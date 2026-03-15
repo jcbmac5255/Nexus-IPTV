@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import java.util.zip.CRC32
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -86,10 +87,16 @@ class BackupManagerImpl @Inject constructor(
                 multiViewPresets = multiViewPresets
             )
 
+            // Compute checksum over the data without checksum field
+            val jsonWithoutChecksum = gson.toJson(backupData)
+            val crc = CRC32()
+            crc.update(jsonWithoutChecksum.toByteArray(Charsets.UTF_8))
+            val backupWithChecksum = backupData.copy(checksum = crc.value.toString(16))
+
             // 2. Serialize and write to URI
             context.contentResolver.openOutputStream(uri)?.use { outputStream ->
                 OutputStreamWriter(outputStream).use { writer ->
-                    gson.toJson(backupData, writer)
+                    gson.toJson(backupWithChecksum, writer)
                 }
             } ?: return@withContext com.streamvault.domain.model.Result.error("Failed to open output stream")
 
@@ -105,6 +112,9 @@ class BackupManagerImpl @Inject constructor(
                 ?: return@withContext Result.error("Failed to open input stream")
             if (backupData.version > 2) {
                 return@withContext Result.error("Unsupported backup version")
+            }
+            if (!verifyChecksum(backupData)) {
+                return@withContext Result.error("Backup file is corrupted (checksum mismatch)")
             }
 
             val existingProviders = providerDao.getAll().first()
@@ -171,6 +181,9 @@ class BackupManagerImpl @Inject constructor(
 
             if (backupData.version > 2) {
                 return@withContext com.streamvault.domain.model.Result.error("Unsupported backup version")
+            }
+            if (!verifyChecksum(backupData)) {
+                return@withContext com.streamvault.domain.model.Result.error("Backup file is corrupted (checksum mismatch)")
             }
 
             val importedSections = mutableListOf<String>()
@@ -305,6 +318,15 @@ class BackupManagerImpl @Inject constructor(
         } catch (e: Exception) {
             com.streamvault.domain.model.Result.error("Failed to import backup: ${e.message}", e)
         }
+    }
+
+    private fun verifyChecksum(backupData: BackupData): Boolean {
+        val storedChecksum = backupData.checksum ?: return true // no checksum = legacy backup, skip verification
+        val dataWithoutChecksum = backupData.copy(checksum = null)
+        val json = gson.toJson(dataWithoutChecksum)
+        val crc = CRC32()
+        crc.update(json.toByteArray(Charsets.UTF_8))
+        return crc.value.toString(16) == storedChecksum
     }
 
     private fun readBackupData(uriString: String): BackupData? {

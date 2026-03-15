@@ -7,6 +7,7 @@ import com.streamvault.domain.model.Result
 
 data class BackupData(
     val version: Int = 2,
+    val checksum: String? = null,
     val preferences: Map<String, String>? = null,
     val providers: List<Provider>? = null,
     val favorites: List<com.streamvault.domain.model.Favorite>? = null,

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.rememberScrollState
@@ -54,9 +55,9 @@ fun ProviderSetupScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    var name by remember { mutableStateOf("") }
-    var m3uUrl by remember { mutableStateOf("") }
-    var fileImportError by remember { mutableStateOf<String?>(null) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var m3uUrl by rememberSaveable { mutableStateOf("") }
+    var fileImportError by rememberSaveable { mutableStateOf<String?>(null) }
 
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
@@ -147,10 +148,10 @@ fun ProviderSetupScreen(
     //    if (uiState.hasExistingProvider) onProviderAdded()
     // }
 
-    var selectedTab by remember { mutableStateOf(0) } // 0 = Xtream, 1 = M3U
-    var serverUrl by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var selectedTab by rememberSaveable { mutableStateOf(0) } // 0 = Xtream, 1 = M3U
+    var serverUrl by rememberSaveable { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
     val providerNameFocusRequester = remember { FocusRequester() }
     val m3uUrlTabFocusRequester = remember { FocusRequester() }
     val m3uFileTabFocusRequester = remember { FocusRequester() }

@@ -81,12 +81,12 @@ fun SettingsScreen(
     }
 
     // Parental Control State
-    var showPinDialog by remember { mutableStateOf(false) }
-    var showLevelDialog by remember { mutableStateOf(false) }
-    var showLanguageDialog by remember { mutableStateOf(false) }
-    var showLiveTvModeDialog by remember { mutableStateOf(false) }
-    var showClearHistoryDialog by remember { mutableStateOf(false) }
-    var pinError by remember { mutableStateOf<String?>(null) }
+    var showPinDialog by rememberSaveable { mutableStateOf(false) }
+    var showLevelDialog by rememberSaveable { mutableStateOf(false) }
+    var showLanguageDialog by rememberSaveable { mutableStateOf(false) }
+    var showLiveTvModeDialog by rememberSaveable { mutableStateOf(false) }
+    var showClearHistoryDialog by rememberSaveable { mutableStateOf(false) }
+    var pinError by rememberSaveable { mutableStateOf<String?>(null) }
     var pendingAction by remember { mutableStateOf<ParentalAction?>(null) }
 
     val createDocumentLauncher = rememberLauncherForActivityResult(

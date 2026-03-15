@@ -118,11 +118,11 @@ fun HomeScreen(
     // Split screen state
     val splitSlots by multiViewViewModel.slotsFlow.collectAsState()
     val hasSplitChannels = splitSlots.any { it != null }
-    var showSplitManagerDialog by remember { mutableStateOf(false) }
+    var showSplitManagerDialog by rememberSaveable { mutableStateOf(false) }
     
     // Parental Control State
-    var showPinDialog by remember { mutableStateOf(false) }
-    var pinError by remember { mutableStateOf<String?>(null) }
+    var showPinDialog by rememberSaveable { mutableStateOf(false) }
+    var pinError by rememberSaveable { mutableStateOf<String?>(null) }
     var pendingUnlockCategory by remember { mutableStateOf<Category?>(null) }
     var pendingUnlockChannel by remember { mutableStateOf<Channel?>(null) }
     var pendingLockToggleCategory by remember { mutableStateOf<Category?>(null) }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -100,10 +101,28 @@ fun DashboardScreen(
         }
         val orderedSections = rememberDashboardSections(uiState)
 
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = Primary)
+            }
+            return@AppScreenScaffold
+        }
+
         androidx.compose.foundation.lazy.LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 28.dp)
         ) {
+            if (uiState.providerWarnings.isNotEmpty()) {
+                item(key = "provider_warnings") {
+                    DashboardProviderWarningCard(
+                        warnings = uiState.providerWarnings,
+                        onOpenSettings = { onNavigate(Routes.SETTINGS) }
+                    )
+                }
+            }
             items(orderedSections, key = { it.name }) { section ->
                 when (section) {
                     DashboardHomeSection.LIVE_SHORTCUTS -> DashboardShortcutRow(

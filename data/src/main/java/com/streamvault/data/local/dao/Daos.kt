@@ -60,7 +60,7 @@ interface ChannelDao {
         WHERE c.provider_id = :providerId
           AND channels_fts MATCH :query
         ORDER BY c.name ASC
-        LIMIT 300
+        LIMIT 1000
         """
     )
     fun search(providerId: Long, query: String): Flow<List<ChannelEntity>>
@@ -73,7 +73,7 @@ interface ChannelDao {
           AND c.category_id = :categoryId
           AND channels_fts MATCH :query
         ORDER BY c.name ASC
-        LIMIT 300
+        LIMIT 1000
         """
     )
     fun searchByCategory(providerId: Long, categoryId: Long, query: String): Flow<List<ChannelEntity>>
@@ -152,7 +152,7 @@ interface MovieDao {
         WHERE m.provider_id = :providerId
           AND movies_fts MATCH :query
         ORDER BY m.name ASC
-        LIMIT 300
+        LIMIT 1000
         """
     )
     fun search(providerId: Long, query: String): Flow<List<MovieEntity>>
@@ -254,7 +254,7 @@ interface SeriesDao {
         WHERE s.provider_id = :providerId
           AND series_fts MATCH :query
         ORDER BY s.name ASC
-        LIMIT 300
+        LIMIT 1000
         """
     )
     fun search(providerId: Long, query: String): Flow<List<SeriesEntity>>

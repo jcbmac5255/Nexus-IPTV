@@ -43,7 +43,8 @@ class Media3PlayerEngine @Inject constructor(
     private val okHttpClient: OkHttpClient
 ) : PlayerEngine {
 
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var supervisorJob = SupervisorJob()
+    private var scope = CoroutineScope(Dispatchers.Main + supervisorJob)
     private var exoPlayer: ExoPlayer? = null
     private var mediaSession: MediaSession? = null
     private var currentDecoderMode: DecoderMode = DecoderMode.AUTO
@@ -449,7 +450,9 @@ class Media3PlayerEngine @Inject constructor(
         exoPlayer?.release()
         exoPlayer = null
         lastStreamInfo = null
-        scope.cancel()
+        supervisorJob.cancel()
+        supervisorJob = SupervisorJob()
+        scope = CoroutineScope(Dispatchers.Main + supervisorJob)
         _playbackState.value = PlaybackState.IDLE
         _isPlaying.value = false
     }
