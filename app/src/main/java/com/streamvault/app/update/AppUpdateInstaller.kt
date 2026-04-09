@@ -2,8 +2,10 @@ package com.streamvault.app.update
 
 import android.app.DownloadManager
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -15,15 +17,17 @@ import com.streamvault.domain.model.Result
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,10 +52,23 @@ class AppUpdateInstaller @Inject constructor(
     private val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val _downloadState = MutableStateFlow(AppUpdateDownloadState())
+    private var downloadPollingJob: Job? = null
+    private val downloadCompleteReceiver = object : BroadcastReceiver() {
+        override fun onReceive(receiverContext: Context?, intent: Intent?) {
+            if (intent?.action != DownloadManager.ACTION_DOWNLOAD_COMPLETE) return
+            val completedDownloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L)
+            val trackedDownloadId = _downloadState.value.downloadId ?: return
+            if (completedDownloadId != trackedDownloadId) return
+            scope.launch {
+                refreshState()
+            }
+        }
+    }
 
     val downloadState: StateFlow<AppUpdateDownloadState> = _downloadState.asStateFlow()
 
     init {
+        registerDownloadReceiver()
         scope.launch {
             refreshState()
         }
@@ -126,6 +143,7 @@ class AppUpdateInstaller @Inject constructor(
                 }
             }
             _downloadState.value = state
+            syncPollingForState(state)
             return@withContext state
         }
     }
@@ -153,16 +171,22 @@ class AppUpdateInstaller @Inject constructor(
                 .setMimeType("application/vnd.android.package-archive")
                 .setAllowedOverMetered(true)
                 .setAllowedOverRoaming(true)
-                .setDestinationUri(Uri.fromFile(targetFile))
+                .setDestinationInExternalFilesDir(
+                    context,
+                    Environment.DIRECTORY_DOWNLOADS,
+                    targetFile.name
+                )
 
             val downloadId = downloadManager.enqueue(request)
             preferencesRepository.setDownloadedAppUpdateVersionName(releaseInfo.versionName)
             preferencesRepository.setAppUpdateDownloadId(downloadId)
-            _downloadState.value = AppUpdateDownloadState(
+            val state = AppUpdateDownloadState(
                 status = AppUpdateDownloadStatus.Downloading,
                 versionName = releaseInfo.versionName,
                 downloadId = downloadId
             )
+            _downloadState.value = state
+            syncPollingForState(state)
             Result.success(Unit)
         } catch (error: IllegalArgumentException) {
             Result.error("Failed to start update download", error)
@@ -219,5 +243,35 @@ class AppUpdateInstaller @Inject constructor(
         val downloadsDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
             ?: File(context.cacheDir, "downloads")
         return File(downloadsDir, "StreamVault-$sanitizedVersion.apk")
+    }
+
+    private fun registerDownloadReceiver() {
+        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(downloadCompleteReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            @Suppress("DEPRECATION")
+            context.registerReceiver(downloadCompleteReceiver, filter)
+        }
+    }
+
+    private fun syncPollingForState(state: AppUpdateDownloadState) {
+        if (state.status != AppUpdateDownloadStatus.Downloading || state.downloadId == null) {
+            downloadPollingJob?.cancel()
+            downloadPollingJob = null
+            return
+        }
+
+        if (downloadPollingJob?.isActive == true) return
+
+        downloadPollingJob = scope.launch {
+            while (isActive) {
+                delay(1500)
+                val refreshed = refreshState()
+                if (refreshed.status != AppUpdateDownloadStatus.Downloading) {
+                    break
+                }
+            }
+        }
     }
 }

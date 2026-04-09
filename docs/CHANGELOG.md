@@ -2,6 +2,17 @@
 
 All notable product changes are recorded in this document.
 
+## 1.0.4 - 09/04/2026
+
+### Changed
+- Updated VOD playback preparation to carry richer resolved stream metadata into the shared player path, improving compatibility with provider-resolved movie and episode streams.
+
+### Fixed
+- Fixed top navigation focus so switching between top-bar destinations no longer snaps focus back to the Home tab.
+- Fixed in-app update downloads that could remain stuck on `Downloading...` by improving download tracking and completion handling.
+- Fixed M3U catch-up detection and replay URL expansion so archive-capable playlists using `catchup-source`, `timeshift`, and common replay placeholders are wired correctly.
+- Fixed catch-up and replay handling across M3U and Xtream providers with added regression coverage for archive metadata parsing and replay URL building.
+
 ## 1.0.3 - 09/04/2026
 
 ### Added

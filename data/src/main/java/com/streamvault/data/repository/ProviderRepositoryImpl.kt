@@ -375,17 +375,7 @@ class ProviderRepositoryImpl @Inject constructor(
         } else {
             // M3U catch-up
             val source = channel?.catchUpSource ?: return emptyList()
-
-            // Substitute common provider placeholder variants.
-            listOf(
-                source.replace("{start}", start.toString())
-                    .replace("{end}", end.toString())
-                    .replace("{duration}", (end - start).toString())
-                    .replace("{utc}", start.toString())
-                    .replace("{utcend}", end.toString())
-                    .replace("{lutc}", end.toString())
-                    .replace("{timestamp}", start.toString())
-            )
+            buildM3uCatchUpUrls(source, start, end)
         }
     }
 
@@ -463,4 +453,44 @@ class ProviderRepositoryImpl @Inject constructor(
         )
         syncMetadataRepository.updateMetadata(metadata)
     }
+}
+
+internal fun buildM3uCatchUpUrls(source: String, start: Long, end: Long): List<String> {
+    val trimmedSource = source.trim()
+    if (trimmedSource.isBlank()) return emptyList()
+
+    val durationSeconds = (end - start).coerceAtLeast(0L)
+    val durationMinutes = (durationSeconds / 60L).coerceAtLeast(1L)
+    val startDate = java.time.Instant.ofEpochSecond(start).atZone(java.time.ZoneOffset.UTC)
+    val endDate = java.time.Instant.ofEpochSecond(end).atZone(java.time.ZoneOffset.UTC)
+    val compactStart = startDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+    val compactEnd = endDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+
+    val replacements = linkedMapOf(
+        "{start}" to start.toString(),
+        "{end}" to end.toString(),
+        "{duration}" to durationSeconds.toString(),
+        "{duration_seconds}" to durationSeconds.toString(),
+        "{duration_minutes}" to durationMinutes.toString(),
+        "{utc}" to start.toString(),
+        "{utcend}" to end.toString(),
+        "{lutc}" to end.toString(),
+        "{timestamp}" to start.toString(),
+        "{Y}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyy")),
+        "{m}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("MM")),
+        "{d}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("dd")),
+        "{H}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("HH")),
+        "{M}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("mm")),
+        "{S}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("ss")),
+        "{Ymd}" to startDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")),
+        "{YmdHis}" to compactStart,
+        "{utc:yyyyMMddHHmmss}" to compactStart,
+        "{utcend:yyyyMMddHHmmss}" to compactEnd
+    )
+
+    val expanded = replacements.entries.fold(trimmedSource) { current, (placeholder, value) ->
+        current.replace(placeholder, value)
+    }
+
+    return listOf(expanded).distinct()
 }

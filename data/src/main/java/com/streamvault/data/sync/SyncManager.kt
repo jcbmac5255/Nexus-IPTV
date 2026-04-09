@@ -3102,7 +3102,9 @@ class SyncManager @Inject constructor(
                                     epgChannelId = entry.tvgId ?: entry.tvgName,
                                     number = entry.tvgChno ?: 0,
                                     streamUrl = entry.url,
-                                    catchUpSupported = entry.catchUp != null,
+                                    catchUpSupported = !entry.catchUp.isNullOrBlank() ||
+                                        !entry.catchUpSource.isNullOrBlank() ||
+                                        !entry.timeshift.isNullOrBlank(),
                                     catchUpDays = entry.catchUpDays ?: 0,
                                     catchUpSource = safeCatchUpSource,
                                     providerId = provider.id,

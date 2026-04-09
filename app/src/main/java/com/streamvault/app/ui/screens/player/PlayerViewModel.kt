@@ -982,18 +982,13 @@ class PlayerViewModel @Inject constructor(
 
         if (!hasArchiveRequest) {
             viewModelScope.launch {
-                val resolvedUrl = resolvePlaybackUrl(streamUrl, internalChannelId, providerId, currentContentType)
+                val streamInfo = resolvePlaybackStreamInfo(streamUrl, internalChannelId, providerId, currentContentType)
                 if (!isActivePlaybackSession(requestVersion, streamUrl)) return@launch
-                if (resolvedUrl.isNullOrBlank()) {
+                if (streamInfo == null) {
                     if (!isActivePlaybackSession(requestVersion, streamUrl)) return@launch
                     showPlayerNotice(message = "No playable stream URL was available.", recoveryType = PlayerRecoveryType.SOURCE)
                     return@launch
                 }
-                val streamInfo = com.streamvault.domain.model.StreamInfo(
-                    url = resolvedUrl,
-                    title = currentTitle,
-                    streamType = com.streamvault.domain.model.StreamType.UNKNOWN
-                )
                 if (!preparePlayer(streamInfo, requestVersion)) return@launch
             }
         }
@@ -2430,18 +2425,72 @@ class PlayerViewModel @Inject constructor(
         prepare(streamUrl, epgChannelId, currentId, currentCategoryId, currentProviderId, isVirtualCategory, currentContentType.name, currentTitle)
     }
 
-    private suspend fun resolvePlaybackUrl(
+    private suspend fun resolvePlaybackStreamInfo(
         logicalUrl: String,
         internalContentId: Long,
         providerId: Long,
         contentType: ContentType
-    ): String? {
+    ): com.streamvault.domain.model.StreamInfo? {
+        var fallbackStreamId: Long? = null
+        var fallbackContainerExtension: String? = null
+
+        if (providerId > 0L && internalContentId > 0L) {
+            when (contentType) {
+                ContentType.LIVE -> {
+                    channelRepository.getChannel(internalContentId)?.let { channel ->
+                        fallbackStreamId = channel.streamId.takeIf { it > 0L }
+                        channelRepository.getStreamInfo(channel).getOrNull()?.let { resolved ->
+                            return resolved.copy(title = resolved.title ?: currentTitle)
+                        }
+                    }
+                }
+
+                ContentType.MOVIE -> {
+                    movieRepository.getMovie(internalContentId)?.let { movie ->
+                        fallbackStreamId = movie.streamId.takeIf { it > 0L }
+                        fallbackContainerExtension = movie.containerExtension
+                        movieRepository.getStreamInfo(movie).getOrNull()?.let { resolved ->
+                            return resolved.copy(title = resolved.title ?: currentTitle)
+                        }
+                    }
+                }
+
+                ContentType.SERIES,
+                ContentType.SERIES_EPISODE -> {
+                    val episode = when {
+                        _currentEpisode.value?.id == internalContentId -> _currentEpisode.value
+                        else -> _currentSeries.value
+                            ?.seasons
+                            ?.asSequence()
+                            ?.flatMap { it.episodes.asSequence() }
+                            ?.firstOrNull { it.id == internalContentId }
+                    }
+                    episode?.let {
+                        fallbackStreamId = it.episodeId.takeIf { episodeId -> episodeId > 0L } ?: it.id
+                        fallbackContainerExtension = it.containerExtension
+                        seriesRepository.getEpisodeStreamInfo(it).getOrNull()?.let { resolved ->
+                            return resolved.copy(title = resolved.title ?: currentTitle)
+                        }
+                    }
+                }
+            }
+        }
+
         try {
-            xtreamStreamUrlResolver.resolve(
+            xtreamStreamUrlResolver.resolveWithMetadata(
                 url = logicalUrl,
                 fallbackProviderId = providerId.takeIf { it > 0 },
-                fallbackContentType = contentType
-            )?.let { return it }
+                fallbackStreamId = fallbackStreamId,
+                fallbackContentType = contentType,
+                fallbackContainerExtension = fallbackContainerExtension
+            )?.let { resolved ->
+                return com.streamvault.domain.model.StreamInfo(
+                    url = resolved.url,
+                    title = currentTitle,
+                    containerExtension = fallbackContainerExtension,
+                    expirationTime = resolved.expirationTime
+                )
+            }
         } catch (e: CredentialDecryptionException) {
             val message = e.message ?: CredentialDecryptionException.MESSAGE
             setLastFailureReason(message)
@@ -2449,20 +2498,26 @@ class PlayerViewModel @Inject constructor(
             return null
         }
 
-        if (providerId <= 0L || internalContentId <= 0L) {
-            return logicalUrl.takeIf { it.isNotBlank() }
-        }
-
-        return when (contentType) {
-            ContentType.LIVE -> channelRepository.getChannel(internalContentId)?.let { channel ->
-                channelRepository.getStreamInfo(channel).getOrNull()?.url
-            }
-            ContentType.MOVIE -> movieRepository.getMovie(internalContentId)?.let { movie ->
-                movieRepository.getStreamInfo(movie).getOrNull()?.url
-            }
-            ContentType.SERIES, ContentType.SERIES_EPISODE -> logicalUrl.takeIf { it.isNotBlank() }
+        return logicalUrl.takeIf { it.isNotBlank() }?.let {
+            com.streamvault.domain.model.StreamInfo(
+                url = it,
+                title = currentTitle,
+                containerExtension = fallbackContainerExtension
+            )
         }
     }
+
+    private suspend fun resolvePlaybackUrl(
+        logicalUrl: String,
+        internalContentId: Long,
+        providerId: Long,
+        contentType: ContentType
+    ): String? = resolvePlaybackStreamInfo(
+        logicalUrl = logicalUrl,
+        internalContentId = internalContentId,
+        providerId = providerId,
+        contentType = contentType
+    )?.url
 
     private suspend fun buildCastRequest(): CastMediaRequest? {
         return when (currentContentType) {

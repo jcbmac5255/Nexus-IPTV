@@ -198,6 +198,21 @@ class M3uParserTest {
     }
 
     @Test
+    fun `parseToChannels_marksCatchUpSupported_whenOnlyCatchUpSourceExists`() {
+        val channels = parser.parseToChannels(
+            """
+            #EXTM3U
+            #EXTINF:-1 catchup-source="http://catchup.example.com/ch1/{utc}-{utcend}.ts" group-title="Live",Live Channel
+            http://stream.example.com/ch1.ts
+            """.trimIndent().byteInputStream(),
+            providerId = 99L
+        )
+
+        assertThat(channels).hasSize(1)
+        assertThat(channels.single().catchUpSupported).isTrue()
+    }
+
+    @Test
     fun `parse_unknownAttributes_ignoredGracefully`() {
         val m3u = """
             #EXTM3U

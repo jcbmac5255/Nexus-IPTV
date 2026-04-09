@@ -150,7 +150,7 @@ class M3uParser {
                 epgChannelId = entry.tvgId ?: entry.tvgName,
                 number = entry.tvgChno ?: (index + 1),
                 streamUrl = entry.url,
-                catchUpSupported = entry.catchUp != null,
+                catchUpSupported = entry.supportsCatchUp(),
                 catchUpDays = entry.catchUpDays ?: 0,
                 catchUpSource = entry.catchUpSource,
                 providerId = providerId,
@@ -182,6 +182,10 @@ class M3uParser {
             genre = extinf.genre,
             durationSeconds = extinf.durationSeconds
         )
+    }
+
+    private fun M3uEntry.supportsCatchUp(): Boolean {
+        return !catchUp.isNullOrBlank() || !catchUpSource.isNullOrBlank() || !timeshift.isNullOrBlank()
     }
 
     private fun sanitizeLine(rawLine: String): String =

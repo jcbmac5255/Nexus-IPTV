@@ -286,7 +286,7 @@ private fun TopNavigationBar(
                         label = stringResource(item.labelRes),
                         icon = item.icon,
                         selected = currentRoute.startsWith(item.route),
-                        modifier = Modifier.focusRequester(requester),
+                        focusRequester = requester,
                         onClick = {
                             if (!currentRoute.startsWith(item.route)) {
                                 onNavigate(item.route)
@@ -304,12 +304,12 @@ private fun TopNavigationButton(
     label: String,
     icon: ImageVector,
     selected: Boolean,
+    focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val sounds = rememberTvInteractionSounds()
-    val focusRequester = remember { FocusRequester() }
     val scale by animateFloatAsState(
         targetValue = if (isFocused) FocusSpec.FocusedScale else 1f,
         animationSpec = AppMotion.FocusSpec,
