@@ -1,0 +1,619 @@
+{
+  "nodes": [
+    {
+      "id": "streamvault",
+      "label": "StreamVault IPTV Player",
+      "file_type": "document"
+    },
+    {
+      "id": "core_features",
+      "label": "Core Features",
+      "file_type": "document"
+    },
+    {
+      "id": "live_tv",
+      "label": "Live TV and Channel Management",
+      "file_type": "code"
+    },
+    {
+      "id": "guide_epg",
+      "label": "EPG Guide System",
+      "file_type": "code"
+    },
+    {
+      "id": "vod_movies",
+      "label": "Movies and VOD Library",
+      "file_type": "code"
+    },
+    {
+      "id": "series_episodes",
+      "label": "Series and Episode Playback",
+      "file_type": "code"
+    },
+    {
+      "id": "playback_player",
+      "label": "Player and Playback Engine",
+      "file_type": "code"
+    },
+    {
+      "id": "recording_dvr",
+      "label": "DVR Recording System",
+      "file_type": "code"
+    },
+    {
+      "id": "multiview",
+      "label": "MultiView Split-Screen Playback",
+      "file_type": "code"
+    },
+    {
+      "id": "search_discovery",
+      "label": "Search and Discovery",
+      "file_type": "code"
+    },
+    {
+      "id": "favorites_history",
+      "label": "Favorites and Playback History",
+      "file_type": "code"
+    },
+    {
+      "id": "parental_controls",
+      "label": "Parental Controls and PIN Protection",
+      "file_type": "code"
+    },
+    {
+      "id": "provider_system",
+      "label": "Provider Management System",
+      "file_type": "code"
+    },
+    {
+      "id": "m3u_provider",
+      "label": "M3U Playlist Provider",
+      "file_type": "code"
+    },
+    {
+      "id": "xtream_provider",
+      "label": "Xtream Codes Provider",
+      "file_type": "code"
+    },
+    {
+      "id": "stalker_provider",
+      "label": "Stalker Portal Provider",
+      "file_type": "code"
+    },
+    {
+      "id": "combined_m3u",
+      "label": "Combined M3U Live Source",
+      "file_type": "code"
+    },
+    {
+      "id": "sync_pipeline",
+      "label": "Sync Pipeline and Catalog Import",
+      "file_type": "code"
+    },
+    {
+      "id": "database_persistence",
+      "label": "Database and Repository Layer",
+      "file_type": "code"
+    },
+    {
+      "id": "parser_protocols",
+      "label": "Protocol Adapters and Parsers",
+      "file_type": "code"
+    },
+    {
+      "id": "xmltv_parser",
+      "label": "XMLTV EPG Parser",
+      "file_type": "code"
+    },
+    {
+      "id": "m3u_parser",
+      "label": "M3U Playlist Parser",
+      "file_type": "code"
+    },
+    {
+      "id": "backup_restore",
+      "label": "Backup and Restore System",
+      "file_type": "code"
+    },
+    {
+      "id": "settings_ui",
+      "label": "Settings and Configuration UI",
+      "file_type": "code"
+    },
+    {
+      "id": "app_shell",
+      "label": "App Shell and Navigation",
+      "file_type": "code"
+    },
+    {
+      "id": "platform_integration",
+      "label": "Platform Integration (Android TV)",
+      "file_type": "code"
+    },
+    {
+      "id": "launcher_recommendations",
+      "label": "Launcher Recommendations",
+      "file_type": "code"
+    },
+    {
+      "id": "watch_next",
+      "label": "Android TV Watch Next Integration",
+      "file_type": "code"
+    },
+    {
+      "id": "tv_input",
+      "label": "Android TV Input Framework",
+      "file_type": "code"
+    },
+    {
+      "id": "home_screen",
+      "label": "Home Screen and Dashboard",
+      "file_type": "code"
+    },
+    {
+      "id": "dashboard",
+      "label": "Dashboard Discovery Shelves",
+      "file_type": "code"
+    },
+    {
+      "id": "provider_onboarding",
+      "label": "Provider Onboarding and Validation",
+      "file_type": "code"
+    },
+    {
+      "id": "reminders",
+      "label": "Program Reminders",
+      "file_type": "code"
+    },
+    {
+      "id": "timeshift",
+      "label": "Live Timeshift and Rewind",
+      "file_type": "code"
+    },
+    {
+      "id": "cast_support",
+      "label": "Google Cast Support",
+      "file_type": "code"
+    },
+    {
+      "id": "localization",
+      "label": "Localization and Languages",
+      "file_type": "code"
+    }
+  ],
+  "edges": [
+    {
+      "source": "streamvault",
+      "target": "core_features",
+      "relation": "implements",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "live_tv",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "guide_epg",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "vod_movies",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "series_episodes",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "playback_player",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "recording_dvr",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "multiview",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "search_discovery",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "core_features",
+      "target": "parental_controls",
+      "relation": "includes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "live_tv",
+      "target": "guide_epg",
+      "relation": "displays",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "live_tv",
+      "target": "favorites_history",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "live_tv",
+      "target": "parental_controls",
+      "relation": "enforces",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "guide_epg",
+      "target": "xmltv_parser",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "guide_epg",
+      "target": "recording_dvr",
+      "relation": "enables_scheduling_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "vod_movies",
+      "target": "favorites_history",
+      "relation": "tracks",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "vod_movies",
+      "target": "search_discovery",
+      "relation": "discoverable_through",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "series_episodes",
+      "target": "vod_movies",
+      "relation": "parallel_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "series_episodes",
+      "target": "playback_player",
+      "relation": "enables_playback_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "playback_player",
+      "target": "timeshift",
+      "relation": "supports",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "playback_player",
+      "target": "favorites_history",
+      "relation": "updates",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "playback_player",
+      "target": "cast_support",
+      "relation": "supports",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "recording_dvr",
+      "target": "reminders",
+      "relation": "uses_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "recording_dvr",
+      "target": "guide_epg",
+      "relation": "schedules_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "multiview",
+      "target": "playback_player",
+      "relation": "uses_multiple_instances_of",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "search_discovery",
+      "target": "vod_movies",
+      "relation": "searches",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "search_discovery",
+      "target": "series_episodes",
+      "relation": "searches",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "search_discovery",
+      "target": "live_tv",
+      "relation": "searches",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "favorites_history",
+      "target": "database_persistence",
+      "relation": "persisted_in",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "provider_system",
+      "target": "m3u_provider",
+      "relation": "supports",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "provider_system",
+      "target": "xtream_provider",
+      "relation": "supports",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "provider_system",
+      "target": "stalker_provider",
+      "relation": "supports",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "provider_system",
+      "target": "combined_m3u",
+      "relation": "supports",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "provider_system",
+      "target": "sync_pipeline",
+      "relation": "orchestrates",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "m3u_provider",
+      "target": "m3u_parser",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "xtream_provider",
+      "target": "parser_protocols",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "stalker_provider",
+      "target": "parser_protocols",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "combined_m3u",
+      "target": "m3u_provider",
+      "relation": "aggregates",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "sync_pipeline",
+      "target": "database_persistence",
+      "relation": "updates",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "sync_pipeline",
+      "target": "parser_protocols",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "xmltv_parser",
+      "target": "guide_epg",
+      "relation": "parses_data_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "m3u_parser",
+      "target": "live_tv",
+      "relation": "parses_channels_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "backup_restore",
+      "target": "favorites_history",
+      "relation": "can_restore",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "backup_restore",
+      "target": "recording_dvr",
+      "relation": "can_restore",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "backup_restore",
+      "target": "provider_system",
+      "relation": "can_restore",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "settings_ui",
+      "target": "provider_system",
+      "relation": "manages",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "settings_ui",
+      "target": "recording_dvr",
+      "relation": "configures",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "settings_ui",
+      "target": "parental_controls",
+      "relation": "configures",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "settings_ui",
+      "target": "backup_restore",
+      "relation": "controls",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "app_shell",
+      "target": "live_tv",
+      "relation": "navigates_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "app_shell",
+      "target": "vod_movies",
+      "relation": "navigates_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "app_shell",
+      "target": "series_episodes",
+      "relation": "navigates_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "app_shell",
+      "target": "playback_player",
+      "relation": "displays",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "platform_integration",
+      "target": "launcher_recommendations",
+      "relation": "implements",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "platform_integration",
+      "target": "watch_next",
+      "relation": "implements",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "platform_integration",
+      "target": "tv_input",
+      "relation": "implements",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "launcher_recommendations",
+      "target": "vod_movies",
+      "relation": "recommends",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "launcher_recommendations",
+      "target": "series_episodes",
+      "relation": "recommends",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "launcher_recommendations",
+      "target": "favorites_history",
+      "relation": "based_on",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "watch_next",
+      "target": "favorites_history",
+      "relation": "syncs",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "tv_input",
+      "target": "live_tv",
+      "relation": "syncs_channels_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "home_screen",
+      "target": "live_tv",
+      "relation": "displays",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "home_screen",
+      "target": "favorites_history",
+      "relation": "displays_recent_and_favorites_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "dashboard",
+      "target": "vod_movies",
+      "relation": "displays_shelves_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "dashboard",
+      "target": "series_episodes",
+      "relation": "displays_shelves_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "dashboard",
+      "target": "search_discovery",
+      "relation": "surfaces_recommendations_through",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "provider_onboarding",
+      "target": "provider_system",
+      "relation": "enables_adding_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "reminders",
+      "target": "guide_epg",
+      "relation": "notifies_about_programs_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "parental_controls",
+      "target": "guide_epg",
+      "relation": "filters_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "parental_controls",
+      "target": "vod_movies",
+      "relation": "filters_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "parental_controls",
+      "target": "series_episodes",
+      "relation": "filters_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "localization",
+      "target": "streamvault",
+      "relation": "applies_to",
+      "confidence": "EXTRACTED"
+    }
+  ],
+  "hyperedges": []
+}

@@ -1,0 +1,26 @@
+# Community 478
+
+> 2 nodes
+
+## Key Concepts
+
+- **AudioVideoOffsetAudioSink** (1 connections) — `player\src\main\java\com\streamvault\player\playback\AudioVideoOffsetAudioSink.kt`
+- **AudioVideoOffsetAudioSink.kt** (1 connections) — `player\src\main\java\com\streamvault\player\playback\AudioVideoOffsetAudioSink.kt`
+
+## Relationships
+
+- No strong cross-community connections detected
+
+## Source Files
+
+- `player\src\main\java\com\streamvault\player\playback\AudioVideoOffsetAudioSink.kt`
+
+## Audit Trail
+
+- EXTRACTED: 2 (100%)
+- INFERRED: 0 (0%)
+- AMBIGUOUS: 0 (0%)
+
+---
+
+*Part of the graphify knowledge wiki. See [[index]] to navigate.*

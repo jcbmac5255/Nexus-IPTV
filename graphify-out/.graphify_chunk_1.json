@@ -1,0 +1,250 @@
+{
+  "nodes": [
+    {
+      "id": "streamvault",
+      "label": "StreamVault",
+      "file_type": "document"
+    },
+    {
+      "id": "readme",
+      "label": "README",
+      "file_type": "document"
+    },
+    {
+      "id": "changelog",
+      "label": "Changelog",
+      "file_type": "document"
+    },
+    {
+      "id": "review_database_repository_consistency",
+      "label": "Database and Repository Consistency Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_epg_guide",
+      "label": "EPG and Guide Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_favorites_history_continue_watching",
+      "label": "Favorites, History, and Continue Watching Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_live_tv_home",
+      "label": "Live TV Home and Channel Browsing Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_movies_vod",
+      "label": "Movies and VOD Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_multiview",
+      "label": "MultiView Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_platform_integration_app_shell",
+      "label": "Platform Integration and App Shell Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_player_playback",
+      "label": "Player and Playback Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_protocol_adapters_parsers",
+      "label": "Protocol Adapters and Parsers Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_provider_onboarding_validation",
+      "label": "Provider Onboarding and Validation Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_recording_reminders_backup",
+      "label": "Recording, Reminders, and Backup Reliability Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_search_discovery",
+      "label": "Search and Discovery Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_series_episode_playback",
+      "label": "Series and Episode Playback Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_settings_provider_management",
+      "label": "Settings and Provider Management Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "review_sync_pipeline_catalog_import",
+      "label": "Sync Pipeline and Catalog Import Code Review (2026-04-30)",
+      "file_type": "document"
+    },
+    {
+      "id": "image_app_banner",
+      "label": "App Banner",
+      "file_type": "image"
+    },
+    {
+      "id": "image_welcome_bg",
+      "label": "Welcome Background",
+      "file_type": "image"
+    },
+    {
+      "id": "image_app_banner_hdpi",
+      "label": "App Banner HDPI",
+      "file_type": "image"
+    },
+    {
+      "id": "image_launcher_vault_art",
+      "label": "Launcher Vault Art",
+      "file_type": "image"
+    },
+    {
+      "id": "subsystem_database_repository_consistency",
+      "label": "Database and Repository Consistency",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_epg_guide",
+      "label": "EPG and Guide",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_favorites_history_continue_watching",
+      "label": "Favorites, History, and Continue Watching",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_live_tv_home",
+      "label": "Live TV Home and Channel Browsing",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_movies_vod",
+      "label": "Movies and VOD",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_multiview",
+      "label": "MultiView",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_platform_integration_app_shell",
+      "label": "Platform Integration and App Shell",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_player_playback",
+      "label": "Player and Playback",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_protocol_adapters_parsers",
+      "label": "Protocol Adapters and Parsers",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_provider_onboarding_validation",
+      "label": "Provider Onboarding and Validation",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_recording_reminders_backup",
+      "label": "Recording, Reminders, and Backup Reliability",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_search_discovery",
+      "label": "Search and Discovery",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_series_episode_playback",
+      "label": "Series and Episode Playback",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_settings_provider_management",
+      "label": "Settings and Provider Management",
+      "file_type": "document"
+    },
+    {
+      "id": "subsystem_sync_pipeline_catalog_import",
+      "label": "Sync Pipeline and Catalog Import",
+      "file_type": "document"
+    }
+  ],
+  "edges": [
+    {"source": "readme", "target": "streamvault", "relation": "introduces", "confidence": "EXTRACTED"},
+    {"source": "readme", "target": "changelog", "relation": "links to", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "streamvault", "relation": "records releases for", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_live_tv_home", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_movies_vod", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_series_episode_playback", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_epg_guide", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_favorites_history_continue_watching", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_multiview", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_platform_integration_app_shell", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_player_playback", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_recording_reminders_backup", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_search_discovery", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_settings_provider_management", "relation": "includes", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_provider_onboarding_validation", "relation": "supports provider setup for", "confidence": "EXTRACTED"},
+    {"source": "streamvault", "target": "subsystem_protocol_adapters_parsers", "relation": "relies on", "confidence": "INFERRED"},
+    {"source": "streamvault", "target": "subsystem_sync_pipeline_catalog_import", "relation": "relies on", "confidence": "INFERRED"},
+    {"source": "streamvault", "target": "subsystem_database_repository_consistency", "relation": "relies on", "confidence": "INFERRED"},
+    {"source": "review_database_repository_consistency", "target": "subsystem_database_repository_consistency", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_epg_guide", "target": "subsystem_epg_guide", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_favorites_history_continue_watching", "target": "subsystem_favorites_history_continue_watching", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_live_tv_home", "target": "subsystem_live_tv_home", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_movies_vod", "target": "subsystem_movies_vod", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_multiview", "target": "subsystem_multiview", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_platform_integration_app_shell", "target": "subsystem_platform_integration_app_shell", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_player_playback", "target": "subsystem_player_playback", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_protocol_adapters_parsers", "target": "subsystem_protocol_adapters_parsers", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_provider_onboarding_validation", "target": "subsystem_provider_onboarding_validation", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_recording_reminders_backup", "target": "subsystem_recording_reminders_backup", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_search_discovery", "target": "subsystem_search_discovery", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_series_episode_playback", "target": "subsystem_series_episode_playback", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_settings_provider_management", "target": "subsystem_settings_provider_management", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "review_sync_pipeline_catalog_import", "target": "subsystem_sync_pipeline_catalog_import", "relation": "reviews", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_player_playback", "relation": "documents fixes for", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_epg_guide", "relation": "documents fixes for", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_series_episode_playback", "relation": "documents fixes for", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_multiview", "relation": "documents fixes for", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_sync_pipeline_catalog_import", "relation": "documents fixes for", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_provider_onboarding_validation", "relation": "documents provider support changes for", "confidence": "EXTRACTED"},
+    {"source": "changelog", "target": "subsystem_recording_reminders_backup", "relation": "documents recording and reminder changes for", "confidence": "EXTRACTED"},
+    {"source": "subsystem_protocol_adapters_parsers", "target": "subsystem_epg_guide", "relation": "parses guide feeds for", "confidence": "EXTRACTED"},
+    {"source": "subsystem_protocol_adapters_parsers", "target": "subsystem_sync_pipeline_catalog_import", "relation": "feeds imported provider data into", "confidence": "INFERRED"},
+    {"source": "subsystem_provider_onboarding_validation", "target": "subsystem_sync_pipeline_catalog_import", "relation": "triggers initial sync through", "confidence": "EXTRACTED"},
+    {"source": "subsystem_settings_provider_management", "target": "subsystem_sync_pipeline_catalog_import", "relation": "launches sync operations for", "confidence": "EXTRACTED"},
+    {"source": "subsystem_settings_provider_management", "target": "subsystem_provider_onboarding_validation", "relation": "manages providers after", "confidence": "INFERRED"},
+    {"source": "subsystem_search_discovery", "target": "subsystem_favorites_history_continue_watching", "relation": "surfaces recent and continue-watching data from", "confidence": "EXTRACTED"},
+    {"source": "subsystem_recording_reminders_backup", "target": "subsystem_epg_guide", "relation": "schedules recordings and reminders from", "confidence": "EXTRACTED"},
+    {"source": "subsystem_series_episode_playback", "target": "subsystem_player_playback", "relation": "hands episode context into", "confidence": "EXTRACTED"},
+    {"source": "subsystem_multiview", "target": "subsystem_player_playback", "relation": "uses auxiliary playback engines from", "confidence": "EXTRACTED"},
+    {"source": "subsystem_platform_integration_app_shell", "target": "subsystem_search_discovery", "relation": "publishes discovery surfaces for", "confidence": "EXTRACTED"},
+    {"source": "subsystem_platform_integration_app_shell", "target": "subsystem_player_playback", "relation": "routes external playback back into", "confidence": "EXTRACTED"},
+    {"source": "subsystem_sync_pipeline_catalog_import", "target": "subsystem_epg_guide", "relation": "orchestrates background EPG sync for", "confidence": "EXTRACTED"},
+    {"source": "subsystem_sync_pipeline_catalog_import", "target": "subsystem_database_repository_consistency", "relation": "commits staged catalog data into", "confidence": "INFERRED"},
+    {"source": "subsystem_database_repository_consistency", "target": "subsystem_favorites_history_continue_watching", "relation": "defines favorites and playback history invariants for", "confidence": "EXTRACTED"},
+    {"source": "image_app_banner", "target": "streamvault", "relation": "brands", "confidence": "EXTRACTED"},
+    {"source": "image_app_banner_hdpi", "target": "image_app_banner", "relation": "provides density variant for", "confidence": "EXTRACTED"},
+    {"source": "image_launcher_vault_art", "target": "streamvault", "relation": "brands", "confidence": "EXTRACTED"},
+    {"source": "image_welcome_bg", "target": "streamvault", "relation": "presents welcome branding for", "confidence": "EXTRACTED"}
+  ],
+  "hyperedges": []
+}

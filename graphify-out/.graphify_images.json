@@ -1,0 +1,234 @@
+{
+  "nodes": [
+    {
+      "id": "streamvault_brand",
+      "label": "StreamVault IPTV Application",
+      "file_type": "document"
+    },
+    {
+      "id": "asset_app_banner",
+      "label": "App Banner Asset (StreamVault Logo)",
+      "file_type": "image"
+    },
+    {
+      "id": "asset_welcome_bg",
+      "label": "Welcome Background Asset (Vault Door Branding)",
+      "file_type": "image"
+    },
+    {
+      "id": "asset_launcher_icon",
+      "label": "Launcher Icon Asset (Vault Icon Multi-DPI)",
+      "file_type": "image"
+    },
+    {
+      "id": "asset_launcher_art",
+      "label": "Launcher Art Asset (Vault Art Multi-DPI)",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_home",
+      "label": "Home Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_livetv",
+      "label": "Live TV Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_movies",
+      "label": "Movies Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_guide",
+      "label": "EPG Guide Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_channelview",
+      "label": "Channel View Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_movieinfo",
+      "label": "Movie Info Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_seriesepisodes",
+      "label": "Series Episodes Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "screen_settings",
+      "label": "Settings Screen",
+      "file_type": "image"
+    },
+    {
+      "id": "app_branding",
+      "label": "Brand Identity System",
+      "file_type": "document"
+    }
+  ],
+  "edges": [
+    {
+      "source": "streamvault_brand",
+      "target": "asset_app_banner",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "asset_welcome_bg",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "asset_launcher_icon",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "asset_launcher_art",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_home",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_livetv",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_movies",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_guide",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_channelview",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_movieinfo",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_seriesepisodes",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "streamvault_brand",
+      "target": "screen_settings",
+      "relation": "contains",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "screen_home",
+      "target": "screen_livetv",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "screen_home",
+      "target": "screen_movies",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "screen_home",
+      "target": "screen_guide",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "screen_livetv",
+      "target": "screen_channelview",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "screen_movies",
+      "target": "screen_movieinfo",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "screen_guide",
+      "target": "screen_seriesepisodes",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "screen_home",
+      "target": "screen_settings",
+      "relation": "navigates_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "app_branding",
+      "target": "asset_app_banner",
+      "relation": "defines_visual_language_of",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "app_branding",
+      "target": "asset_welcome_bg",
+      "relation": "defines_visual_language_of",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "asset_launcher_icon",
+      "target": "asset_launcher_art",
+      "relation": "semantic_variant_of",
+      "confidence": "EXTRACTED"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "launcher_icon_bundle",
+      "label": "Launcher Icon Multi-DPI Variants",
+      "nodes": ["asset_launcher_icon"],
+      "description": "ic_launcher_vault.png in mipmap-hdpi, mipmap-mdpi, mipmap-xhdpi, mipmap-xxhdpi, mipmap-xxxhdpi"
+    },
+    {
+      "id": "launcher_art_bundle",
+      "label": "Launcher Art Multi-DPI Variants",
+      "nodes": ["asset_launcher_art"],
+      "description": "ic_launcher_vault_art.png in drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi"
+    },
+    {
+      "id": "app_banner_bundle",
+      "label": "App Banner Multi-DPI Variants",
+      "nodes": ["asset_app_banner"],
+      "description": "app_banner.png in drawable, drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi"
+    },
+    {
+      "id": "main_navigation",
+      "label": "Main Navigation Hub",
+      "nodes": ["screen_home", "screen_livetv", "screen_movies", "screen_guide", "screen_settings"],
+      "description": "Primary navigation screens accessible from home"
+    }
+  ]
+}
