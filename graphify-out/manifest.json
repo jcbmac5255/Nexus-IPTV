@@ -48,8 +48,8 @@
     "hash": "00fbca2336e60801a3ca885436b4b27c"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\StreamVaultApp.kt": {
-    "mtime": 1776544531.7477956,
-    "hash": "8e6cfb43b0e92461ff4d1de45711fd0d"
+    "mtime": 1777992207.7487347,
+    "hash": "8400aa5c10027cd1f436c0ca9d138dc5"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\cast\\CastManager.kt": {
     "mtime": 1775913022.8294587,
@@ -72,20 +72,20 @@
     "hash": "a39bfc9ea63e76a39e4e2fcb14589f62"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\di\\DatabaseModule.kt": {
-    "mtime": 1777818791.856627,
-    "hash": "ab9b60f09dde780ac8c855f7c3655187"
+    "mtime": 1778234375.921523,
+    "hash": "39d2abd333a699c99bf201a95fb8985f"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\di\\NetworkModule.kt": {
-    "mtime": 1777320529.2493925,
-    "hash": "5323f3d1e0e6248ced62ff6a636382a9"
+    "mtime": 1778249327.7661142,
+    "hash": "ac80f0307ea13102d8ce7f53fddeb9ae"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\di\\PlayerEngineQualifiers.kt": {
     "mtime": 1773760107.0503187,
     "hash": "b311c9e3f282d3834ebbd9da70906396"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\di\\RepositoryModule.kt": {
-    "mtime": 1777320529.2514026,
-    "hash": "15a8cebb47223fe1288df0a2fc41253c"
+    "mtime": 1778233680.0080564,
+    "hash": "5f60ac03290dfa37f26a58a05bce054e"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\di\\SlowQueryLoggingOpenHelperFactory.kt": {
     "mtime": 1776544531.7523057,
@@ -392,12 +392,12 @@
     "hash": "54b642c90ed6c0cf26d1b33c82c61a09"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\home\\HomeSidebarComponents.kt": {
-    "mtime": 1777320529.272503,
-    "hash": "58a03445f274c2b3650bdced6591b092"
+    "mtime": 1778246612.4780538,
+    "hash": "fb25e8452373313b1a630c6ac2ee1e8f"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\home\\HomeViewModel.kt": {
-    "mtime": 1777818791.882209,
-    "hash": "49b171bc678b15743c6f10c529099d66"
+    "mtime": 1778246772.7419996,
+    "hash": "c9b52f479adeb0867385ec2d392ee826"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\movies\\MovieDetailScreen.kt": {
     "mtime": 1777818791.88422,
@@ -408,12 +408,12 @@
     "hash": "55751fb3aaed86eea6ab3166c08a4b05"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\movies\\MoviesScreen.kt": {
-    "mtime": 1777818978.3047957,
-    "hash": "15a1727c215f9cda77a871b285d4c9b8"
+    "mtime": 1778230920.7166605,
+    "hash": "ac7c82cf0bd697351bdc3e8269a270a7"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\movies\\MoviesViewModel.kt": {
-    "mtime": 1777818791.8877444,
-    "hash": "2e12cf63d665e851f184f4b5483a85b9"
+    "mtime": 1778236695.3027327,
+    "hash": "a3abbc6961e6f8501e518af952740cc2"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\multiview\\EnhancedMultiViewControlHud.kt": {
     "mtime": 1777818791.8887436,
@@ -428,16 +428,16 @@
     "hash": "c185f2c42148b1f3b83c7b18bbec2dd6"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\multiview\\MultiViewScreen.kt": {
-    "mtime": 1777818791.8917449,
-    "hash": "1645ec1be8cc46e249da7a5f9e12136d"
+    "mtime": 1778243869.6581964,
+    "hash": "05e35710bf5bcfcefe03e84c5c7520b4"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\multiview\\MultiViewState.kt": {
     "mtime": 1777818791.8927426,
     "hash": "d58a2a978927f5ffcc9813ce30386f19"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\multiview\\MultiViewViewModel.kt": {
-    "mtime": 1777909136.8564336,
-    "hash": "d856de074c298aa9459c57fcdacadab1"
+    "mtime": 1778190849.9796407,
+    "hash": "62a4a0088dd00046c303368fd08c00c7"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerAlternateStreamActions.kt": {
     "mtime": 1777818791.8957431,
@@ -536,8 +536,8 @@
     "hash": "f157d5bc2b2a2c9f2446b64c8fb340a2"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerScreen.kt": {
-    "mtime": 1777818791.903871,
-    "hash": "5e5cd3ec4b01749b3b99f684a2fe0e10"
+    "mtime": 1778190868.4982686,
+    "hash": "f74e57532a77201dd4835e6eeed36cf4"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerSleepTimerActions.kt": {
     "mtime": 1777483524.318232,
@@ -548,16 +548,16 @@
     "hash": "e567eb915607cf5fa8dc63f222a0936c"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerViewModel.kt": {
-    "mtime": 1777818791.9063835,
-    "hash": "40b253b3d019458383c2a23a10d707c1"
+    "mtime": 1778247584.8323834,
+    "hash": "3c5414ea122f47feb7a8674e06a425d0"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerViewModelActions.kt": {
     "mtime": 1776544531.7787306,
     "hash": "4a71114c407511fda6811888d1b5c83d"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerViewModelModels.kt": {
-    "mtime": 1777818791.9073894,
-    "hash": "bf126f637752474ed67319cc35e58db3"
+    "mtime": 1778190825.9591894,
+    "hash": "200cf996fa8774d2c171ea7faf4f8c76"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\PlayerZapActions.kt": {
     "mtime": 1777818791.9093893,
@@ -568,16 +568,16 @@
     "hash": "fe45e1e25e3447ad23d50b1ab296f962"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\overlay\\PlayerAuxiliaryOverlays.kt": {
-    "mtime": 1777487281.9901507,
-    "hash": "32ce95dcb79003cf208fa6c98ece1322"
+    "mtime": 1778191016.5576737,
+    "hash": "4af2a749f29ba1016dc84d71f9b362b1"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\overlay\\PlayerChannelInfoOverlay.kt": {
-    "mtime": 1777486055.8440707,
-    "hash": "d35ad3aed118e7ed15d00ef85ad87b99"
+    "mtime": 1778191010.2052886,
+    "hash": "672a0ec19d4a2d1f1094b48a86d92c4a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\overlay\\PlayerControlsChrome.kt": {
-    "mtime": 1777320529.283811,
-    "hash": "674b7fe22837161ebd2b826d348bc8a6"
+    "mtime": 1778191129.0156462,
+    "hash": "7c7a5c5b2ca51543ea54ff7aa9cbf818"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\player\\overlay\\PlayerOverlayShared.kt": {
     "mtime": 1777486590.7933035,
@@ -588,16 +588,16 @@
     "hash": "66c81e9c4c93d744e8c934032b2e2faf"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\provider\\ProviderSetupScreen.kt": {
-    "mtime": 1777907061.8230727,
-    "hash": "b50cdd22ed6a837a0d46097dde1a0180"
+    "mtime": 1777917313.7851336,
+    "hash": "c70e35fdec5aab93c4bcef2f8960bd4a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\provider\\ProviderSetupViewModel.kt": {
-    "mtime": 1777905722.847719,
-    "hash": "d4c30728d8c1e6c4b0585e499827f5e3"
+    "mtime": 1777917325.2020397,
+    "hash": "4ab216b4904189d42143efc688451b60"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\search\\SearchScreen.kt": {
-    "mtime": 1777818791.9134042,
-    "hash": "47cac0f302b5e7e6593be6a82bf40dfa"
+    "mtime": 1778235481.2161894,
+    "hash": "7c0b541fe1405ddee920a20e465ec9b0"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\series\\SeriesDetailScreen.kt": {
     "mtime": 1777320529.287826,
@@ -608,12 +608,12 @@
     "hash": "0489c1e8137b718796086f3222da9710"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\series\\SeriesScreen.kt": {
-    "mtime": 1777818978.4332783,
-    "hash": "2be6f7787edde8c44793c979ee921d77"
+    "mtime": 1778230932.635589,
+    "hash": "30d0c0cd52c80a5f915c9f269ec71382"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\series\\SeriesViewModel.kt": {
-    "mtime": 1777818791.915907,
-    "hash": "a1545d29c08668b1240ad730970535b2"
+    "mtime": 1778236700.144376,
+    "hash": "9517d76f86078083f8795514759744d2"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\InternetSpeedTestRunner.kt": {
     "mtime": 1774047802.2778568,
@@ -708,24 +708,24 @@
     "hash": "55fa723ac852f32893a8a713f465086c"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsPlaybackSection.kt": {
-    "mtime": 1777818791.9239144,
-    "hash": "1b1811fcda267b9aca82b484ae596bd2"
+    "mtime": 1778190781.7250414,
+    "hash": "e10a19d0efed2d79857dd08b83e4563c"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsPlayerPreferenceDialogs.kt": {
-    "mtime": 1777430997.5985713,
-    "hash": "92b0d6ecf51c10168a3461901c8b7ad8"
+    "mtime": 1778190786.1252608,
+    "hash": "466a5780f64c9eb94331766dfef28bce"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsPreferenceDialogs.kt": {
     "mtime": 1777430997.5794766,
     "hash": "ca69c1a48832905a517ec4dbd663b4e0"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsPreferenceModels.kt": {
-    "mtime": 1777818791.9254212,
-    "hash": "818c8e70b87d26396c864a3f3b69544e"
+    "mtime": 1778190751.1088932,
+    "hash": "923801aa6202794b931ba138ca268158"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsPreferenceSnapshotMapper.kt": {
-    "mtime": 1777818791.9264312,
-    "hash": "02da51328f8c815bb25d42e4d96ed11a"
+    "mtime": 1778190765.9574654,
+    "hash": "dcb47d43ea7d76823cddd46ddf455fc2"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsPrivacySection.kt": {
     "mtime": 1777818791.9274273,
@@ -736,8 +736,8 @@
     "hash": "1474d1d944caa1c2ef62af67ea5b380a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsProviderActions.kt": {
-    "mtime": 1777818791.9284348,
-    "hash": "e348313af8061efda4689027c20be2fa"
+    "mtime": 1777990677.9774933,
+    "hash": "65b208eb73a85f7310d415c822a9052a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsProviderCardSections.kt": {
     "mtime": 1777470644.873901,
@@ -760,8 +760,8 @@
     "hash": "a2000b5c0e90670e71e0a9f46f7734df"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsProviderSyncDialogs.kt": {
-    "mtime": 1777430997.5995963,
-    "hash": "af8018d5c9115c5830d4f72025a2d2ce"
+    "mtime": 1777989374.7503414,
+    "hash": "b2437184f1f40f571fa8b066c50418d6"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsProviderUiComponents.kt": {
     "mtime": 1777470230.8476033,
@@ -844,12 +844,12 @@
     "hash": "bea5219c08249eb7f5b9824cf88255e1"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsStateBindings.kt": {
-    "mtime": 1777818791.9364643,
-    "hash": "fc8b9a543b22bc7c2ffc178974c749fa"
+    "mtime": 1778190761.9361854,
+    "hash": "9720971a9be8b80a16ff0db628cf5655"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsSyncActions.kt": {
-    "mtime": 1775853177.9724603,
-    "hash": "8622cf41d74b28a10f3c5ad511f17872"
+    "mtime": 1777989859.3245778,
+    "hash": "9d9b43331539ea746a1dcecec6cce517"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsSyncOverlay.kt": {
     "mtime": 1777401017.407912,
@@ -860,16 +860,16 @@
     "hash": "2001d9269a3aa889ea4a395d4b9743a5"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsUiStateModel.kt": {
-    "mtime": 1777818791.9374635,
-    "hash": "e0652f8b6c18208372e96769cf5fde8c"
+    "mtime": 1778190755.8442483,
+    "hash": "71689c9e8faacf96ed3e7fb1e2b0d06e"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsValueDialogs.kt": {
     "mtime": 1777430997.5985713,
     "hash": "51958d9f4c1fed9a41b19df6fa22ef27"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsViewModel.kt": {
-    "mtime": 1777818791.9384654,
-    "hash": "5280a2beaf893f833817811b6fd0e2dc"
+    "mtime": 1778190770.3195624,
+    "hash": "8d402230d194b41611eeaf4665e1e8b7"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\java\\com\\streamvault\\app\\ui\\screens\\settings\\parental\\ParentalControlGroupScreen.kt": {
     "mtime": 1776544531.8058112,
@@ -1016,8 +1016,8 @@
     "hash": "179a8d8a46de2222564fcfcb3ead0037"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\test\\java\\com\\streamvault\\app\\ui\\screens\\search\\SearchViewModelTest.kt": {
-    "mtime": 1776549088.3141851,
-    "hash": "320bd13c1c8f26c707ae1e1a77d70126"
+    "mtime": 1778233170.909855,
+    "hash": "019b793f1fc6e5c61406d97fb62d84cb"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\test\\java\\com\\streamvault\\app\\ui\\screens\\settings\\SettingsProviderActionsTest.kt": {
     "mtime": 1777731247.4556885,
@@ -1056,8 +1056,8 @@
     "hash": "9a02fe2be70aabcf31dbd0d81b4f0d52"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\androidTest\\java\\com\\streamvault\\data\\local\\StreamVaultDatabaseMigrationTest.kt": {
-    "mtime": 1777818791.9504988,
-    "hash": "90c775426563eb3aa12a6836c9b9405e"
+    "mtime": 1777914998.088518,
+    "hash": "8b28d7013e02b6dc2a8ef4002e777674"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\epg\\EpgNameNormalizer.kt": {
     "mtime": 1775126475.5721655,
@@ -1076,8 +1076,8 @@
     "hash": "eb2909d36132e97563f95b91fa371567"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\StreamVaultDatabase.kt": {
-    "mtime": 1777818791.9565246,
-    "hash": "a8b50f4c64ea5703b8ad4f320c6e2215"
+    "mtime": 1778234375.9200149,
+    "hash": "e5ab350ed25348c78bf59d4138459301"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\dao\\CatalogSyncDao.kt": {
     "mtime": 1777818791.957526,
@@ -1088,28 +1088,40 @@
     "hash": "837266c47f8310e9007d24b1461c4b20"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\dao\\Daos.kt": {
-    "mtime": 1777906286.2217607,
-    "hash": "daf171df90b2893b642cb8b77e6162fb"
+    "mtime": 1778243680.2303057,
+    "hash": "6152945cba8d29fb76a64b76ecac5e26"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\dao\\RecordingDaos.kt": {
     "mtime": 1777818791.9605348,
     "hash": "b01e2854e07681d211c52d1327b74fac"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\dao\\SearchDao.kt": {
+    "mtime": 1778234375.9190164,
+    "hash": "83eed21ae2298fe593e3e645e7189eb8"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\dao\\XtreamIndexDaos.kt": {
+    "mtime": 1778008493.9161546,
+    "hash": "f99483211bf3202171433cadd9642514"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\entity\\CombinedM3uEntities.kt": {
     "mtime": 1775678257.5837426,
     "hash": "6a5ffb07fb61d6dcd8906465adc44972"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\entity\\Entities.kt": {
-    "mtime": 1777818791.9620464,
-    "hash": "a84c5f3f58452841d9a1e62cd623aa3d"
+    "mtime": 1777913681.2962017,
+    "hash": "c7a8e466daa46017c06418bf1f180bc3"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\entity\\RecordingEntities.kt": {
     "mtime": 1776544531.8580384,
     "hash": "18d1d59439e2d34d1c192600567cb9c9"
   },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\local\\entity\\XtreamIndexEntities.kt": {
+    "mtime": 1778085514.5399191,
+    "hash": "0cb82a1f532356960a21ceb41e6d8759"
+  },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\manager\\BackupManagerImpl.kt": {
-    "mtime": 1777818791.9640548,
-    "hash": "bab445a9e9c3022289853af8b578c165"
+    "mtime": 1778190723.7013,
+    "hash": "45e8e923760c60d3a3e0243b8ccb35e6"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\manager\\ProgramReminderManagerImpl.kt": {
     "mtime": 1777818791.9640548,
@@ -1192,8 +1204,8 @@
     "hash": "f805f3808cf59788f6bd12dfbf90182d"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\preferences\\PreferencesRepository.kt": {
-    "mtime": 1777818791.9806118,
-    "hash": "81271afd523ffac71ee6a0960300dc06"
+    "mtime": 1778190716.5335627,
+    "hash": "0f9548a83db28844ee6ef7984bfd8c90"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\NetworkTimeoutConfig.kt": {
     "mtime": 1776544532.2305593,
@@ -1206,6 +1218,10 @@
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\dto\\XtreamDtos.kt": {
     "mtime": 1775063447.9157672,
     "hash": "8b373031a70ee9f2e6ff62f9f83e90ea"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\http\\RequestIdentity.kt": {
+    "mtime": 1778249327.7496378,
+    "hash": "8635680ba4d3cc420208957cfe556d90"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\stalker\\OkHttpStalkerApiService.kt": {
     "mtime": 1777818791.983123,
@@ -1228,24 +1244,24 @@
     "hash": "01d148b0c77fb92847b977ed685298f5"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\xtream\\OkHttpXtreamApiService.kt": {
-    "mtime": 1776865862.7694013,
-    "hash": "06e2e21527eabd8adf8c278ed759fe72"
+    "mtime": 1778248688.9593542,
+    "hash": "18bea705934e87134a720b4a5990d869"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamApiExceptions.kt": {
     "mtime": 1774805961.2667184,
     "hash": "da474a878e121b81ae31abe90e3d8711"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamApiService.kt": {
-    "mtime": 1773760107.1616528,
-    "hash": "c1fc680ebf83298e753ce8249854fa5f"
+    "mtime": 1778248688.658191,
+    "hash": "99039d8c38de8cd03d61f23be1842425"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamErrorFormatter.kt": {
     "mtime": 1774293260.7852316,
     "hash": "dd2e298ac9a3c59634232fe2bf0217cc"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamProvider.kt": {
-    "mtime": 1777830495.8113253,
-    "hash": "f2c7d585b1001b41e543717b33f55921"
+    "mtime": 1778248688.658191,
+    "hash": "39978460bdc3986ddbb657e7fe403795"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamStreamUrlResolver.kt": {
     "mtime": 1777320529.3762088,
@@ -1260,8 +1276,8 @@
     "hash": "dcb70b3f6665f61085b5f4d520d31af9"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\ChannelRepositoryImpl.kt": {
-    "mtime": 1777818791.9876373,
-    "hash": "58badc87bf740ab6fbf6a07b72df82e5"
+    "mtime": 1778232975.3019845,
+    "hash": "11450eb7e45433899b7f8de3aaf4c12c"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\CombinedM3uRepositoryImpl.kt": {
     "mtime": 1775913022.912567,
@@ -1272,8 +1288,8 @@
     "hash": "e9fe8d3d75457b8091c4ede70085fbbb"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\EpgSourceRepositoryImpl.kt": {
-    "mtime": 1777906286.2227602,
-    "hash": "f81df1d6f138f15264c417fe5a9c1a5a"
+    "mtime": 1778248688.6601913,
+    "hash": "ad2cb123da420dacf288063814140a22"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\ExternalRatingsRepositoryImpl.kt": {
     "mtime": 1775568370.207915,
@@ -1284,8 +1300,8 @@
     "hash": "7530588136d621c034bfa5605242d276"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\MovieRepositoryImpl.kt": {
-    "mtime": 1777818791.9941533,
-    "hash": "91b417917b85b13dc97a4eea3e9a18a9"
+    "mtime": 1778243755.5712016,
+    "hash": "b0a26f233431f22d7a43b9a90ceef679"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\PlaybackCompatibilityRepositoryImpl.kt": {
     "mtime": 1777320529.3837476,
@@ -1296,12 +1312,16 @@
     "hash": "8a80f686fda15f7db0f6a0c81dfd397d"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\ProviderRepositoryImpl.kt": {
-    "mtime": 1777819274.836225,
-    "hash": "848de81512e5b754f857b6dbad9a6a7c"
+    "mtime": 1777917274.5689049,
+    "hash": "ecd59bf757226fadd50cac4539e2445f"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\SearchRepositoryImpl.kt": {
+    "mtime": 1778235759.2753499,
+    "hash": "c9f97b5d6bce60499a07d775c471d4fa"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\SeriesRepositoryImpl.kt": {
-    "mtime": 1777818791.9976726,
-    "hash": "9103af01ffb6ba95b8c539d63e43b9b3"
+    "mtime": 1778243808.0536575,
+    "hash": "fd4e0e73c1f223fab12a59a09c8085c1"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\repository\\SyncMetadataRepositoryImpl.kt": {
     "mtime": 1772127705.9123604,
@@ -1324,60 +1344,52 @@
     "hash": "7b3b08424226ecf1bf07eac9ca06ea62"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\ProviderSyncStateReaderImpl.kt": {
-    "mtime": 1774047802.3515644,
-    "hash": "54995b20458ad8480ad785dbdf12aff1"
+    "mtime": 1778008583.6323354,
+    "hash": "192f28461f28a806d1ba888dc3735461"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\ProviderSyncWorker.kt": {
-    "mtime": 1776544531.890125,
-    "hash": "b55f20e0ea228b888ef80ca9530f24ba"
+    "mtime": 1777992611.9927213,
+    "hash": "6b80e00391f02921a1cf78cfb2050358"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncCatalogStore.kt": {
-    "mtime": 1777818792.000671,
-    "hash": "4585254cc6e09bc800d468824609de5a"
+    "mtime": 1777920244.3141496,
+    "hash": "6f77b6018402ab05e64e1cd5d4cb12e9"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncErrorSanitizer.kt": {
     "mtime": 1776728600.1552887,
     "hash": "4db6b6c4c87828d74731cd019f9a5f36"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManager.kt": {
-    "mtime": 1777818792.002177,
-    "hash": "99c852620c34e08616f6bb649d05dac1"
+    "mtime": 1778249451.4785502,
+    "hash": "c23f08756f7fee85b3fd49b4bf7541a6"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerCatalogStager.kt": {
     "mtime": 1776865862.778476,
     "hash": "9f9bed7e3f6f8f4227662e01d6fc61f2"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerCatalogStrategySupport.kt": {
-    "mtime": 1775853178.0389488,
-    "hash": "ec442b31bc49349312fe8d1c224ab6d1"
+    "mtime": 1777993060.1654942,
+    "hash": "5f4fa48214ef45bbb8c5e4f7a1ef46ca"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerM3uImporter.kt": {
-    "mtime": 1777818792.0031888,
-    "hash": "686430dbeacbab841b13714ece06e85e"
+    "mtime": 1778248688.658191,
+    "hash": "7bc0173ca16a164f86c65a38a6c070db"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerSupport.kt": {
-    "mtime": 1775853178.040948,
-    "hash": "51085f48245e1b28430230d6159533af"
+    "mtime": 1777993060.1644862,
+    "hash": "ca6500d749ee77802b6efd784d3bccac"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerXtreamFetcher.kt": {
-    "mtime": 1775853178.0419483,
-    "hash": "75de83e7f800357860e67e54f0fd1674"
+    "mtime": 1777993060.163476,
+    "hash": "18c2c402d550c9fbee9feb8ecc56dbc1"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerXtreamLiveStrategy.kt": {
     "mtime": 1776865862.7794735,
     "hash": "e88b72534a1ce3a2932c90e42ef30795"
   },
-  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerXtreamMovieStrategy.kt": {
-    "mtime": 1775853178.043961,
-    "hash": "f20fc1cad0cae96b6113f67b9d8ecd30"
-  },
-  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerXtreamSeriesStrategy.kt": {
-    "mtime": 1775853178.0449662,
-    "hash": "6565eae7a8a0e759b91d3ad7c46df229"
-  },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncManagerXtreamSupport.kt": {
-    "mtime": 1775853178.0464723,
-    "hash": "94776f6a24df3ed0b5c9fc98d44e4b3a"
+    "mtime": 1777993060.1654942,
+    "hash": "ccb1728ed5a018c49f20ad1819bb635b"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\SyncStateTracker.kt": {
     "mtime": 1774805961.2768092,
@@ -1388,8 +1400,12 @@
     "hash": "fec5010c32d908266fe58012374c6de3"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\XtreamAdaptiveSyncPolicy.kt": {
-    "mtime": 1774805961.2781878,
-    "hash": "966bca7afe73802ca1165b4659d56b99"
+    "mtime": 1777993361.108278,
+    "hash": "6ba3071fe187067dd78d87e96c40276d"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\sync\\XtreamIndexWorker.kt": {
+    "mtime": 1778085554.7426267,
+    "hash": "57fcf5a52ad1f6f276bf390ef147d2a1"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\main\\java\\com\\streamvault\\data\\util\\AdultContentClassifier.kt": {
     "mtime": 1776544531.9021513,
@@ -1428,8 +1444,8 @@
     "hash": "f6bb643cda9a67f8c48f6d8da2e8fee4"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\manager\\BackupManagerImplTest.kt": {
-    "mtime": 1777710407.8467185,
-    "hash": "df0dd6d7b2c03979c510b4c09e2939e7"
+    "mtime": 1778191241.9011593,
+    "hash": "aa3ecfe3a3471b6501d1e37546ced57c"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\manager\\ProgramReminderManagerImplTest.kt": {
     "mtime": 1777818792.0107102,
@@ -1467,29 +1483,33 @@
     "mtime": 1777905148.551063,
     "hash": "6cf04f26b5fb812c44005f04938d492d"
   },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\remote\\http\\RequestIdentityTest.kt": {
+    "mtime": 1778248688.6601913,
+    "hash": "ef8a62552cd97f69e0431af63a30506d"
+  },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\remote\\stalker\\OkHttpStalkerApiServiceTest.kt": {
     "mtime": 1777320529.3952825,
     "hash": "cdc42cb8e8ae04ca81c338a477e4da22"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\remote\\xtream\\OkHttpXtreamApiServiceTest.kt": {
-    "mtime": 1774805961.280169,
-    "hash": "756780cc10110555625f995e01bb5042"
+    "mtime": 1778248688.9593542,
+    "hash": "838215d997ad745a1fe246d00105b004"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamDtoParsingTest.kt": {
     "mtime": 1775568370.216088,
     "hash": "2df6cd6bbcdf3584516aaa37a8218a68"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamProviderTest.kt": {
-    "mtime": 1777830495.813833,
-    "hash": "246d1c19cd77cb0beb9ac05d99246d81"
+    "mtime": 1778249033.2586532,
+    "hash": "808ae45628b1add8956e1cb170dcd965"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\remote\\xtream\\XtreamStreamUrlResolverTest.kt": {
     "mtime": 1777818792.0132234,
     "hash": "41b5631d55f90cb11ec3861d87c1d20b"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\repository\\ChannelRepositoryImplTest.kt": {
-    "mtime": 1777818792.0142236,
-    "hash": "de8caabfe5968f98b55d2bba8342974a"
+    "mtime": 1778232889.063537,
+    "hash": "5cdb6a95dff4ddf46c912f6ff78096cc"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\repository\\EpgRepositoryImplTest.kt": {
     "mtime": 1777818792.0142236,
@@ -1504,8 +1524,8 @@
     "hash": "0fad463723062825ffe0d3802b7fdf92"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\repository\\MovieRepositoryImplTest.kt": {
-    "mtime": 1777818792.0197434,
-    "hash": "a8a2968397b74eab6b8e87fdad291a2c"
+    "mtime": 1778244010.6755133,
+    "hash": "c826af11489d1270567b6bd41525901f"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\repository\\PlaybackHistoryRepositoryImplTest.kt": {
     "mtime": 1777818792.021744,
@@ -1519,21 +1539,25 @@
     "mtime": 1777819274.8382244,
     "hash": "abb9fbc887c142e778e4df75aaab0958"
   },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\repository\\SearchRepositoryImplTest.kt": {
+    "mtime": 1778234844.796404,
+    "hash": "3b650a444b62434c7965b11270e8775f"
+  },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\repository\\SeriesRepositoryImplTest.kt": {
-    "mtime": 1777818792.0237522,
-    "hash": "fe625b9eaea381befe8aca5fb70547b8"
+    "mtime": 1778244021.2466695,
+    "hash": "8dadd8ff6557e9fd638013474605fc9a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\sync\\ContentCachePolicyTest.kt": {
     "mtime": 1776544531.923709,
     "hash": "3f269f99bf5df082487605017fcfcdc2"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\sync\\SyncCatalogStoreTest.kt": {
-    "mtime": 1777818792.025753,
-    "hash": "a108cf30065a3c4f867e2b48d467483e"
+    "mtime": 1777920313.4061933,
+    "hash": "24639817a17d463236e0c8af1a141f6e"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\sync\\SyncManagerTest.kt": {
-    "mtime": 1777818792.0262616,
-    "hash": "eefb5c6ca24e3ef601dd2bd9ffb300a1"
+    "mtime": 1778088873.556428,
+    "hash": "d7ec9123382977655acd824f49d68d67"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\data\\src\\test\\java\\com\\streamvault\\data\\util\\AdultContentClassifierTest.kt": {
     "mtime": 1776544531.9282336,
@@ -1584,8 +1608,8 @@
     "hash": "794019aaa1a0897c5c397202f339013e"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\manager\\ProviderSyncStateReader.kt": {
-    "mtime": 1774047802.3685544,
-    "hash": "2bfc955d1acf9dcb44c3246f34866d6a"
+    "mtime": 1778008583.6313393,
+    "hash": "9608afe121ad75ec1328455db6df9624"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\manager\\RecordingManager.kt": {
     "mtime": 1776544532.2837834,
@@ -1763,6 +1787,10 @@
     "mtime": 1777819274.8326957,
     "hash": "ceaeadafcea232591c09b9dc18b7fe2b"
   },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\repository\\SearchRepository.kt": {
+    "mtime": 1778234375.9190164,
+    "hash": "4f80eee10449e85eada20229abed6351"
+  },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\repository\\SeriesRepository.kt": {
     "mtime": 1777818792.03931,
     "hash": "40c4739563d19ea6077422cde58bf0b9"
@@ -1800,8 +1828,8 @@
     "hash": "f15742af91bbaf50fe51014bcd61bacd"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\usecase\\SearchContent.kt": {
-    "mtime": 1777819521.7116272,
-    "hash": "cc63afe80fc6d8e0a0273e6533afbab1"
+    "mtime": 1778235481.2176952,
+    "hash": "b37bd2d0ee2ff2f6c47a44633315e893"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\usecase\\SearchExternalSubtitles.kt": {
     "mtime": 1777320529.4293933,
@@ -1816,8 +1844,8 @@
     "hash": "0e1be286c1aaad620890c13ef8b53606"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\usecase\\ValidateAndAddProvider.kt": {
-    "mtime": 1777819274.8326957,
-    "hash": "bff6f828588c22329b7ecadbf6c2af9c"
+    "mtime": 1777917280.4151785,
+    "hash": "16de21b5bc87690bd8676dc24d58bbce"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\main\\java\\com\\streamvault\\domain\\util\\AdultContentVisibilityPolicy.kt": {
     "mtime": 1776544532.2943308,
@@ -1856,8 +1884,8 @@
     "hash": "11dc21086a7fa95684975c2a0ce40fee"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\GetContinueWatchingTest.kt": {
-    "mtime": 1777818792.045328,
-    "hash": "d4a32d54db3ea015791192d81f6c615d"
+    "mtime": 1778233791.3853915,
+    "hash": "941802f084fbd709f6eb9d1438efd8da"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\GetCustomCategoriesTest.kt": {
     "mtime": 1777818792.0463364,
@@ -1872,20 +1900,20 @@
     "hash": "7ab4088b9c410b2b78cac0e20c432cc3"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\MarkAsWatchedTest.kt": {
-    "mtime": 1777818792.050337,
-    "hash": "565af868a05312e882d06cd28faac79b"
+    "mtime": 1778233791.3853915,
+    "hash": "3336b0f7a2cafccbcd9915091e0da361"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\ScheduleRecordingTest.kt": {
     "mtime": 1775913022.9817188,
     "hash": "fb4a94aeb2d8a34147ae3bd06d144fbb"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\SearchContentTest.kt": {
-    "mtime": 1777818792.050337,
-    "hash": "580129090f5ce0be7269f4976aa6b1da"
+    "mtime": 1778235493.6886854,
+    "hash": "70e5c0c621054f0fdafecb2c8408fd24"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\SyncProviderTest.kt": {
-    "mtime": 1776707296.8341434,
-    "hash": "ff719b32e35be0b8a332b8e365b9dde8"
+    "mtime": 1778008741.2861545,
+    "hash": "d476a644c28612cce24a1b4aab1da765"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\domain\\src\\test\\java\\com\\streamvault\\domain\\usecase\\UnlockParentalCategoryTest.kt": {
     "mtime": 1774047802.399163,
@@ -1904,12 +1932,12 @@
     "hash": "0095c5da46aba513efcca98a0547b233"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\Media3PlayerEngine.kt": {
-    "mtime": 1777907894.8582182,
-    "hash": "bfa27541254afe70dd62c8fe3e2c1340"
+    "mtime": 1778249755.1644757,
+    "hash": "ac0ec5e83a5f281c3baafb0e685fa572"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\PlayerEngine.kt": {
-    "mtime": 1777818792.0573647,
-    "hash": "fb0690bd94457a8fee65a0aafc760346"
+    "mtime": 1778190728.4346757,
+    "hash": "f00f69d73398d941f569aae8404ec84e"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\PlayerSubtitleStyle.kt": {
     "mtime": 1774293260.8275404,
@@ -1932,8 +1960,8 @@
     "hash": "91fae34422e97c1bb6c1a829a712554f"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\playback\\CodecPreference.kt": {
-    "mtime": 1777904760.9936767,
-    "hash": "86cee31968987f5af07ed49ea869418c"
+    "mtime": 1778249723.056716,
+    "hash": "2c585cd882424eb268a5c1fc83726270"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\playback\\DecoderPreferencePolicy.kt": {
     "mtime": 1777907894.8552194,
@@ -1984,8 +2012,8 @@
     "hash": "f3bb20c68165dbc52fe7df3a73927336"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\playback\\VideoStallDetector.kt": {
-    "mtime": 1777320529.4414454,
-    "hash": "1b9199aa3e5515b028e08c80604f23ff"
+    "mtime": 1778237286.710713,
+    "hash": "1bda2c4a238993ac1bd393466dcf662b"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\main\\java\\com\\streamvault\\player\\stats\\PlayerStatsCollector.kt": {
     "mtime": 1776544531.9718516,
@@ -2024,8 +2052,8 @@
     "hash": "9e66a8b800b1b04a8e0a3b1e7c26bb5f"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\test\\java\\com\\streamvault\\player\\playback\\PlaybackCodecSelectorTest.kt": {
-    "mtime": 1777320529.4459639,
-    "hash": "5628f98866a0313574ab64164996fecf"
+    "mtime": 1778249765.3430586,
+    "hash": "4a7ae99bee40e050ea4dc5790704a01a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\test\\java\\com\\streamvault\\player\\playback\\PlaybackPreparationPlanTest.kt": {
     "mtime": 1777585463.653434,
@@ -2052,8 +2080,8 @@
     "hash": "22b098b077b26d559ab4033f5109f86b"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\test\\java\\com\\streamvault\\player\\playback\\VideoStallDetectorTest.kt": {
-    "mtime": 1777320529.4469645,
-    "hash": "14b5fb6ae203c679cfb391a5b111a85f"
+    "mtime": 1778237330.0276766,
+    "hash": "2deedef4cdb9487d867ed77d3a94466a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\player\\src\\test\\java\\com\\streamvault\\player\\timeshift\\DashSnapshotPlaylistTest.kt": {
     "mtime": 1777619988.1873033,
@@ -2070,6 +2098,14 @@
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\docs\\CHANGELOG.md": {
     "mtime": 1777908080.850052,
     "hash": "17c40764ff17c720d3246fb7116d2ec5"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\docs\\xtream-index-sync-plan.md": {
+    "mtime": 1777913427.9373767,
+    "hash": "c0048f8aceeb0679112dcbb6aa8803df"
+  },
+  "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\docs\\xtream-live-onboarding-plan.md": {
+    "mtime": 1778246428.026978,
+    "hash": "42f0ebee1bb672c81dd536e19bdd827a"
   },
   "C:\\Users\\david\\.gemini\\antigravity\\scratch\\iptv-player\\app\\src\\main\\res\\drawable\\app_banner.png": {
     "mtime": 1776544532.2009807,
