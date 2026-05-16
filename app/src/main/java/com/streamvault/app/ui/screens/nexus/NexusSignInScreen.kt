@@ -45,6 +45,7 @@ import com.streamvault.app.ui.components.shell.StatusPill
 import com.streamvault.app.ui.design.AppColors
 import com.streamvault.app.ui.interaction.TvButton
 import com.streamvault.app.ui.theme.ErrorColor
+import com.streamvault.data.local.dao.XtreamIndexJobDao
 import com.streamvault.data.sync.SyncProgressBus
 import com.streamvault.domain.sync.Section
 import com.streamvault.domain.sync.SyncProgress
@@ -60,28 +61,82 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 
 data class NexusSignInUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
-    val signInSuccess: Boolean = false
+    val signInSuccess: Boolean = false,
+    // While deepIndexPhase != null, the screen overrides the SyncProgressBus
+    // phase with a synthesized SyncProgress sourced from the active section's
+    // xtream_index_jobs row, keeping the progress bar live as WorkManager
+    // finishes deep-indexing movies/series after foreground sync returns.
+    val deepIndexPhase: Section? = null,
+    // Per-item indexed row count from the active section's job (smooth).
+    val deepIndexedRows: Int = 0,
+    // Categories progress — fixed denominator known upfront from the shell
+    // fetch. Drives both the progress bar fill and the "X / Y categories"
+    // line; coarse but truthful (no extrapolation).
+    val deepIndexCompletedCategories: Int = 0,
+    val deepIndexTotalCategories: Int = 0
 )
 
 @HiltViewModel
 class NexusSignInViewModel @Inject constructor(
     private val validateAndAddProvider: ValidateAndAddProvider,
+    private val xtreamIndexJobDao: XtreamIndexJobDao,
     syncProgressBus: SyncProgressBus
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NexusSignInUiState())
     val uiState: StateFlow<NexusSignInUiState> = _uiState.asStateFlow()
 
+    // Bus stream with a LIVE→VOD transition interceptor: when the data layer
+    // moves on from Section.LIVE to a different section, this transform
+    // synthesizes a "LIVE at 100%" frame and holds it briefly so the bar
+    // visually reaches the right edge before transitioning, matching the
+    // per-phase UX used for MOVIES/SERIES in the deep-index path.
+    private val transformedBusFlow = syncProgressBus.flow
+        .scan(Pair<SyncProgress?, SyncProgress?>(null, null)) { acc, current -> Pair(acc.second, current) }
+        .transform { (previous, current) ->
+            if (previous?.section == Section.LIVE && current != null && current.section != Section.LIVE) {
+                emit(
+                    SyncProgress(
+                        section = Section.LIVE,
+                        current = previous.itemsIndexed,
+                        total = previous.itemsIndexed,
+                        currentLabel = "",
+                        itemsIndexed = previous.itemsIndexed
+                    )
+                )
+                delay(LIVE_COMPLETE_HOLD_MS)
+            }
+            emit(current)
+        }
+
     val syncProgress: StateFlow<SyncProgress?> =
-        combine(syncProgressBus.flow, _uiState) { progress, state ->
-            if (state.isLoading) progress else null
+        combine(transformedBusFlow, _uiState) { progress, state ->
+            when {
+                !state.isLoading -> null
+                state.deepIndexPhase != null -> SyncProgress(
+                    section = state.deepIndexPhase,
+                    // Bar fills current/total = completed/total categories. The
+                    // item count rides along separately in itemsIndexed; the
+                    // screen renders an extra "X / Y categories" line below.
+                    current = state.deepIndexCompletedCategories,
+                    total = state.deepIndexTotalCategories,
+                    currentLabel = "",
+                    itemsIndexed = state.deepIndexedRows
+                )
+                else -> progress
+            }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun signIn(username: String, password: String, blankErrorMessage: String, genericErrorMessage: String) {
@@ -109,22 +164,103 @@ class NexusSignInViewModel @Inject constructor(
                 )
             )
 
-            _uiState.update {
-                when (result) {
-                    is ValidateAndAddProviderResult.Success,
-                    is ValidateAndAddProviderResult.SavedWithWarning ->
-                        it.copy(isLoading = false, signInSuccess = true, errorMessage = null)
-                    is ValidateAndAddProviderResult.ValidationError ->
-                        it.copy(isLoading = false, errorMessage = result.message)
-                    is ValidateAndAddProviderResult.Error ->
-                        it.copy(isLoading = false, errorMessage = genericErrorMessage)
-                }
+            when (result) {
+                is ValidateAndAddProviderResult.Success ->
+                    completeAfterDeepIndex(result.provider.id)
+                is ValidateAndAddProviderResult.SavedWithWarning ->
+                    completeAfterDeepIndex(result.provider.id)
+                is ValidateAndAddProviderResult.ValidationError ->
+                    _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
+                is ValidateAndAddProviderResult.Error ->
+                    _uiState.update { it.copy(isLoading = false, errorMessage = genericErrorMessage) }
             }
+        }
+    }
+
+    /**
+     * Hold the loading panel until the MOVIE and SERIES xtream_index_jobs rows
+     * reach a terminal state. The displayed counter and bar are driven by the
+     * job's per-item indexedRows count over a fixed total sourced from
+     * MovieDao/SeriesDao (which is populated during the foreground catalog
+     * sync, so the total is known the moment we start observing here).
+     */
+    private suspend fun completeAfterDeepIndex(providerId: Long) {
+        val deepIndexFlow = xtreamIndexJobDao.observeForProvider(providerId)
+
+        // Phase 1: MOVIES. Bar tracks the movie job's own progress (0..100%).
+        awaitSectionDone(deepIndexFlow, SECTION_MOVIE, Section.VOD)
+        pinPhaseToHundredPercent(SECTION_MOVIE, Section.VOD, deepIndexFlow)
+        delay(PHASE_COMPLETE_HOLD_MS)
+
+        // Phase 2: SERIES. Bar resets and tracks series progress (0..100%).
+        awaitSectionDone(deepIndexFlow, SECTION_SERIES, Section.SERIES)
+        pinPhaseToHundredPercent(SECTION_SERIES, Section.SERIES, deepIndexFlow)
+        delay(PHASE_COMPLETE_HOLD_MS)
+
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                signInSuccess = true,
+                deepIndexPhase = null,
+                errorMessage = null
+            )
+        }
+    }
+
+    private suspend fun awaitSectionDone(
+        flow: kotlinx.coroutines.flow.Flow<List<com.streamvault.data.local.entity.XtreamIndexJobEntity>>,
+        section: String,
+        phaseSection: Section
+    ) {
+        withTimeoutOrNull(DEEP_INDEX_TIMEOUT_MS) {
+            flow
+                .onEach { jobs ->
+                    val job = jobs.firstOrNull { it.section.equals(section, ignoreCase = true) }
+                    _uiState.update {
+                        it.copy(
+                            deepIndexPhase = phaseSection,
+                            deepIndexedRows = job?.indexedRows ?: 0,
+                            deepIndexCompletedCategories = job?.completedCategories ?: 0,
+                            deepIndexTotalCategories = job?.totalCategories ?: 0
+                        )
+                    }
+                }
+                .first { jobs ->
+                    val job = jobs.firstOrNull { it.section.equals(section, ignoreCase = true) }
+                    job == null || job.state.uppercase() in TERMINAL_STATES
+                }
+        }
+    }
+
+    private suspend fun pinPhaseToHundredPercent(
+        section: String,
+        phaseSection: Section,
+        flow: kotlinx.coroutines.flow.Flow<List<com.streamvault.data.local.entity.XtreamIndexJobEntity>>
+    ) {
+        val jobs = flow.first()
+        val job = jobs.firstOrNull { it.section.equals(section, ignoreCase = true) }
+        val total = job?.totalCategories ?: _uiState.value.deepIndexTotalCategories
+        _uiState.update {
+            it.copy(
+                deepIndexPhase = phaseSection,
+                deepIndexedRows = job?.indexedRows ?: it.deepIndexedRows,
+                deepIndexCompletedCategories = total,
+                deepIndexTotalCategories = total
+            )
         }
     }
 
     fun clearError() {
         _uiState.update { it.copy(errorMessage = null) }
+    }
+
+    private companion object {
+        const val SECTION_MOVIE = "MOVIE"
+        const val SECTION_SERIES = "SERIES"
+        val TERMINAL_STATES = setOf("SUCCESS", "PARTIAL", "FAILED_RETRYABLE", "FAILED_PERMANENT")
+        const val DEEP_INDEX_TIMEOUT_MS = 5L * 60_000L
+        const val PHASE_COMPLETE_HOLD_MS = 1_500L
+        const val LIVE_COMPLETE_HOLD_MS = 1_500L
     }
 }
 
@@ -366,6 +502,17 @@ private fun SignInLoadingContent(syncProgress: SyncProgress?) {
             style = MaterialTheme.typography.labelLarge,
             color = AppColors.TextSecondary
         )
+        if (syncProgress.total > 0) {
+            Text(
+                text = stringResource(
+                    R.string.nexus_sign_in_progress_count_format,
+                    syncProgress.current,
+                    syncProgress.total
+                ),
+                style = MaterialTheme.typography.labelMedium,
+                color = AppColors.TextSecondary
+            )
+        }
     }
 
     Spacer(modifier = Modifier.height(4.dp))

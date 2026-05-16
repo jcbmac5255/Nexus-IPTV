@@ -1581,8 +1581,22 @@ class SyncManager @Inject constructor(
         )
 
         var indexedRows = 0
+        var batchCounter = 0
         val categoryNamesById = categories.associate { it.categoryId to it.name }
         val adultCategoryIds = categories.filter { it.isAdult }.mapTo(mutableSetOf()) { it.categoryId }
+        // Per-batch estimate of completedCategories. The full-catalog stream
+        // doesn't actually iterate categories so the field would otherwise
+        // stay at 0 the entire time. Asymptotically approaches
+        // totalCategories - 1 so progress UIs (NexusSignInScreen, Settings)
+        // show steady advancement during the stream; the final upsert below
+        // commits totalCategories on SUCCESS.
+        fun estimateCompletedCategories(): Int {
+            if (totalCategories <= 0) return 0
+            // Aggressive asymptote so the bar visually approaches 100% during
+            // streaming: batch 3 -> 75%, batch 10 -> 91%, batch 20 -> 95%.
+            val asymptote = (batchCounter.toDouble() / (batchCounter + 1.0))
+            return (asymptote * totalCategories).toInt().coerceIn(0, totalCategories - 1)
+        }
         val streamResult = when (contentType) {
             ContentType.MOVIE -> api.streamVodSummaries(adultCategoryIds = adultCategoryIds) { batch ->
                 val accepted = upsertXtreamMovieSummaryBatch(
@@ -1591,13 +1605,14 @@ class SyncManager @Inject constructor(
                     indexedAt = System.currentTimeMillis()
                 )
                 indexedRows += accepted
+                batchCounter++
                 upsertXtreamIndexJob(
                     providerId = provider.id,
                     section = contentType.name,
                     state = "RUNNING",
                     now = System.currentTimeMillis(),
                     totalCategories = totalCategories,
-                    completedCategories = 0,
+                    completedCategories = estimateCompletedCategories(),
                     nextCategoryIndex = 0,
                     indexedRows = indexedRows,
                     lastAttemptAt = now,
@@ -1611,13 +1626,14 @@ class SyncManager @Inject constructor(
                     indexedAt = System.currentTimeMillis()
                 )
                 indexedRows += accepted
+                batchCounter++
                 upsertXtreamIndexJob(
                     providerId = provider.id,
                     section = contentType.name,
                     state = "RUNNING",
                     now = System.currentTimeMillis(),
                     totalCategories = totalCategories,
-                    completedCategories = 0,
+                    completedCategories = estimateCompletedCategories(),
                     nextCategoryIndex = 0,
                     indexedRows = indexedRows,
                     lastAttemptAt = now,

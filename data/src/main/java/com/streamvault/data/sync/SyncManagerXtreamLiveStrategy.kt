@@ -99,7 +99,12 @@ internal class SyncManagerXtreamLiveStrategy(
             runtimeProfile.shouldAttemptFullLiveCatalog(trackInitialLiveOnboarding)
         if (shouldAttemptFullCatalog) {
             progress(provider.id, onProgress, "Downloading Live TV...")
-            fullPayload = loadXtreamLiveFull(provider, api, runtimeProfile)
+            fullPayload = loadXtreamLiveFull(
+                provider,
+                api,
+                runtimeProfile,
+                liveCategoryTotal = filteredRawLiveCategories.size
+            )
             when (val fullResult = fullPayload.catalogResult) {
                 is CatalogStrategyResult.Success -> return fullPayload.copy(
                     categories = catalogStrategySupport.mergePreferredAndFallbackCategories(
@@ -166,7 +171,8 @@ internal class SyncManagerXtreamLiveStrategy(
     suspend fun loadXtreamLiveFull(
         provider: Provider,
         api: XtreamProvider,
-        runtimeProfile: CatalogSyncRuntimeProfile
+        runtimeProfile: CatalogSyncRuntimeProfile,
+        liveCategoryTotal: Int = 0
     ): CatalogSyncPayload<Channel> {
         val endpoint = XtreamUrlFactory.buildPlayerApiUrl(
             serverUrl = provider.serverUrl,
@@ -182,7 +188,8 @@ internal class SyncManagerXtreamLiveStrategy(
                 failureNextStep = "category-bulk",
                 streamItems = { item -> xtreamCatalogHttpService.streamLiveStreams(endpoint, onItem = item) },
                 mapRawBatch = { batch -> api.mapLiveStreamsSequence(batch) },
-                runtimeProfile = runtimeProfile
+                runtimeProfile = runtimeProfile,
+                liveCategoryTotal = liveCategoryTotal
             )
         }
 
@@ -192,7 +199,8 @@ internal class SyncManagerXtreamLiveStrategy(
             failureNextStep = "legacy-full",
             streamItems = { item -> xtreamCatalogHttpService.streamLiveStreamRows(endpoint, onItem = item) },
             mapRawBatch = { batch -> api.mapLiveStreamRowsSequence(batch) },
-            runtimeProfile = runtimeProfile
+            runtimeProfile = runtimeProfile,
+            liveCategoryTotal = liveCategoryTotal
         )
         if (!thinPayload.shouldRetryLegacyFullDecode()) {
             return thinPayload
@@ -208,7 +216,8 @@ internal class SyncManagerXtreamLiveStrategy(
             failureNextStep = "category-bulk",
             streamItems = { item -> xtreamCatalogHttpService.streamLiveStreams(endpoint, onItem = item) },
             mapRawBatch = { batch -> api.mapLiveStreamsSequence(batch) },
-            runtimeProfile = runtimeProfile
+            runtimeProfile = runtimeProfile,
+            liveCategoryTotal = liveCategoryTotal
         )
     }
 
@@ -227,7 +236,8 @@ internal class SyncManagerXtreamLiveStrategy(
         failureNextStep: String,
         streamItems: suspend (suspend (RawItem) -> Unit) -> Int,
         mapRawBatch: suspend (Sequence<RawItem>) -> Sequence<Channel>,
-        runtimeProfile: CatalogSyncRuntimeProfile
+        runtimeProfile: CatalogSyncRuntimeProfile,
+        liveCategoryTotal: Int = 0
     ): CatalogSyncPayload<Channel> {
         val fallbackCollector = FallbackCategoryCollector(provider.id, ContentType.LIVE)
         val seenStreamIds = HashSet<Long>()
@@ -282,15 +292,21 @@ internal class SyncManagerXtreamLiveStrategy(
             acceptedCount += staged.acceptedCount
             flushCount++
             rawBatch.clear()
-            // D10 — mode HIGH (full catalog) : pas de count par categorie disponible,
-            // on emet en indetermine (`total = 0`) une fois par flush de batch (cadence
-            // <= 1/s en pratique, jamais par item). Le label reste vide car aucune
-            // categorie ne correspond a la fenetre courante.
+            // STREAM_ALL doesn't iterate categories, but the upfront
+            // get_live_categories fetch gave us a fixed total. Use the count
+            // of distinct categories the fallback collector has recorded
+            // (i.e., categories that have had at least one channel staged) as
+            // current — this gives a real proportional X / Y categories
+            // metric that the Nexus screen can render the same way as
+            // MOVIES/SERIES.
+            val distinctCategoriesSeen = fallbackCollector.entities().size
+            val barCurrent = if (liveCategoryTotal > 0) distinctCategoriesSeen else 0
+            val barTotal = liveCategoryTotal
             syncProgressBus.emit(
                 SyncProgress(
                     section = Section.LIVE,
-                    current = 0,
-                    total = 0,
+                    current = barCurrent.coerceAtMost(barTotal.coerceAtLeast(0)),
+                    total = barTotal,
                     currentLabel = "",
                     itemsIndexed = acceptedCount
                 )
