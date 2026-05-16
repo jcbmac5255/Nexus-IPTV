@@ -563,6 +563,8 @@
     <string name="nexus_sign_in_loading_indexing_live">Indexing channels</string>
     <string name="nexus_sign_in_loading_indexing_vod">Indexing movies</string>
     <string name="nexus_sign_in_loading_indexing_series">Indexing series</string>
+    <string name="nexus_sign_in_complete_title">You\'re signed in</string>
+    <string name="nexus_sign_in_complete_subtitle">Channels are ready. Movies and series will keep filling in for a few more minutes.</string>
     <string name="settings_updates_title">Updates</string>
     <string name="settings_updates_subtitle">Check GitHub Releases for newer Nexus versions without leaving the app.</string>
     <string name="settings_update_auto_check">Automatically check for updates</string>

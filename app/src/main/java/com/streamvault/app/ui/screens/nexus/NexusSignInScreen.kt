@@ -48,6 +48,7 @@ import com.streamvault.app.ui.theme.ErrorColor
 import com.streamvault.data.sync.SyncProgressBus
 import com.streamvault.domain.sync.Section
 import com.streamvault.domain.sync.SyncProgress
+import com.streamvault.domain.model.ProviderXtreamLiveSyncMode
 import com.streamvault.domain.usecase.ValidateAndAddProvider
 import com.streamvault.domain.usecase.ValidateAndAddProviderResult
 import com.streamvault.domain.usecase.XtreamProviderSetupCommand
@@ -57,6 +58,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -98,7 +100,12 @@ class NexusSignInViewModel @Inject constructor(
                     username = trimmedUser,
                     password = trimmedPass,
                     name = NexusBranding.PROVIDER_NAME,
-                    xtreamFastSyncEnabled = true
+                    xtreamFastSyncEnabled = true,
+                    // The Nexus panel rate-limits per-category requests (HTTP 429
+                    // around 40+ categories in). STREAM_ALL fetches every live
+                    // channel in a single request so we never trip the limit and
+                    // VOD/Series requests aren't blocked by the cooldown.
+                    xtreamLiveSyncMode = ProviderXtreamLiveSyncMode.STREAM_ALL
                 )
             )
 
@@ -136,7 +143,12 @@ fun NexusSignInScreen(
     val genericErrorMessage = stringResource(R.string.nexus_sign_in_error_credentials)
 
     LaunchedEffect(uiState.signInSuccess) {
-        if (uiState.signInSuccess) onSignInComplete()
+        if (uiState.signInSuccess) {
+            // Hold on the "You're signed in" panel briefly so the user sees the
+            // message about background indexing before we drop them on Home.
+            delay(2500)
+            onSignInComplete()
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -168,7 +180,9 @@ fun NexusSignInScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                if (uiState.isLoading) {
+                if (uiState.signInSuccess) {
+                    SignInCompleteContent()
+                } else if (uiState.isLoading) {
                     SignInLoadingContent(syncProgress = syncProgress)
                 } else {
                     SignInFormContent(
@@ -365,6 +379,26 @@ private fun SignInLoadingContent(syncProgress: SyncProgress?) {
     Text(
         text = stringResource(R.string.nexus_sign_in_loading_dont_close),
         style = MaterialTheme.typography.labelMedium,
+        color = AppColors.TextSecondary,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+private fun SignInCompleteContent() {
+    StatusPill(
+        label = stringResource(R.string.app_name),
+        containerColor = AppColors.Brand
+    )
+    Text(
+        text = stringResource(R.string.nexus_sign_in_complete_title),
+        style = MaterialTheme.typography.headlineMedium,
+        color = AppColors.TextPrimary,
+        textAlign = TextAlign.Center
+    )
+    Text(
+        text = stringResource(R.string.nexus_sign_in_complete_subtitle),
+        style = MaterialTheme.typography.bodyMedium,
         color = AppColors.TextSecondary,
         textAlign = TextAlign.Center
     )
