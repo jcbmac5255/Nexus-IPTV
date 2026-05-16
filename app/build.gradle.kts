@@ -50,17 +50,17 @@ fun computeOfficialSigningCertSha256(): String {
 val officialSigningCertSha256 = computeOfficialSigningCertSha256()
 
 android {
-    namespace = "com.streamvault.app"
+    namespace = "com.nexus.iptv"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.streamvault.app"
+        applicationId = "com.nexus.iptv"
         minSdk = 27
         targetSdk = 36
-        versionCode = 15
-        versionName = "1.0.14"
+        versionCode = 16
+        versionName = "1.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "OFFICIAL_APPLICATION_ID", "\"com.streamvault.app\"")
+        buildConfigField("String", "OFFICIAL_APPLICATION_ID", "\"com.nexus.iptv\"")
         buildConfigField("String", "OFFICIAL_SIGNING_CERT_SHA256", "\"$officialSigningCertSha256\"")
         buildConfigField("String", "APP_UPDATE_CHANNEL", "\"stable\"")
         buildConfigField("long", "BUILD_TIMESTAMP_UTC", "0L")

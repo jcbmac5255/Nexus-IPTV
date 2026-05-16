@@ -2,7 +2,7 @@
 
 StreamVault plugins are companion Android APKs. They do not inject code into the
 main application. Instead, StreamVault discovers installed APKs that expose a
-bound service with the action `com.streamvault.plugin.API` and talks to them
+bound service with the action `com.nexus.iptv.plugin.API` and talks to them
 through Android `Messenger` IPC.
 
 This keeps the plugin boundary installable, removable, and compatible with
@@ -16,7 +16,7 @@ the plugin needs a richer UI.
 The host queries services for:
 
 ```xml
-<action android:name="com.streamvault.plugin.API" />
+<action android:name="com.nexus.iptv.plugin.API" />
 ```
 
 The host app must declare the same action in `<queries>`. Plugin APKs should
@@ -27,7 +27,7 @@ declare an exported service:
     android:name=".MyPluginService"
     android:exported="true">
     <intent-filter>
-        <action android:name="com.streamvault.plugin.API" />
+        <action android:name="com.nexus.iptv.plugin.API" />
     </intent-filter>
 </service>
 ```
@@ -42,7 +42,7 @@ Plugins can be installed from:
 ## Manifest
 
 StreamVault first asks the plugin service for its manifest. As a fallback, it
-reads `com.streamvault.plugin.MANIFEST_JSON` service metadata, then individual
+reads `com.nexus.iptv.plugin.MANIFEST_JSON` service metadata, then individual
 metadata fields if the JSON is missing or invalid.
 
 Example manifest for host-rendered configuration:
@@ -90,15 +90,15 @@ Example manifest for native Activity configuration:
 Recommended fallback metadata:
 
 ```xml
-<meta-data android:name="com.streamvault.plugin.ID" android:value="com.example.plugin" />
-<meta-data android:name="com.streamvault.plugin.NAME" android:value="Example Plugin" />
-<meta-data android:name="com.streamvault.plugin.VERSION_NAME" android:value="1.0.0" />
-<meta-data android:name="com.streamvault.plugin.VERSION_CODE" android:value="1" />
-<meta-data android:name="com.streamvault.plugin.DESCRIPTION" android:value="Adds external capabilities to StreamVault." />
-<meta-data android:name="com.streamvault.plugin.PROVIDER_NAME" android:value="Example Provider" />
-<meta-data android:name="com.streamvault.plugin.CONFIGURATION_MODE" android:value="host.schema" />
-<meta-data android:name="com.streamvault.plugin.CONFIGURATION_ACTIVITY_ACTION" android:value="" />
-<meta-data android:name="com.streamvault.plugin.CAPABILITIES" android:value="provider.m3u,playback.prepare,cast.rewriteUrl,configuration.schema" />
+<meta-data android:name="com.nexus.iptv.plugin.ID" android:value="com.example.plugin" />
+<meta-data android:name="com.nexus.iptv.plugin.NAME" android:value="Example Plugin" />
+<meta-data android:name="com.nexus.iptv.plugin.VERSION_NAME" android:value="1.0.0" />
+<meta-data android:name="com.nexus.iptv.plugin.VERSION_CODE" android:value="1" />
+<meta-data android:name="com.nexus.iptv.plugin.DESCRIPTION" android:value="Adds external capabilities to StreamVault." />
+<meta-data android:name="com.nexus.iptv.plugin.PROVIDER_NAME" android:value="Example Provider" />
+<meta-data android:name="com.nexus.iptv.plugin.CONFIGURATION_MODE" android:value="host.schema" />
+<meta-data android:name="com.nexus.iptv.plugin.CONFIGURATION_ACTIVITY_ACTION" android:value="" />
+<meta-data android:name="com.nexus.iptv.plugin.CAPABILITIES" android:value="provider.m3u,playback.prepare,cast.rewriteUrl,configuration.schema" />
 ```
 
 For Activity configuration, set `CONFIGURATION_MODE` to `activity`, set
@@ -372,7 +372,7 @@ Recommended visual and interaction rules:
 
 Before publishing a plugin:
 
-- Expose exactly one `com.streamvault.plugin.API` service.
+- Expose exactly one `com.nexus.iptv.plugin.API` service.
 - Return a complete manifest from `MSG_GET_MANIFEST`.
 - Keep service metadata in sync with the runtime manifest as fallback.
 - Choose `host.schema` or `activity` as the primary configuration mode.

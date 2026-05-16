@@ -24,7 +24,7 @@
 
     <queries>
         <intent>
-            <action android:name="com.streamvault.plugin.API" />
+            <action android:name="com.nexus.iptv.plugin.API" />
         </intent>
     </queries>
 
@@ -137,7 +137,7 @@
 
         <meta-data
             android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-            android:value="com.streamvault.app.cast.StreamVaultCastOptionsProvider" />
+            android:value="com.nexus.iptv.cast.StreamVaultCastOptionsProvider" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

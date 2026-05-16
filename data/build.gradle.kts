@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.streamvault.data"
+    namespace = "com.nexus.iptv.data"
     compileSdk = 36
 
     defaultConfig {

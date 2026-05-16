@@ -64,3 +64,8 @@ tmp/gha-artifact-inspect/
 .tmp-inspect/
 translations/
 releases/*.apk
+
+# Local release artifacts and tooling
+dist/
+.claude/
+icon.jpg
