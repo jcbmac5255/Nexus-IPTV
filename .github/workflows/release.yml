@@ -171,7 +171,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.app_version.outputs.release_tag }}
-          name: StreamVault ${{ steps.app_version.outputs.version_name }}
+          name: Nexus ${{ steps.app_version.outputs.version_name }}
           body: |
             ${{ steps.changelog.outputs.notes }}
             
