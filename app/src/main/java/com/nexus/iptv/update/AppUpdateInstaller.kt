@@ -79,6 +79,25 @@ class AppUpdateInstaller @Inject constructor(
         val downloadId = preferencesRepository.appUpdateDownloadId.first()
         val downloadingVersionName = preferencesRepository.appUpdateDownloadVersionName.first()
         val downloadedVersionName = preferencesRepository.downloadedAppUpdateVersionName.first()
+
+        // If the user already installed the downloaded update (or even rolled
+        // forward past it via Nextcloud / sideload), the currently running
+        // build will be at-or-newer than the downloaded version. In that case
+        // the download has been consumed — clear the persisted state and
+        // delete the cached APK so the UI doesn't keep showing "Install
+        // update" after the install completed.
+        if (downloadedVersionName != null &&
+            isInstalledAtOrPastDownloadedVersion(downloadedVersionName, BuildConfig.VERSION_NAME)
+        ) {
+            preferencesRepository.setDownloadedAppUpdateVersionName(null)
+            preferencesRepository.setAppUpdateDownloadId(null)
+            preferencesRepository.setAppUpdateDownloadVersionName(null)
+            apkFileForVersion(downloadedVersionName).takeIf { it.exists() }?.delete()
+            val clearedState = AppUpdateDownloadState()
+            _downloadState.value = clearedState
+            return@withContext clearedState
+        }
+
         val apkFile = downloadedVersionName?.let(::apkFileForVersion)
 
         if (downloadId == null) {
@@ -314,7 +333,26 @@ class AppUpdateInstaller @Inject constructor(
         val sanitizedVersion = versionName.replace(Regex("[^A-Za-z0-9._-]"), "_")
         val downloadsDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
             ?: File(context.cacheDir, "downloads")
-        return File(downloadsDir, "StreamVault-$sanitizedVersion.apk")
+        return File(downloadsDir, "Nexus-$sanitizedVersion.apk")
+    }
+
+    /**
+     * Returns true when the running build's version is equal to or newer than
+     * the version that's recorded as "downloaded and ready to install". Used
+     * to detect when an in-app install has actually been applied so the
+     * persisted download state can be cleared.
+     */
+    private fun isInstalledAtOrPastDownloadedVersion(downloaded: String, installed: String): Boolean {
+        val downloadedParts = downloaded.removePrefix("v").split('.')
+        val installedParts = installed.removePrefix("v").split('.')
+        val length = maxOf(downloadedParts.size, installedParts.size)
+        for (i in 0 until length) {
+            val d = downloadedParts.getOrNull(i)?.toIntOrNull() ?: 0
+            val c = installedParts.getOrNull(i)?.toIntOrNull() ?: 0
+            if (c > d) return true
+            if (c < d) return false
+        }
+        return true
     }
 
     private fun registerDownloadReceiver() {
