@@ -589,8 +589,15 @@
     <string name="settings_update_download_unavailable">No downloadable update package is available for this release.</string>
     <string name="settings_update_install_action">Install update</string>
     <string name="settings_update_install_started">Opening the package installer.</string>
-    <string name="settings_update_view_release">Open latest release</string>
-    <string name="settings_update_release_notes">Release page</string>
+    <string name="settings_update_view_release">View release notes</string>
+    <string name="settings_update_release_notes">Release notes</string>
+    <string name="release_notes_dialog_title">What\'s new in Nexus v%1$s</string>
+    <string name="release_notes_dialog_section_features">Features</string>
+    <string name="release_notes_dialog_section_changes">Changes</string>
+    <string name="release_notes_dialog_section_fixes">Bug Fixes</string>
+    <string name="release_notes_dialog_section_other">What\'s new</string>
+    <string name="release_notes_dialog_empty">Release notes aren\'t available yet. Try checking for updates from the Updates section above.</string>
+    <string name="release_notes_dialog_close">Close</string>
     <string name="settings_update_error">Update check</string>
     <string name="settings_update_not_checked">Not checked yet</string>
     <string name="settings_update_status_available">Update available</string>

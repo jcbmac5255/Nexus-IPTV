@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +25,9 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.nexus.iptv.BuildConfig
 import com.nexus.iptv.R
+import com.nexus.iptv.ui.components.dialogs.ReleaseNotesDialog
 import com.nexus.iptv.ui.interaction.TvClickableSurface
+import com.nexus.iptv.update.ReleaseNotesParser
 import com.nexus.iptv.ui.theme.OnSurface
 import com.nexus.iptv.ui.theme.OnSurfaceDim
 import com.nexus.iptv.ui.theme.Primary
@@ -309,12 +315,23 @@ internal fun LazyListScope.settingsAboutSection(
                 }
             )
         }
-        if (!uiState.appUpdate.releaseUrl.isNullOrBlank()) {
+        if (uiState.appUpdate.latestVersionName != null || uiState.appUpdate.releaseNotes.isNotBlank()) {
+            var showReleaseNotes by remember { mutableStateOf(false) }
             ClickableSettingsRow(
                 label = stringResource(R.string.settings_update_view_release),
                 value = uiState.appUpdate.latestVersionName ?: stringResource(R.string.settings_update_release_notes),
-                onClick = { onOpenUri(uiState.appUpdate.releaseUrl.orEmpty()) }
+                onClick = { showReleaseNotes = true }
             )
+            if (showReleaseNotes) {
+                val parsedNotes = remember(uiState.appUpdate.releaseNotes) {
+                    ReleaseNotesParser.parse(uiState.appUpdate.releaseNotes)
+                }
+                ReleaseNotesDialog(
+                    versionName = uiState.appUpdate.latestVersionName.orEmpty(),
+                    parsedNotes = parsedNotes,
+                    onDismissRequest = { showReleaseNotes = false }
+                )
+            }
         }
         if (!uiState.appUpdate.errorMessage.isNullOrBlank()) {
             SettingsRow(
