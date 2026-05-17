@@ -2,6 +2,33 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.6] - 2026-05-17
+
+### Added
+
+- Added an inline preview window to the top-right corner of the Live TV
+  (formerly Guide) page. Click any channel to load it into the preview without
+  leaving the page; click the same channel again to open it full-screen.
+
+### Changed
+
+- Replaced the standalone Live TV channel-grid page with the Guide page, which
+  now occupies the "Live TV" slot in the top navigation bar. The Guide's
+  inline preview makes a separate channel-grid view redundant.
+- Renamed the "VOD" sync-phase label to "Movies" since it sits next to a
+  separate "Series" phase, and "VOD" traditionally encompasses both.
+
+### Fixed
+
+- Reduced the auto-update check cooldown from 24 hours to 15 minutes so
+  overnight releases are picked up on the next morning's app launch instead
+  of waiting a full day.
+- Dashboard announcements now refresh whenever the screen resumes, so edits
+  made in PocketBase appear without needing to restart the app.
+- Fixed the "What's new" release-notes dialog so wrapped bullets in the
+  changelog are joined back into a single item instead of appearing as
+  separate lowercase entries.
+
 ## [1.1.5] - 2026-05-17
 
 ### Changed
