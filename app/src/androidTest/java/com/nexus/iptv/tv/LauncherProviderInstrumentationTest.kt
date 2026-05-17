@@ -184,7 +184,7 @@ class LauncherProviderInstrumentationTest {
     }
 
     private fun resourceArtworkUri(): Uri =
-        Uri.parse("android.resource://${context.packageName}/${com.nexus.iptv.R.mipmap.ic_launcher_vault}")
+        Uri.parse("android.resource://${context.packageName}/${com.nexus.iptv.R.mipmap.ic_launcher}")
 
     private fun mainActivityIntentUri(): String =
         Intent(context, com.nexus.iptv.MainActivity::class.java)

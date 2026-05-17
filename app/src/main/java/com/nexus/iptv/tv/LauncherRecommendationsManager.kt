@@ -379,7 +379,7 @@ class LauncherRecommendationsManager @Inject constructor(
     }
 
     private fun writeDefaultLogo(stream: OutputStream) {
-        val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_vault)
+        val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
     }
 
@@ -400,7 +400,7 @@ class LauncherRecommendationsManager @Inject constructor(
         if (remoteArtwork != null) {
             return Uri.parse(remoteArtwork)
         }
-        return Uri.parse("android.resource://${context.packageName}/${R.mipmap.ic_launcher_vault}")
+        return Uri.parse("android.resource://${context.packageName}/${R.mipmap.ic_launcher}")
     }
 
     private data class RecommendationChannelSpec(
