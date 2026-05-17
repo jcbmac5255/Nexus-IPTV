@@ -2,6 +2,23 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.3] - 2026-05-16
+
+### Added
+
+- Added Announcements banner on the Dashboard, backed by a self-hosted
+  PocketBase backend at `nexus.nexgrid.cc`. Supports global or per-user
+  targeting, optional banner image, start/expiry dates, and priority ordering.
+- Added an Announcement detail dialog with full body, image, and a
+  "Don't show again" option that persists the dismissal locally.
+
+### Changed
+
+- Cleaned up remaining user-facing "StreamVault" references missed by the
+  initial rebrand.
+- Replaced the Settings → About "Open latest release" link with an in-app
+  release notes modal that splits notes into Features, Changes, and Bug Fixes.
+
 ## [1.0.11] - 2026-05-13
 
 ### Added
