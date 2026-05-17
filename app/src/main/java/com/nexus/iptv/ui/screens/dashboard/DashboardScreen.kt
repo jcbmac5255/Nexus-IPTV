@@ -135,8 +135,16 @@ fun DashboardScreen(
                 return@AppScreenScaffold
             }
             val orderedSections = rememberDashboardSections(uiState)
+            val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+            val hasAnnouncements = uiState.announcements.isNotEmpty()
+            LaunchedEffect(hasAnnouncements) {
+                if (hasAnnouncements) {
+                    listState.scrollToItem(0)
+                }
+            }
 
             androidx.compose.foundation.lazy.LazyColumn(
+                state = listState,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = 28.dp)
             ) {

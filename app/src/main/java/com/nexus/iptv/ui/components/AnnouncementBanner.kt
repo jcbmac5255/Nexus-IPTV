@@ -105,6 +105,7 @@ private fun AnnouncementCard(
             containerColor = AppColors.SurfaceElevated,
             focusedContainerColor = AppColors.SurfaceEmphasis
         ),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             border = Border(
                 border = BorderStroke(1.dp, AppColors.Brand.copy(alpha = 0.32f)),

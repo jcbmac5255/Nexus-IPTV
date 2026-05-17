@@ -2,6 +2,15 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.4] - 2026-05-17
+
+### Fixed
+
+- Fixed Dashboard announcement banner overflowing past the screen edges when
+  focused on TV by disabling its focus-scale animation.
+- Fixed the Dashboard scrolling past the announcement row on entry so the
+  banner is now visible immediately when the screen opens.
+
 ## [1.1.3] - 2026-05-16
 
 ### Added
