@@ -37,7 +37,8 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val movieDao: MovieDao,
     private val episodeDao: EpisodeDao,
-    private val transactionRunner: DatabaseTransactionRunner
+    private val transactionRunner: DatabaseTransactionRunner,
+    private val remoteMirror: PlaybackHistoryRemoteMirror
 ) : PlaybackHistoryRepository {
     private val repositoryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val pendingResumeUpdates = ConcurrentHashMap<PlaybackKey, PlaybackHistory>()
@@ -144,6 +145,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
                 syncDenormalizedProgress(updatedHistory.contentId, updatedHistory.contentType, updatedHistory.providerId)
             }
             clearPendingResumeUpdate(key)
+            remoteMirror.pushHistory(updatedHistory, force = true)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.error("Failed to mark content as watched", e)
@@ -176,6 +178,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
                 syncDenormalizedProgress(updatedHistory.contentId, updatedHistory.contentType, updatedHistory.providerId)
             }
             clearPendingResumeUpdate(key)
+            remoteMirror.pushHistory(updatedHistory)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.error("Failed to record playback history", e)
@@ -208,6 +211,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
                 dao.insertOrUpdate(updatedHistory.toEntity())
                 syncDenormalizedProgress(updatedHistory.contentId, updatedHistory.contentType, updatedHistory.providerId)
             }
+            remoteMirror.pushHistory(updatedHistory)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.error("Failed to update playback resume position", e)
@@ -220,6 +224,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
             dao.delete(contentId, contentType.name, providerId)
             syncDenormalizedProgress(contentId, contentType, providerId)
         }
+        remoteMirror.pushRemoval(providerId, contentId, contentType)
         Result.success(Unit)
     } catch (e: Exception) {
         Result.error("Failed to remove playback history item", e)
@@ -273,6 +278,10 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
                     dao.insertOrUpdate(history.toEntity())
                     syncDenormalizedProgress(history.contentId, history.contentType, history.providerId)
                 }
+                // Force on flush: this is typically called on app pause / player exit,
+                // so we want the latest position pushed immediately rather than waiting
+                // for the next debounce window.
+                remoteMirror.pushHistory(history, force = true)
             }
         }
         if (changed) {

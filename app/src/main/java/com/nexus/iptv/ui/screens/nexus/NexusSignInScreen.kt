@@ -96,6 +96,7 @@ class NexusSignInViewModel @Inject constructor(
     private val xtreamIndexJobDao: XtreamIndexJobDao,
     private val programDao: ProgramDao,
     private val favoriteRestorer: NexusFavoriteRestorer,
+    private val historyRestorer: NexusHistoryRestorer,
     syncProgressBus: SyncProgressBus
 ) : ViewModel() {
 
@@ -216,10 +217,12 @@ class NexusSignInViewModel @Inject constructor(
         pinEpgToFinal(providerId, deepIndexFlow)
         delay(PHASE_COMPLETE_HOLD_MS)
 
-        // Restore the user's previously-saved favorites from PocketBase. Errors are
-        // logged inside the restorer and never block sign-in; users with no remote
-        // favorites simply land on an empty list, same as before this feature.
+        // Restore the user's previously-saved favorites and watch history from
+        // PocketBase. Errors are logged inside the restorers and never block
+        // sign-in; users with nothing on the server simply land on an empty
+        // state, same as before this feature.
         runCatching { favoriteRestorer.restoreFor(providerId, username) }
+        runCatching { historyRestorer.restoreFor(providerId, username) }
 
         _uiState.update {
             it.copy(
