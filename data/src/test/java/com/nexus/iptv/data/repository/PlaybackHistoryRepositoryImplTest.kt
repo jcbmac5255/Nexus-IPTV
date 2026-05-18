@@ -34,12 +34,15 @@ class PlaybackHistoryRepositoryImplTest {
         override suspend fun <T> inTransaction(block: suspend () -> T): T = block()
     }
 
+    private val remoteMirror: PlaybackHistoryRemoteMirror = mock()
+
     private fun repository() = PlaybackHistoryRepositoryImpl(
         dao = historyDao,
         preferencesRepository = preferencesRepository,
         movieDao = movieDao,
         episodeDao = episodeDao,
-        transactionRunner = transactionRunner
+        transactionRunner = transactionRunner,
+        remoteMirror = remoteMirror
     )
 
     private fun movieHistory(
