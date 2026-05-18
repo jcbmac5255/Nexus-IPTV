@@ -2,6 +2,19 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.7] - 2026-05-17
+
+### Added
+
+- Favorites now sync to the server so they survive uninstall and sign-out.
+- Movie resume positions now sync to the server.
+- Subscription expiration date is always visible in the top nav bar.
+- Dashboard shows a banner when your subscription expires in 7 days or less.
+
+### Fixed
+
+- The Live TV preview no longer freezes after returning from full-screen playback.
+
 ## [1.1.6] - 2026-05-17
 
 ### Added
