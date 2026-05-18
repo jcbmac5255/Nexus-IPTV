@@ -278,9 +278,20 @@ class DashboardViewModel @Inject constructor(
                 },
                 updateNotice = snapshot.updateNotice,
                 announcements = announcements,
+                expirationWarning = buildExpirationWarning(provider.expirationDate),
                 isLoading = false
             )
         }
+    }
+
+    private fun buildExpirationWarning(expirationDate: Long?): DashboardExpirationWarning? {
+        val raw = expirationDate ?: return null
+        if (raw <= 0L) return null
+        val msRemaining = raw - System.currentTimeMillis()
+        val daysRemaining = (msRemaining / (24L * 60L * 60L * 1000L)).toInt()
+        // Surface only when subscription is within the renewal window (≤7 days, including past-due).
+        if (daysRemaining > 7) return null
+        return DashboardExpirationWarning(daysRemaining = daysRemaining, expirationDate = raw)
     }
 
     private fun filterVisibleAnnouncements(
@@ -708,8 +719,16 @@ data class DashboardUiState(
     val updateNotice: DashboardUpdateNotice? = null,
     val stats: DashboardStats = DashboardStats(),
     val announcements: List<Announcement> = emptyList(),
+    val expirationWarning: DashboardExpirationWarning? = null,
     val userMessage: String? = null,
     val isLoading: Boolean = true
+)
+
+data class DashboardExpirationWarning(
+    /** Days until the subscription expires (0 = today, negative = already expired). */
+    val daysRemaining: Int,
+    /** Raw expiration epoch millis for display formatting. */
+    val expirationDate: Long
 )
 
 data class DashboardUpdateNotice(

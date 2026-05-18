@@ -192,6 +192,11 @@ fun DashboardScreen(
                         )
                     }
                 }
+                uiState.expirationWarning?.let { warning ->
+                    item(key = "expiration_warning") {
+                        DashboardExpirationCard(warning = warning)
+                    }
+                }
                 if (uiState.announcements.isNotEmpty()) {
                     item(key = "announcements") {
                         AnnouncementBannerRow(
@@ -705,6 +710,43 @@ private fun DashboardProviderWarningCard(
                     onClick = onOpenSettings
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun DashboardExpirationCard(
+    warning: DashboardExpirationWarning
+) {
+    val accent = Color(0xFFFFB44A)
+    val body = when {
+        warning.daysRemaining < 0 -> stringResource(R.string.dashboard_expiration_expired)
+        warning.daysRemaining == 0 -> stringResource(R.string.dashboard_expiration_today)
+        warning.daysRemaining == 1 -> stringResource(R.string.dashboard_expiration_tomorrow)
+        else -> stringResource(R.string.dashboard_expiration_days, warning.daysRemaining)
+    }
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 48.dp, vertical = 6.dp),
+        shape = RoundedCornerShape(20.dp),
+        colors = SurfaceDefaults.colors(containerColor = accent.copy(alpha = 0.16f)),
+        border = Border(BorderStroke(1.dp, accent.copy(alpha = 0.5f)))
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 22.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.dashboard_expiration_title),
+                style = MaterialTheme.typography.titleMedium,
+                color = accent
+            )
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextPrimary
+            )
         }
     }
 }

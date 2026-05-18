@@ -112,6 +112,11 @@
     <string name="dashboard_subtitle">%1$s is active. Jump back into live, catch up on progress, or browse fresh additions.</string>
     <string name="dashboard_favorite_channels">Favorite Channels</string>
     <string name="dashboard_announcements_title">Announcements</string>
+    <string name="dashboard_expiration_title">Subscription renewal</string>
+    <string name="dashboard_expiration_expired">Your subscription has expired. Contact support to renew.</string>
+    <string name="dashboard_expiration_today">Your subscription expires today. Contact support to renew.</string>
+    <string name="dashboard_expiration_tomorrow">Your subscription expires tomorrow. Contact support to renew.</string>
+    <string name="dashboard_expiration_days">Your subscription expires in %1$d days. Contact support to renew.</string>
     <string name="guide_preview_placeholder">Tap a channel to preview</string>
     <string name="guide_preview_loading">Loading…</string>
     <string name="announcement_dialog_dismiss">Don\'t show again</string>
