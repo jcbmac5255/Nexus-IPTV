@@ -23,7 +23,7 @@ import com.nexus.iptv.navigation.PlayerNavigationRequest
 import com.nexus.iptv.tv.LauncherRecommendationsManager
 import com.nexus.iptv.tv.WatchNextManager
 import com.nexus.iptv.tvinput.TvInputChannelSyncManager
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import com.nexus.iptv.ui.time.LocalAppTimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -116,8 +116,8 @@ class MainActivity : ComponentActivity() {
             lifecycleScope.launch {
                 watchNextManager.refreshWatchNext()
                 launcherRecommendationsManager.refreshRecommendations()
-                tvInputChannelSyncManager.refreshTvInputCatalog()
             }
+            tvInputChannelSyncManager.refreshTvInputCatalogAsync()
         }
         setContent {
             val appLanguage by preferencesRepository.appLanguage.collectAsState(initial = "system")
@@ -163,7 +163,7 @@ class MainActivity : ComponentActivity() {
                 LocalLayoutDirection provides layoutDirection,
                 LocalAppTimeFormat provides appTimeFormat
             ) {
-                StreamVaultTheme {
+                NexusTheme {
                     AppNavigation(mainActivity = this@MainActivity)
                 }
             }

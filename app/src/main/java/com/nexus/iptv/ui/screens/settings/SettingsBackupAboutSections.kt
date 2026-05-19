@@ -244,7 +244,9 @@ internal fun LazyListScope.settingsAboutSection(
     onRefreshDownloadState: () -> Unit,
     onViewCrashReport: () -> Unit,
     onShareCrashReport: () -> Unit,
-    onDeleteCrashReport: () -> Unit
+    onDeleteCrashReport: () -> Unit,
+    /** Non-zero values request focus on the "Check for updates" row when composed. */
+    focusCheckForUpdatesToken: Int = 0
 ) {
     item {
         val downloadStatus = uiState.appUpdate.downloadStatus
@@ -254,6 +256,16 @@ internal fun LazyListScope.settingsAboutSection(
                     kotlinx.coroutines.delay(2000L)
                     onRefreshDownloadState()
                 }
+            }
+        }
+        val checkForUpdatesRequester = remember { androidx.compose.ui.focus.FocusRequester() }
+        LaunchedEffect(focusCheckForUpdatesToken) {
+            if (focusCheckForUpdatesToken > 0) {
+                // Tiny delay so the row's TvClickableSurface has time to register itself as
+                // focusable; calling requestFocus() during the same frame as the composable
+                // first appears intermittently no-ops on TV.
+                kotlinx.coroutines.delay(120L)
+                runCatching { checkForUpdatesRequester.requestFocus() }
             }
         }
         SettingsSectionHeader(
@@ -300,7 +312,8 @@ internal fun LazyListScope.settingsAboutSection(
                 if (!uiState.isCheckingForUpdates) {
                     onCheckForUpdates()
                 }
-            }
+            },
+            externalFocusRequester = checkForUpdatesRequester
         )
         if (shouldShowUpdateDownloadAction(uiState.appUpdate)) {
             ClickableSettingsRow(

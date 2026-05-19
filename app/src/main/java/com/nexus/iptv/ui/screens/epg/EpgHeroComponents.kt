@@ -343,8 +343,6 @@ internal fun GuideHeroBadge(
 
 @Composable
 internal fun GuideToolbarRow(
-    selectedCategoryName: String,
-    onOpenCategoryPicker: () -> Unit,
     onJumpToNow: () -> Unit,
     onOpenSearch: () -> Unit,
     onOpenOptions: () -> Unit,
@@ -356,12 +354,6 @@ internal fun GuideToolbarRow(
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        GuideToolbarButton(
-            label = selectedCategoryName,
-            modifier = Modifier.widthIn(min = 200.dp, max = 280.dp),
-            onClick = onOpenCategoryPicker,
-            onFocused = onGuideInteract
-        )
         GuideToolbarButton(
             label = stringResource(R.string.epg_jump_now),
             onClick = onJumpToNow,

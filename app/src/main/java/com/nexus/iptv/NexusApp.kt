@@ -33,7 +33,7 @@ import com.nexus.iptv.player.timeshift.TimeshiftDiskManager
 import javax.inject.Inject
 
 @HiltAndroidApp
-class StreamVaultApp : Application(), SingletonImageLoader.Factory {
+class NexusApp : Application(), SingletonImageLoader.Factory {
     private val runtimeDiagnosticsManager by lazy { RuntimeDiagnosticsManager(this) }
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 

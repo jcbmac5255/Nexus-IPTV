@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,13 +32,24 @@ class TvInputChannelSyncManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val providerRepository: ProviderRepository,
     private val channelRepository: ChannelRepository,
-    private val epgRepository: EpgRepository
+    private val epgRepository: EpgRepository,
+    private val backgroundScope: kotlinx.coroutines.CoroutineScope
 ) {
 
     suspend fun refreshTvInputCatalog() {
         refreshTvInputCatalogResult().onFailure { throwable ->
             Log.w(TAG, "TV input catalog sync failed", throwable)
         }
+    }
+
+    /**
+     * Fire-and-forget version that runs on the injected singleton scope. Use from user-facing
+     * sync paths so the (potentially many-minute) ContentResolver fan-out doesn't block the
+     * progress UI. If the caller's scope dies before this finishes the refresh keeps running
+     * since [backgroundScope] is process-scoped.
+     */
+    fun refreshTvInputCatalogAsync() {
+        backgroundScope.launch { refreshTvInputCatalog() }
     }
 
     suspend fun refreshTvInputCatalogResult(): Result<Unit> = withContext(Dispatchers.IO) {
@@ -265,7 +277,7 @@ class TvInputChannelSyncManager @Inject constructor(
         )
     }
 
-    private fun inputId(): String = ComponentName(context, StreamVaultTvInputService::class.java).flattenToShortString()
+    private fun inputId(): String = ComponentName(context, NexusTvInputService::class.java).flattenToShortString()
 
     private fun channelKey(channel: Channel): String = "${channel.providerId}:${channel.id}"
 

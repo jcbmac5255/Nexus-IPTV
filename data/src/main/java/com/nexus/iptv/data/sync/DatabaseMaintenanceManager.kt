@@ -2,7 +2,7 @@ package com.nexus.iptv.data.sync
 
 import android.util.Log
 import androidx.annotation.WorkerThread
-import com.nexus.iptv.data.local.StreamVaultDatabase
+import com.nexus.iptv.data.local.NexusDatabase
 import com.nexus.iptv.data.local.dao.ChannelDao
 import com.nexus.iptv.data.local.dao.EpgProgrammeDao
 import com.nexus.iptv.data.local.dao.EpisodeDao
@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 @Singleton
 class DatabaseMaintenanceManager @Inject constructor(
-    private val database: StreamVaultDatabase,
+    private val database: NexusDatabase,
     private val channelDao: ChannelDao,
     private val programDao: ProgramDao,
     private val epgProgrammeDao: EpgProgrammeDao,

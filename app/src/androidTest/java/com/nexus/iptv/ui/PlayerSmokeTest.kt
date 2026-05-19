@@ -17,7 +17,7 @@ import com.nexus.iptv.ui.components.shell.CategoryRailPanel
 import com.nexus.iptv.ui.screens.player.overlay.PlayerControlsOverlay
 import com.nexus.iptv.ui.screens.player.overlay.PlayerTrackSelectionDialog
 import com.nexus.iptv.ui.test.TestFixtures
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import com.nexus.iptv.player.TrackType
 import org.junit.Rule
 import org.junit.Test
@@ -35,7 +35,7 @@ class PlayerSmokeTest {
 
         composeRule.setContent {
             val query = remember { mutableStateOf("") }
-            StreamVaultTheme {
+            NexusTheme {
                 CategoryRailPanel(
                     title = "Guide",
                     searchValue = query.value,
@@ -61,7 +61,7 @@ class PlayerSmokeTest {
         val playButtonFocusRequester = FocusRequester()
 
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 PlayerControlsOverlay(
                     visible = true,
                     title = TestFixtures.vodTitle,
@@ -109,7 +109,7 @@ class PlayerSmokeTest {
     @Test
     fun playerControlsOverlay_showsMuteActionWhenMuted() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 PlayerControlsOverlay(
                     visible = true,
                     title = TestFixtures.liveTitle,
@@ -157,7 +157,7 @@ class PlayerSmokeTest {
         var selectedTrackId: String? = null
 
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 PlayerTrackSelectionDialog(
                     trackType = TrackType.AUDIO,
                     audioTracks = TestFixtures.audioTracks,

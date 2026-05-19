@@ -34,6 +34,12 @@ internal fun SettingsContentPane(
     onDrivePush: () -> Unit,
     onDrivePull: () -> Unit,
     onOpenUri: (String) -> Unit,
+    /**
+     * Bumped each time the caller wants the About tab to focus its "Check for updates" row
+     * (e.g. when the user lands here from the Dashboard update banner). Zero means no
+     * focus request.
+     */
+    focusCheckForUpdatesToken: Int = 0,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -45,6 +51,7 @@ internal fun SettingsContentPane(
         userScrollEnabled = !uiState.isSyncing
     ) {
         if (dialogState.selectedCategory == 0) {
+            accountInfoSection(uiState = uiState, context = context)
             providerSection(
                 uiState = uiState,
                 onAddProvider = onAddProvider,
@@ -171,7 +178,8 @@ internal fun SettingsContentPane(
                 onRefreshDownloadState = viewModel::refreshDownloadState,
                 onViewCrashReport = onViewCrashReport,
                 onShareCrashReport = onShareCrashReport,
-                onDeleteCrashReport = onDeleteCrashReport
+                onDeleteCrashReport = onDeleteCrashReport,
+                focusCheckForUpdatesToken = focusCheckForUpdatesToken
             )
         }
     }

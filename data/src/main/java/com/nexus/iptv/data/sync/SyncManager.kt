@@ -666,6 +666,10 @@ class SyncManager @Inject constructor(
                     SyncRepairSection.SERIES -> syncSeriesOnly(provider, onProgress)
                 }
             }
+            // Stamp the provider's lastSyncedAt so UI surfaces ("Last synced" in
+            // Settings → Account, the Dashboard provider health card, etc.) reflect
+            // the section-level sync just like full-sync does.
+            providerDao.updateSyncTime(providerId, System.currentTimeMillis())
             updateSyncStatusMetadata(
                 providerId = providerId,
                 status = if (outcome.partial) "PARTIAL" else "SUCCESS"

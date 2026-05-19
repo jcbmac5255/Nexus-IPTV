@@ -59,7 +59,7 @@ internal class SettingsProviderActions(
             combinedM3uRepository.setActiveLiveSource(ActiveLiveSource.ProviderSource(providerId))
             watchNextManager.refreshWatchNext()
             launcherRecommendationsManager.refreshRecommendations(force = true)
-            tvInputChannelSyncManager.refreshTvInputCatalog()
+            tvInputChannelSyncManager.refreshTvInputCatalogAsync()
             val lastSyncedAt = provider.lastSyncedAt
             val shouldAutoSync = lastSyncedAt <= 0L ||
                 System.currentTimeMillis() - lastSyncedAt >= AUTO_SWITCH_SYNC_STALE_AFTER_MS
@@ -313,13 +313,9 @@ internal class SettingsProviderActions(
                 afterMetadata.lastSeriesSync > beforeMetadata.lastSeriesSync
 
             if (liveRefreshed) {
-                uiState.update { state ->
-                    state.copy(
-                        syncProgress = "Updating TV integration...",
-                        syncingProviderName = providerName
-                    )
-                }
-                tvInputChannelSyncManager.refreshTvInputCatalog()
+                // Catalog refresh runs in the background — see TvInputChannelSyncManager.
+                // The progress message is left up to the next step.
+                tvInputChannelSyncManager.refreshTvInputCatalogAsync()
             } else if (!catalogRefreshed) {
                 uiState.update { state ->
                     state.copy(
@@ -435,7 +431,7 @@ internal class SettingsProviderActions(
                 is Result.Success -> {
                     watchNextManager.refreshWatchNext()
                     launcherRecommendationsManager.refreshRecommendations(force = true)
-                    tvInputChannelSyncManager.refreshTvInputCatalog()
+                    tvInputChannelSyncManager.refreshTvInputCatalogAsync()
                     uiState.update { it.copy(isDeletingProvider = false, userMessage = "Provider deleted") }
                     onSuccess()
                 }

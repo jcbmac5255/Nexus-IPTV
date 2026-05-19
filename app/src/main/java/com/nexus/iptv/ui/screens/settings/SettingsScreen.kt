@@ -29,6 +29,7 @@ import com.nexus.iptv.ui.theme.*
 import com.nexus.iptv.domain.model.Provider
 import androidx.compose.ui.res.stringResource
 import com.nexus.iptv.R
+import com.nexus.iptv.navigation.Routes
 import com.nexus.iptv.ui.design.requestFocusSafely
 import kotlinx.coroutines.delay
 
@@ -41,6 +42,8 @@ fun SettingsScreen(
     onNavigateToParentalControl: (Long) -> Unit = {},
     currentRoute: String,
     initialBackupImportUri: String? = null,
+    /** Pre-select a section on entry. Supported value: [Routes.SETTINGS_SECTION_ABOUT]. */
+    initialSection: String? = null,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -59,6 +62,17 @@ fun SettingsScreen(
     val dialogState = rememberSettingsScreenDialogState()
     val providerState = rememberSettingsProviderSectionState(dialogState)
     var handledInitialBackupImportUri by remember { mutableStateOf<String?>(null) }
+    var pendingAboutFocusToken by remember { mutableStateOf(0) }
+
+    // Apply initialSection once on entry so deep-links can land directly on a category.
+    // Currently only the About category (index 7) is targeted, used by the Dashboard's
+    // "Open update" button.
+    LaunchedEffect(initialSection) {
+        if (initialSection == Routes.SETTINGS_SECTION_ABOUT) {
+            dialogState.selectedCategory = 7
+            pendingAboutFocusToken += 1
+        }
+    }
 
     val createDocumentLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/json")
@@ -191,7 +205,7 @@ fun SettingsScreen(
                     onEditProvider = onEditProvider,
                     onNavigateToParentalControl = onNavigateToParentalControl,
                     onChooseRecordingFolder = { recordingFolderLauncher.launch(null) },
-                    onCreateBackup = { createDocumentLauncher.launch("streamvault_backup.json") },
+                    onCreateBackup = { createDocumentLauncher.launch("nexus_backup.json") },
                     onShareBackup = ::shareBackup,
                     onViewCrashReport = viewModel::viewCrashReport,
                     onShareCrashReport = ::shareCrashReport,
@@ -206,6 +220,7 @@ fun SettingsScreen(
                     onDrivePush = viewModel::pushToDrive,
                     onDrivePull = viewModel::pullFromDrive,
                     onOpenUri = uriHandler::openUri,
+                    focusCheckForUpdatesToken = pendingAboutFocusToken,
                     modifier = Modifier.weight(1f)
                 )
             }

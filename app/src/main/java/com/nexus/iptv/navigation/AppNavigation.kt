@@ -22,7 +22,6 @@ import com.nexus.iptv.domain.model.Movie
 import com.nexus.iptv.domain.repository.ChannelRepository
 import com.nexus.iptv.ui.screens.dashboard.DashboardScreen
 import com.nexus.iptv.ui.screens.multiview.MultiViewScreen
-import com.nexus.iptv.ui.screens.home.HomeScreen
 import com.nexus.iptv.ui.screens.movies.MoviesScreen
 import com.nexus.iptv.ui.screens.nexus.NexusSignInScreen
 import com.nexus.iptv.ui.screens.player.PlayerScreen
@@ -71,7 +70,8 @@ object Routes {
     const val EPG = "epg"
     const val EPG_DESTINATION = "epg?categoryId={categoryId}&anchorTime={anchorTime}&favoritesOnly={favoritesOnly}"
     const val SETTINGS = "settings"
-    const val SETTINGS_DESTINATION = "settings?backupUri={backupUri}"
+    const val SETTINGS_DESTINATION = "settings?backupUri={backupUri}&section={section}"
+    const val SETTINGS_SECTION_ABOUT = "about"
     const val PLUGINS = "plugins"
     const val PLAYER = "player"
     const val SEARCH = "search"
@@ -151,8 +151,15 @@ object Routes {
     fun search(query: String? = null): String =
         if (query.isNullOrBlank()) SEARCH else "$SEARCH?query=${Uri.encode(query)}"
 
-    fun settings(backupUri: String? = null): String =
-        if (backupUri.isNullOrBlank()) SETTINGS else "$SETTINGS?backupUri=${Uri.encode(backupUri)}"
+    fun settings(backupUri: String? = null, section: String? = null): String {
+        val params = buildList {
+            if (!backupUri.isNullOrBlank()) add("backupUri=${Uri.encode(backupUri)}")
+            if (!section.isNullOrBlank()) add("section=${Uri.encode(section)}")
+        }
+        return if (params.isEmpty()) SETTINGS else "$SETTINGS?${params.joinToString("&")}"
+    }
+
+    fun settingsAbout(): String = settings(section = SETTINGS_SECTION_ABOUT)
 
     fun player(
         streamUrl: String,
@@ -594,10 +601,12 @@ fun AppNavigation(mainActivity: MainActivity) {
         composable(
             route = Routes.SETTINGS_DESTINATION,
             arguments = listOf(
-                navArgument("backupUri") { type = NavType.StringType; defaultValue = "" }
+                navArgument("backupUri") { type = NavType.StringType; defaultValue = "" },
+                navArgument("section") { type = NavType.StringType; defaultValue = "" }
             )
         ) { backStackEntry ->
             val backupUri = backStackEntry.arguments?.getString("backupUri")?.takeIf { it.isNotBlank() }
+            val section = backStackEntry.arguments?.getString("section")?.takeIf { it.isNotBlank() }
             SettingsScreen(
                 onNavigate = { route -> tabNavigate(route) },
                 onAddProvider = dropUnlessResumed {
@@ -610,7 +619,8 @@ fun AppNavigation(mainActivity: MainActivity) {
                     navController.navigateIfResumed(Routes.parentalControlGroups(providerId))
                 },
                 currentRoute = Routes.SETTINGS,
-                initialBackupImportUri = backupUri
+                initialBackupImportUri = backupUri,
+                initialSection = section
             )
         }
 

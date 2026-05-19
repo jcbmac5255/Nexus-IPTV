@@ -29,7 +29,7 @@ import com.nexus.iptv.ui.components.shell.StatusPill
 import com.nexus.iptv.ui.design.AppColors
 import com.nexus.iptv.ui.test.TestFixtures
 import com.nexus.iptv.ui.test.assertAgainstGolden
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,7 +43,7 @@ class PremiumRouteGoldenTest {
     @Test
     fun dashboard_route_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -93,7 +93,7 @@ class PremiumRouteGoldenTest {
     @Test
     fun live_route_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -162,7 +162,7 @@ class PremiumRouteGoldenTest {
     @Test
     fun movies_route_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -220,7 +220,7 @@ class PremiumRouteGoldenTest {
     @Test
     fun series_detail_route_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -258,7 +258,7 @@ class PremiumRouteGoldenTest {
     @Test
     fun saved_guide_and_settings_routes_matchGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -341,7 +341,7 @@ class PremiumRouteGoldenTest {
     @Test
     fun search_route_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

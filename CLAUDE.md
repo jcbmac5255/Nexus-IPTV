@@ -32,18 +32,18 @@ Four Gradle modules with strict layering — `:app` → `:data` + `:player`, bot
 - **`:data`** — implementations and persistence.
   - `remote/xtream/`, `remote/stalker/` — `IptvProvider` implementations via Retrofit/OkHttp. `XtreamProvider` and `StalkerProvider` are the two non-M3U backends.
   - `parser/` — M3U / XMLTV / Xtream JSON parsing. JVM tests use `kxml2` for XmlPullParser since the JVM has no built-in impl.
-  - `local/StreamVaultDatabase.kt` — Room database (currently **version 52**, `exportSchema = true`). Schemas are tracked under `data/schemas/com.nexus.iptv.data.local.StreamVaultDatabase/`. **Any entity change requires a Migration and a new schema JSON committed alongside the code.**
-  - `sync/` — orchestration for catalog refresh. `SyncManager` is the entry point; it splits into `SyncManagerXtreamFetcher` / `XtreamLiveStrategy` / `XtreamSupport` / `CatalogStager` / `M3uImporter` files. `ProviderSyncWorker`, `XtreamIndexWorker`, `BackgroundEpgSyncWorker` are WorkManager jobs scheduled from `StreamVaultApp.onCreate`. Live, VOD, and EPG can sync independently.
+  - `local/NexusDatabase.kt` — Room database (currently **version 52**, `exportSchema = true`). Schemas are tracked under `data/schemas/com.nexus.iptv.data.local.NexusDatabase/`. **Any entity change requires a Migration and a new schema JSON committed alongside the code.**
+  - `sync/` — orchestration for catalog refresh. `SyncManager` is the entry point; it splits into `SyncManagerXtreamFetcher` / `XtreamLiveStrategy` / `XtreamSupport` / `CatalogStager` / `M3uImporter` files. `ProviderSyncWorker`, `XtreamIndexWorker`, `BackgroundEpgSyncWorker` are WorkManager jobs scheduled from `NexusApp.onCreate`. Live, VOD, and EPG can sync independently.
   - `manager/recording/` and `manager/reminder/` — DVR and program reminders, including conflict detection and reconcile worker.
   - `repository/` — single `*RepositoryImpl` per domain repository contract; wired in `app/di/RepositoryModule.kt`.
   - `preferences/`, `security/` — DataStore preferences plus `AndroidKeystoreCredentialCrypto` for provider credentials.
 
 - **`:player`** — Media3/ExoPlayer abstraction. Subpackages: `playback/`, `audio/` (FFmpeg fallback for AC-3/E-AC-3/DTS/MP2/TrueHD via the bundled `media3-decoder-ffmpeg-1.9.2.aar` in `player/libs/`), `timeshift/` (up to ~30 min live rewind buffer), `tracks/`, `stats/`, `ui/`. The FFmpeg AAR is consumed via `implementation(files(...))` in `app/build.gradle.kts` — do not remove or relocate that file without updating the audio fallback path.
 
-- **`:app`** — Hilt entry point (`StreamVaultApp`, `MainActivity`), Compose UI, navigation, TV integrations.
+- **`:app`** — Hilt entry point (`NexusApp`, `MainActivity`), Compose UI, navigation, TV integrations.
   - `ui/screens/` is organized by feature (home, dashboard, live/epg, movies, series, vod, multiview, player, provider, settings, search, welcome, plugins, favorites).
   - `di/` — Hilt modules (`DatabaseModule`, `NetworkModule`, `RepositoryModule`, `PlayerEngineQualifiers`, `SlowQueryLoggingOpenHelperFactory`).
-  - `tvinput/` — Android TV Input Framework service (`StreamVaultTvInputService`) and channel sync; `tv/` — Watch Next + launcher recommendations.
+  - `tvinput/` — Android TV Input Framework service (`NexusTvInputService`) and channel sync; `tv/` — Watch Next + launcher recommendations.
   - `cast/` — Google Cast sender + route chooser.
   - `plugins/` — host side of the plugin API (see `docs/PLUGIN_API.md`); plugins are separate APKs bound via `Messenger` IPC with action `com.nexus.iptv.plugin.API` (declared in both the app `<queries>` and the plugin's exported service).
   - `update/` — in-app update via `GitHubReleaseChecker` + `AppUpdateInstaller`.
@@ -62,10 +62,10 @@ Four Gradle modules with strict layering — `:app` → `:data` + `:player`, bot
 
 ## Conventions worth knowing
 
-- **Room migrations**: bumping `version` in `StreamVaultDatabase` requires both a `Migration` object and a checked-in schema JSON under `data/schemas/`. `exportSchema = true` is intentional.
+- **Room migrations**: bumping `version` in `NexusDatabase` requires both a `Migration` object and a checked-in schema JSON under `data/schemas/`. `exportSchema = true` is intentional.
 - **Provider abstraction**: when adding a backend, implement `domain/provider/IptvProvider` and wire it through the relevant sync strategy files under `data/sync/`. Do not branch on provider type inside repositories.
 - **Compose TV**: `compose-tv-material` is pinned at `1.0.1` — note in `gradle/libs.versions.toml` warns to retest TV navigation before bumping. Remaining experimental TV Material usage is limited to `FilterChip` in `SearchScreen`.
-- **Background work** is initialized in `StreamVaultApp.onCreate` (Hilt-injected). New periodic workers should be registered there with `ExistingPeriodicWorkPolicy` and network/idle constraints to match existing patterns.
+- **Background work** is initialized in `NexusApp.onCreate` (Hilt-injected). New periodic workers should be registered there with `ExistingPeriodicWorkPolicy` and network/idle constraints to match existing patterns.
 - **WorkManager + Hilt**: there is a Gradle workaround at the bottom of `app/build.gradle.kts` that disables `hiltJavaCompileDebugUnitTest`. Leave it in place.
 - **Plugin API stability**: the `Messenger` protocol is the public contract for third-party plugins — see `docs/PLUGIN_API.md`. Treat `StreamVaultPluginContract.kt` as load-bearing.
 

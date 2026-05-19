@@ -19,7 +19,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class MovieDaoTest {
-    private lateinit var db: StreamVaultDatabase
+    private lateinit var db: NexusDatabase
     private lateinit var movieDao: MovieDao
     private lateinit var historyDao: PlaybackHistoryDao
 
@@ -27,7 +27,7 @@ class MovieDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, StreamVaultDatabase::class.java
+            context, NexusDatabase::class.java
         ).build()
         movieDao = db.movieDao()
         historyDao = db.playbackHistoryDao()

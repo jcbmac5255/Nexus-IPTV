@@ -429,7 +429,7 @@ class GoogleDriveBackupSyncManager @Inject constructor(
 
     private companion object {
         const val SCOPE_APP_DATA = "https://www.googleapis.com/auth/drive.appdata"
-        const val BACKUP_FILE_NAME = "streamvault_backup.json"
+        const val BACKUP_FILE_NAME = "nexus_backup.json"
         const val TEMP_BACKUP_FILE_NAME = "drive_sync_backup.json"
         const val CREDENTIALS_FILE_NAME = "streamvault_credentials.json"
         const val TEMP_CREDENTIALS_FILE_NAME = "drive_sync_credentials.json"

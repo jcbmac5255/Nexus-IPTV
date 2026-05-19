@@ -72,6 +72,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 
+data class SignInErrorStrings(
+    val credentials: String,
+    val network: String,
+    val timeout: String,
+    val rateLimit: String,
+    val server: String,
+    val generic: String
+)
+
 data class NexusSignInUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
@@ -149,7 +158,7 @@ class NexusSignInViewModel @Inject constructor(
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
-    fun signIn(username: String, password: String, blankErrorMessage: String, genericErrorMessage: String) {
+    fun signIn(username: String, password: String, blankErrorMessage: String, errorMessages: SignInErrorStrings) {
         val trimmedUser = username.trim()
         val trimmedPass = password.trim()
         if (trimmedUser.isBlank() || trimmedPass.isBlank()) {
@@ -181,10 +190,53 @@ class NexusSignInViewModel @Inject constructor(
                     completeAfterDeepIndex(result.provider.id, trimmedUser)
                 is ValidateAndAddProviderResult.ValidationError ->
                     _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
-                is ValidateAndAddProviderResult.Error ->
-                    _uiState.update { it.copy(isLoading = false, errorMessage = genericErrorMessage) }
+                is ValidateAndAddProviderResult.Error -> {
+                    val mapped = mapSignInError(result.message, result.exception, errorMessages)
+                    _uiState.update { it.copy(isLoading = false, errorMessage = mapped) }
+                }
             }
         }
+    }
+
+    private fun mapSignInError(
+        rawMessage: String?,
+        throwable: Throwable?,
+        strings: SignInErrorStrings
+    ): String {
+        val message = rawMessage.orEmpty().lowercase()
+
+        // Network connectivity: covers UnknownHostException, ConnectException, NoRouteToHost…
+        if (throwable is java.net.UnknownHostException ||
+            throwable is java.net.ConnectException ||
+            throwable is java.net.NoRouteToHostException ||
+            "unable to resolve" in message ||
+            "failed to connect" in message ||
+            "network" in message
+        ) {
+            return strings.network
+        }
+        // Timeouts.
+        if (throwable is java.net.SocketTimeoutException ||
+            throwable is java.util.concurrent.TimeoutException ||
+            "timeout" in message || "timed out" in message
+        ) {
+            return strings.timeout
+        }
+        // HTTP status hints. Xtream auth failure typically surfaces as 401/403 or as a
+        // body that says auth=0 / invalid; the use case message usually carries the code.
+        if ("401" in message || "403" in message ||
+            "auth" in message && ("invalid" in message || "failed" in message) ||
+            "credential" in message
+        ) {
+            return strings.credentials
+        }
+        if ("429" in message || "rate" in message && "limit" in message) {
+            return strings.rateLimit
+        }
+        if ("500" in message || "502" in message || "503" in message || "504" in message) {
+            return strings.server
+        }
+        return strings.generic
     }
 
     /**
@@ -375,7 +427,14 @@ fun NexusSignInScreen(
     var password by remember { mutableStateOf("") }
 
     val blankErrorMessage = stringResource(R.string.nexus_sign_in_error_blank)
-    val genericErrorMessage = stringResource(R.string.nexus_sign_in_error_credentials)
+    val errorStrings = SignInErrorStrings(
+        credentials = stringResource(R.string.nexus_sign_in_error_credentials),
+        network = stringResource(R.string.nexus_sign_in_error_network),
+        timeout = stringResource(R.string.nexus_sign_in_error_timeout),
+        rateLimit = stringResource(R.string.nexus_sign_in_error_rate_limit),
+        server = stringResource(R.string.nexus_sign_in_error_server),
+        generic = stringResource(R.string.nexus_sign_in_error_generic)
+    )
 
     LaunchedEffect(uiState.signInSuccess) {
         if (uiState.signInSuccess) {
@@ -433,7 +492,7 @@ fun NexusSignInScreen(
                         },
                         errorMessage = uiState.errorMessage,
                         onSignIn = {
-                            viewModel.signIn(username, password, blankErrorMessage, genericErrorMessage)
+                            viewModel.signIn(username, password, blankErrorMessage, errorStrings)
                         },
                         onAddCustomProvider = onAddCustomProvider
                     )

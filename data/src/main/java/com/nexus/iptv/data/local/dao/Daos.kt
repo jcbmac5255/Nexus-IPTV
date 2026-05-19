@@ -2916,6 +2916,9 @@ interface ProgramDao {
         )
         suspend fun getChannelIdsWithPrograms(providerId: Long, channelIds: List<String>): List<String>
 
+        @Query("SELECT DISTINCT channel_id FROM programs WHERE provider_id = :providerId")
+        suspend fun getAllChannelIdsWithPrograms(providerId: Long): List<String>
+
     @Query("SELECT COUNT(*) FROM programs WHERE provider_id = :providerId")
     suspend fun countByProvider(providerId: Long): Int
 

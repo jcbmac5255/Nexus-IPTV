@@ -544,6 +544,18 @@
     <string name="settings_buffer_5s">5 seconds</string>
     <string name="settings_about">About</string>
     <string name="settings_about_subtitle">Version, build, and support details for this installation.</string>
+    <string name="settings_account_title">Account</string>
+    <string name="settings_account_subtitle">Details from your Nexus subscription.</string>
+    <string name="settings_account_username">Username</string>
+    <string name="settings_account_server">Server</string>
+    <string name="settings_account_expiration">Expiration</string>
+    <string name="settings_account_expiration_none">No expiration recorded</string>
+    <string name="settings_account_max_connections">Max connections</string>
+    <string name="settings_account_output_formats">Allowed formats</string>
+    <string name="settings_account_output_formats_unknown">Not reported</string>
+    <string name="settings_account_api_version">API version</string>
+    <string name="settings_account_last_synced">Last synced</string>
+    <string name="settings_account_last_synced_never">Never</string>
     <string name="settings_app_version">App Version</string>
     <string name="settings_build">Build</string>
     <string name="settings_build_desc">Nexus for Android TV</string>
@@ -557,9 +569,9 @@
     <string name="settings_developer_name">Jake McClanahan</string>
     <string name="settings_github">GitHub</string>
     <string name="settings_github_url">https://github.com/jcbmac5255/Nexus-IPTV</string>
-    <string name="settings_donate">Support on Cash App</string>
+    <string name="settings_donate">Cash App</string>
     <string name="settings_donate_url">https://cash.app/$jakem7612</string>
-    <string name="settings_donate_venmo">Support on Venmo</string>
+    <string name="settings_donate_venmo">Venmo</string>
     <string name="settings_donate_venmo_url">https://venmo.com/u/jake7612</string>
     <string name="nexus_sign_in_title">Sign in to Nexus</string>
     <string name="nexus_sign_in_subtitle">Enter the credentials provided by your reseller.</string>
@@ -570,7 +582,12 @@
     <string name="nexus_sign_in_support_hint">Contact your reseller if you don\'t have credentials.</string>
     <string name="nexus_sign_in_use_custom_provider">Add a custom provider</string>
     <string name="nexus_sign_in_error_blank">Enter both username and password.</string>
-    <string name="nexus_sign_in_error_credentials">Sign-in failed. Check your username and password, then try again.</string>
+    <string name="nexus_sign_in_error_credentials">Wrong username or password.</string>
+    <string name="nexus_sign_in_error_network">Can\'t reach Nexus. Check your internet connection and try again.</string>
+    <string name="nexus_sign_in_error_timeout">The server didn\'t respond in time. Try again in a moment.</string>
+    <string name="nexus_sign_in_error_rate_limit">Too many sign-in attempts. Wait a minute, then try again.</string>
+    <string name="nexus_sign_in_error_server">Nexus is having trouble right now. Try again in a few minutes.</string>
+    <string name="nexus_sign_in_error_generic">Sign-in failed. Please try again.</string>
     <string name="nexus_sign_in_loading_title">Signing you in</string>
     <string name="nexus_sign_in_loading_connecting">Verifying your credentials…</string>
     <string name="nexus_sign_in_loading_subtitle_syncing">Loading your channels, movies, and shows. This can take a moment on the first sign-in.</string>
@@ -953,7 +970,7 @@
     <string name="a11y_channel_with_number">Channel %1$d, %2$s</string>
 
     
-    <string name="setup_title_streamvault">Nexus</string>
+    <string name="setup_title_nexus">Nexus</string>
     <string name="setup_provider_title">Add a provider</string>
     <string name="setup_edit_provider">Edit Provider</string>
     <string name="setup_update_desc">Update your IPTV provider details</string>

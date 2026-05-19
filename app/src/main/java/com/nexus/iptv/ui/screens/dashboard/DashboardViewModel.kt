@@ -52,6 +52,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import com.nexus.iptv.domain.util.AdultContentVisibilityPolicy
@@ -77,7 +78,8 @@ class DashboardViewModel @Inject constructor(
     private val syncManager: SyncManager,
     private val appUpdateInstaller: AppUpdateInstaller,
     private val recordingManager: RecordingManager,
-    private val announcementRepository: AnnouncementRepository
+    private val announcementRepository: AnnouncementRepository,
+    private val gitHubReleaseChecker: com.nexus.iptv.update.GitHubReleaseChecker
 ) : ViewModel() {
     private companion object {
         const val FAVORITE_CHANNEL_LIMIT = 12
@@ -656,6 +658,40 @@ class DashboardViewModel @Inject constructor(
             when (val result = announcementRepository.fetchAnnouncements()) {
                 is com.nexus.iptv.domain.model.Result.Success -> {
                     _allAnnouncements.value = result.data
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    /**
+     * Re-check GitHub for a new release if the last check was more than 15 minutes ago.
+     * Called on Dashboard ON_RESUME so users who keep the app running between releases
+     * still see the update notice without needing a process restart. Honors the same
+     * cooldown NexusApp.refreshCachedAppUpdateIfNeeded uses to avoid hammering
+     * GitHub when the user navigates back and forth quickly.
+     */
+    fun refreshUpdateNoticeIfStale() {
+        viewModelScope.launch {
+            val autoCheckEnabled = preferencesRepository.autoCheckAppUpdates.first()
+            if (!autoCheckEnabled) return@launch
+
+            val lastCheckedAt = preferencesRepository.lastAppUpdateCheckTimestamp.first()
+            val now = System.currentTimeMillis()
+            val cooldownMs = 15L * 60L * 1000L
+            if (lastCheckedAt != null && now - lastCheckedAt < cooldownMs) return@launch
+
+            preferencesRepository.setLastAppUpdateCheckTimestamp(now)
+            when (val result = gitHubReleaseChecker.fetchLatestRelease()) {
+                is com.nexus.iptv.domain.model.Result.Success -> {
+                    preferencesRepository.setCachedAppUpdateRelease(
+                        versionName = result.data.versionName,
+                        versionCode = result.data.versionCode,
+                        releaseUrl = result.data.releaseUrl,
+                        downloadUrl = result.data.downloadUrl,
+                        releaseNotes = result.data.releaseNotes,
+                        publishedAt = result.data.publishedAt
+                    )
                 }
                 else -> Unit
             }

@@ -105,9 +105,11 @@ internal fun ClickableSettingsRow(
     value: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    indent: Dp = 0.dp
+    indent: Dp = 0.dp,
+    externalFocusRequester: FocusRequester? = null
 ) {
-    val focusRequester = remember { FocusRequester() }
+    val internalFocusRequester = remember { FocusRequester() }
+    val focusRequester = externalFocusRequester ?: internalFocusRequester
     TvClickableSurface(
         onClick = { if (enabled) onClick() },
         shape = ClickableSurfaceDefaults.shape(RoundedCornerShape(8.dp)),

@@ -427,13 +427,6 @@ fun FullEpgScreen(
                         }
                     }
                     GuideToolbarRow(
-                        selectedCategoryName = uiState.categories
-                            .firstOrNull { it.id == uiState.selectedCategoryId }
-                            ?.name
-                            ?: stringResource(R.string.epg_filter_short),
-                        onOpenCategoryPicker = {
-                            showCategoryPicker = true
-                        },
                         onJumpToNow = {
                             viewModel.jumpToNow()
                         },
@@ -458,17 +451,35 @@ fun FullEpgScreen(
                             trackColor = SurfaceHighlight
                         )
                     }
-                    GuideNowProvider {
-                        EpgGrid(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            channels = uiState.channels,
-                            favoriteChannelIds = uiState.favoriteChannelIds,
-                            programsByChannel = uiState.programsByChannel,
-                            guideWindowStart = uiState.guideWindowStart,
-                            guideWindowEnd = uiState.guideWindowEnd,
-                            density = uiState.selectedDensity,
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        GuideCategorySidebar(
+                            categories = uiState.categories,
+                            selectedCategoryId = uiState.selectedCategoryId,
+                            onCategoryClick = { category ->
+                                if (isGuideCategoryLocked(category, uiState.parentalControlLevel)) {
+                                    requestLockedGuideAction(LockedGuideAction.SelectCategory(category))
+                                } else {
+                                    viewModel.selectCategory(category.id)
+                                }
+                            },
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                        GuideNowProvider {
+                            EpgGrid(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .weight(1f),
+                                channels = uiState.channels,
+                                favoriteChannelIds = uiState.favoriteChannelIds,
+                                programsByChannel = uiState.programsByChannel,
+                                guideWindowStart = uiState.guideWindowStart,
+                                guideWindowEnd = uiState.guideWindowEnd,
+                                density = uiState.selectedDensity,
                             onChannelClick = { channel ->
                                 if (isGuideChannelLocked(channel, categoriesById, uiState.parentalControlLevel)) {
                                     requestLockedGuideAction(LockedGuideAction.PlayChannel(channel, returnRoute))
@@ -507,6 +518,7 @@ fun FullEpgScreen(
                             },
                             onRequestMoreChannels = viewModel::requestMoreChannels
                         )
+                        }
                     }
                 }
             }

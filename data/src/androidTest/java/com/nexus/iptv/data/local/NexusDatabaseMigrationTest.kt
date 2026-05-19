@@ -12,14 +12,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class StreamVaultDatabaseMigrationTest {
+class NexusDatabaseMigrationTest {
 
     private val testDbName = "streamvault-migration-test"
 
     @get:Rule
     val migrationTestHelper: MigrationTestHelper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
-        StreamVaultDatabase::class.java,
+        NexusDatabase::class.java,
         emptyList(),
         FrameworkSQLiteOpenHelperFactory()
     )
@@ -57,7 +57,7 @@ class StreamVaultDatabaseMigrationTest {
             testDbName,
             10,
             true,
-            StreamVaultDatabase.MIGRATION_9_10
+            NexusDatabase.MIGRATION_9_10
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM channels_fts WHERE channels_fts MATCH 'news*'"))
@@ -91,49 +91,49 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-full-chain-test",
             42,
             true,
-            StreamVaultDatabase.MIGRATION_1_2,
-            StreamVaultDatabase.MIGRATION_2_3,
-            StreamVaultDatabase.MIGRATION_3_4,
-            StreamVaultDatabase.MIGRATION_4_5,
-            StreamVaultDatabase.MIGRATION_5_6,
-            StreamVaultDatabase.MIGRATION_6_7,
-            StreamVaultDatabase.MIGRATION_7_8,
-            StreamVaultDatabase.MIGRATION_8_9,
-            StreamVaultDatabase.MIGRATION_9_10,
-            StreamVaultDatabase.MIGRATION_10_11,
-            StreamVaultDatabase.MIGRATION_11_12,
-            StreamVaultDatabase.MIGRATION_12_13,
-            StreamVaultDatabase.MIGRATION_13_14,
-            StreamVaultDatabase.MIGRATION_14_15,
-            StreamVaultDatabase.MIGRATION_15_16,
-            StreamVaultDatabase.MIGRATION_16_17,
-            StreamVaultDatabase.MIGRATION_17_18,
-            StreamVaultDatabase.MIGRATION_18_19,
-            StreamVaultDatabase.MIGRATION_19_20,
-            StreamVaultDatabase.MIGRATION_20_21,
-            StreamVaultDatabase.MIGRATION_21_22,
-            StreamVaultDatabase.MIGRATION_22_23,
-            StreamVaultDatabase.MIGRATION_23_24,
-            StreamVaultDatabase.MIGRATION_24_25,
-            StreamVaultDatabase.MIGRATION_25_26,
-            StreamVaultDatabase.MIGRATION_26_27,
-            StreamVaultDatabase.MIGRATION_27_28,
-            StreamVaultDatabase.MIGRATION_28_29,
-            StreamVaultDatabase.MIGRATION_29_30,
-            StreamVaultDatabase.MIGRATION_30_31,
-            StreamVaultDatabase.MIGRATION_31_32,
-            StreamVaultDatabase.MIGRATION_32_33,
-            StreamVaultDatabase.MIGRATION_33_34,
-            StreamVaultDatabase.MIGRATION_34_35,
-            StreamVaultDatabase.MIGRATION_35_36,
-            StreamVaultDatabase.MIGRATION_36_37,
-            StreamVaultDatabase.MIGRATION_37_38,
-            StreamVaultDatabase.MIGRATION_38_39,
-            StreamVaultDatabase.MIGRATION_39_40,
-            StreamVaultDatabase.MIGRATION_40_41,
-            StreamVaultDatabase.MIGRATION_41_42,
-            StreamVaultDatabase.MIGRATION_42_43,
-            StreamVaultDatabase.MIGRATION_43_44
+            NexusDatabase.MIGRATION_1_2,
+            NexusDatabase.MIGRATION_2_3,
+            NexusDatabase.MIGRATION_3_4,
+            NexusDatabase.MIGRATION_4_5,
+            NexusDatabase.MIGRATION_5_6,
+            NexusDatabase.MIGRATION_6_7,
+            NexusDatabase.MIGRATION_7_8,
+            NexusDatabase.MIGRATION_8_9,
+            NexusDatabase.MIGRATION_9_10,
+            NexusDatabase.MIGRATION_10_11,
+            NexusDatabase.MIGRATION_11_12,
+            NexusDatabase.MIGRATION_12_13,
+            NexusDatabase.MIGRATION_13_14,
+            NexusDatabase.MIGRATION_14_15,
+            NexusDatabase.MIGRATION_15_16,
+            NexusDatabase.MIGRATION_16_17,
+            NexusDatabase.MIGRATION_17_18,
+            NexusDatabase.MIGRATION_18_19,
+            NexusDatabase.MIGRATION_19_20,
+            NexusDatabase.MIGRATION_20_21,
+            NexusDatabase.MIGRATION_21_22,
+            NexusDatabase.MIGRATION_22_23,
+            NexusDatabase.MIGRATION_23_24,
+            NexusDatabase.MIGRATION_24_25,
+            NexusDatabase.MIGRATION_25_26,
+            NexusDatabase.MIGRATION_26_27,
+            NexusDatabase.MIGRATION_27_28,
+            NexusDatabase.MIGRATION_28_29,
+            NexusDatabase.MIGRATION_29_30,
+            NexusDatabase.MIGRATION_30_31,
+            NexusDatabase.MIGRATION_31_32,
+            NexusDatabase.MIGRATION_32_33,
+            NexusDatabase.MIGRATION_33_34,
+            NexusDatabase.MIGRATION_34_35,
+            NexusDatabase.MIGRATION_35_36,
+            NexusDatabase.MIGRATION_36_37,
+            NexusDatabase.MIGRATION_37_38,
+            NexusDatabase.MIGRATION_38_39,
+            NexusDatabase.MIGRATION_39_40,
+            NexusDatabase.MIGRATION_40_41,
+            NexusDatabase.MIGRATION_41_42,
+            NexusDatabase.MIGRATION_42_43,
+            NexusDatabase.MIGRATION_43_44
         ).close()
     }
 
@@ -157,14 +157,14 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-public-master-44-51-test",
             52,
             true,
-            StreamVaultDatabase.MIGRATION_44_45,
-            StreamVaultDatabase.MIGRATION_45_46,
-            StreamVaultDatabase.MIGRATION_46_47,
-            StreamVaultDatabase.MIGRATION_47_48,
-            StreamVaultDatabase.MIGRATION_48_49,
-            StreamVaultDatabase.MIGRATION_49_50,
-            StreamVaultDatabase.MIGRATION_50_51,
-            StreamVaultDatabase.MIGRATION_51_52
+            NexusDatabase.MIGRATION_44_45,
+            NexusDatabase.MIGRATION_45_46,
+            NexusDatabase.MIGRATION_46_47,
+            NexusDatabase.MIGRATION_47_48,
+            NexusDatabase.MIGRATION_48_49,
+            NexusDatabase.MIGRATION_49_50,
+            NexusDatabase.MIGRATION_50_51,
+            NexusDatabase.MIGRATION_51_52
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM providers WHERE id = 1 AND name = 'Public Master Provider'"))
@@ -203,7 +203,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-48-49-test",
             49,
             true,
-            StreamVaultDatabase.MIGRATION_48_49
+            NexusDatabase.MIGRATION_48_49
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('providers') WHERE name = 'http_user_agent'"))
@@ -221,7 +221,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-49-50-test",
             50,
             true,
-            StreamVaultDatabase.MIGRATION_49_50
+            NexusDatabase.MIGRATION_49_50
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'xtream_live_onboarding_state'"))
@@ -239,7 +239,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-50-51-test",
             51,
             true,
-            StreamVaultDatabase.MIGRATION_50_51
+            NexusDatabase.MIGRATION_50_51
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('xtream_live_onboarding_state') WHERE name = 'sync_profile_tier'"))
@@ -260,7 +260,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-51-52-test",
             52,
             true,
-            StreamVaultDatabase.MIGRATION_51_52
+            NexusDatabase.MIGRATION_51_52
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('providers') WHERE name = 'xtream_live_sync_mode'"))
@@ -276,7 +276,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-40-41-test",
             41,
             true,
-            StreamVaultDatabase.MIGRATION_40_41
+            NexusDatabase.MIGRATION_40_41
         )
 
         assertEquals(
@@ -298,7 +298,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-41-42-test",
             42,
             true,
-            StreamVaultDatabase.MIGRATION_41_42
+            NexusDatabase.MIGRATION_41_42
         )
 
         assertEquals(
@@ -327,7 +327,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-42-43-test",
             43,
             true,
-            StreamVaultDatabase.MIGRATION_42_43
+            NexusDatabase.MIGRATION_42_43
         )
 
         assertEquals(
@@ -349,7 +349,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-43-44-test",
             44,
             true,
-            StreamVaultDatabase.MIGRATION_43_44
+            NexusDatabase.MIGRATION_43_44
         )
 
         listOf("movie_category_hydration", "series_category_hydration").forEach { table ->
@@ -388,7 +388,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-38-39-test",
             39,
             true,
-            StreamVaultDatabase.MIGRATION_38_39
+            NexusDatabase.MIGRATION_38_39
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('providers') WHERE name = 'stalker_mac_address'"))
@@ -450,7 +450,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-32-33-test",
             33,
             true,
-            StreamVaultDatabase.MIGRATION_32_33
+            NexusDatabase.MIGRATION_32_33
         )
 
         assertEquals(6, countRows(migratedDb, "SELECT watch_count FROM movies WHERE id = 10"))
@@ -506,7 +506,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-33-34-test",
             34,
             true,
-            StreamVaultDatabase.MIGRATION_33_34
+            NexusDatabase.MIGRATION_33_34
         )
 
         assertEquals(11, countRows(migratedDb, "SELECT last_live_success FROM sync_metadata WHERE provider_id = 1"))
@@ -555,7 +555,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-44-45-test",
             45,
             true,
-            StreamVaultDatabase.MIGRATION_44_45
+            NexusDatabase.MIGRATION_44_45
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM favorites WHERE provider_id = 1 AND content_id = 10 AND content_type = 'MOVIE' AND group_id IS NULL"))
@@ -603,7 +603,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-45-46-test",
             46,
             true,
-            StreamVaultDatabase.MIGRATION_45_46
+            NexusDatabase.MIGRATION_45_46
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('series_import_stage') WHERE name = 'provider_series_id'"))
@@ -621,7 +621,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-46-47-test",
             47,
             true,
-            StreamVaultDatabase.MIGRATION_46_47
+            NexusDatabase.MIGRATION_46_47
         )
 
         assertEquals(
@@ -830,7 +830,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-47-48-test",
             48,
             true,
-            StreamVaultDatabase.MIGRATION_47_48
+            NexusDatabase.MIGRATION_47_48
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'xtream_content_index'"))
@@ -865,7 +865,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-34-35-test",
             35,
             true,
-            StreamVaultDatabase.MIGRATION_34_35
+            NexusDatabase.MIGRATION_34_35
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('search_history') WHERE name = 'query'"))
@@ -929,7 +929,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-31-32-test",
             32,
             true,
-            StreamVaultDatabase.MIGRATION_31_32
+            NexusDatabase.MIGRATION_31_32
         )
 
         assertEquals(2, countRows(migratedDb, "SELECT COUNT(*) FROM virtual_groups WHERE name = 'Mixed Group'"))
@@ -983,7 +983,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-31-32-no-active-test",
             32,
             true,
-            StreamVaultDatabase.MIGRATION_31_32
+            NexusDatabase.MIGRATION_31_32
         )
 
         assertEquals(0, countRows(migratedDb, "SELECT COUNT(*) FROM virtual_groups WHERE provider_id = 0 OR provider_id IS NULL"))
@@ -1000,7 +1000,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-35-36-test",
             36,
             true,
-            StreamVaultDatabase.MIGRATION_35_36
+            NexusDatabase.MIGRATION_35_36
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('channel_epg_mappings') WHERE name = 'matched_at'"))
@@ -1053,7 +1053,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-36-37-test",
             37,
             true,
-            StreamVaultDatabase.MIGRATION_36_37
+            NexusDatabase.MIGRATION_36_37
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'tmdb_identity'"))
@@ -1089,7 +1089,7 @@ class StreamVaultDatabaseMigrationTest {
             "streamvault-14-15-test",
             15,
             true,
-            StreamVaultDatabase.MIGRATION_14_15
+            NexusDatabase.MIGRATION_14_15
         )
 
         assertEquals(1, countRows(migratedDb, "SELECT COUNT(*) FROM pragma_table_info('providers') WHERE name = 'api_version'"))

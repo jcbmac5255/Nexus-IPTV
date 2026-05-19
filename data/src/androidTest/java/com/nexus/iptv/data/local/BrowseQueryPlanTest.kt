@@ -20,12 +20,12 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class BrowseQueryPlanTest {
-    private lateinit var db: StreamVaultDatabase
+    private lateinit var db: NexusDatabase
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, StreamVaultDatabase::class.java).build()
+        db = Room.inMemoryDatabaseBuilder(context, NexusDatabase::class.java).build()
     }
 
     @After

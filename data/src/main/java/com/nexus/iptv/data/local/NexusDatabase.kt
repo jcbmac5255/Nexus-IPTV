@@ -53,7 +53,7 @@ import com.nexus.iptv.data.local.entity.*
     exportSchema = true   // ← was false; schema JSON now tracked in version control
 )
 @TypeConverters(RoomEnumConverters::class)
-abstract class StreamVaultDatabase : RoomDatabase() {
+abstract class NexusDatabase : RoomDatabase() {
     abstract fun providerDao(): ProviderDao
     abstract fun channelDao(): ChannelDao
     abstract fun channelPreferenceDao(): ChannelPreferenceDao

@@ -21,7 +21,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class CatalogSyncDaoSeriesStageTest {
-    private lateinit var db: StreamVaultDatabase
+    private lateinit var db: NexusDatabase
     private lateinit var providerDao: ProviderDao
     private lateinit var seriesDao: SeriesDao
     private lateinit var catalogSyncDao: CatalogSyncDao
@@ -29,7 +29,7 @@ class CatalogSyncDaoSeriesStageTest {
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, StreamVaultDatabase::class.java).build()
+        db = Room.inMemoryDatabaseBuilder(context, NexusDatabase::class.java).build()
         providerDao = db.providerDao()
         seriesDao = db.seriesDao()
         catalogSyncDao = db.catalogSyncDao()

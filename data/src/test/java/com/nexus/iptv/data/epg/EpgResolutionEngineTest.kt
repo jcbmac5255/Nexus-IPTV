@@ -46,6 +46,7 @@ class EpgResolutionEngineTest {
     fun setup() {
         runTest {
             whenever(programDao.getChannelIdsWithPrograms(any(), any())).thenReturn(emptyList())
+            whenever(programDao.getAllChannelIdsWithPrograms(any())).thenReturn(emptyList())
         }
         engine = EpgResolutionEngine(
             channelDao = channelDao,
@@ -117,7 +118,7 @@ class EpgResolutionEngineTest {
         whenever(channelDao.getByProviderSync(PROVIDER_ID)).thenReturn(listOf(channel))
         whenever(providerEpgSourceDao.getEnabledForProviderSync(PROVIDER_ID)).thenReturn(emptyList())
         whenever(channelEpgMappingDao.getForProvider(PROVIDER_ID)).thenReturn(emptyList())
-        whenever(programDao.getChannelIdsWithPrograms(PROVIDER_ID, listOf("local.ch1"))).thenReturn(listOf("local.ch1"))
+        whenever(programDao.getAllChannelIdsWithPrograms(PROVIDER_ID)).thenReturn(listOf("local.ch1"))
 
         val summary = engine.resolveForProvider(PROVIDER_ID)
 
@@ -155,7 +156,7 @@ class EpgResolutionEngineTest {
         whenever(channelDao.getByProviderSync(PROVIDER_ID)).thenReturn(listOf(channel))
         whenever(providerEpgSourceDao.getEnabledForProviderSync(PROVIDER_ID)).thenReturn(emptyList())
         whenever(channelEpgMappingDao.getForProvider(PROVIDER_ID)).thenReturn(emptyList())
-        whenever(programDao.getChannelIdsWithPrograms(PROVIDER_ID, listOf("local.ch1"))).thenReturn(listOf("local.ch1"))
+        whenever(programDao.getAllChannelIdsWithPrograms(PROVIDER_ID)).thenReturn(listOf("local.ch1"))
 
         val summary = engine.resolveForProvider(PROVIDER_ID)
 
@@ -294,7 +295,7 @@ class EpgResolutionEngineTest {
         whenever(channelDao.getByProviderSync(PROVIDER_ID)).thenReturn(listOf(coveredChannel, uncoveredChannel))
         whenever(providerEpgSourceDao.getEnabledForProviderSync(PROVIDER_ID)).thenReturn(emptyList())
         whenever(channelEpgMappingDao.getForProvider(PROVIDER_ID)).thenReturn(emptyList())
-        whenever(programDao.getChannelIdsWithPrograms(PROVIDER_ID, listOf("local.one", "local.two"))).thenReturn(listOf("local.one"))
+        whenever(programDao.getAllChannelIdsWithPrograms(PROVIDER_ID)).thenReturn(listOf("local.one"))
 
         val summary = engine.resolveForProvider(PROVIDER_ID)
 

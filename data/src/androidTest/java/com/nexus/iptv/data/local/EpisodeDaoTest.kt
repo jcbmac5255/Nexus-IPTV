@@ -19,7 +19,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class EpisodeDaoTest {
-    private lateinit var db: StreamVaultDatabase
+    private lateinit var db: NexusDatabase
     private lateinit var episodeDao: EpisodeDao
     private lateinit var historyDao: PlaybackHistoryDao
 
@@ -27,7 +27,7 @@ class EpisodeDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, StreamVaultDatabase::class.java
+            context, NexusDatabase::class.java
         ).build()
         episodeDao = db.episodeDao()
         historyDao = db.playbackHistoryDao()

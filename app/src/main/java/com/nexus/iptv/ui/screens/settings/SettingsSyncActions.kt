@@ -149,11 +149,15 @@ internal class SettingsSyncActions(
                 }
             }
 
+            // Refresh the system Android-TV Live Channels catalog off the user-blocking
+            // path. For large providers (~16k channels) this fires that many ContentResolver
+            // inserts/updates against the system TIF provider and can take minutes; we don't
+            // need to make the user watch a frozen "Resolving EPG mappings" message during it.
             if (completed.any {
                     it == appContext.getString(R.string.settings_sync_option_tv)
                 }
             ) {
-                tvInputChannelSyncManager.refreshTvInputCatalog()
+                tvInputChannelSyncManager.refreshTvInputCatalogAsync()
             }
 
             uiState.update { state ->

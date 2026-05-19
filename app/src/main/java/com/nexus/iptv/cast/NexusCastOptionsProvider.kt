@@ -10,7 +10,7 @@ import com.google.android.gms.cast.framework.media.CastMediaOptions
 import com.google.android.gms.cast.framework.media.NotificationOptions
 import com.google.android.gms.cast.framework.media.widget.ExpandedControllerActivity
 
-class StreamVaultCastOptionsProvider : OptionsProvider {
+class NexusCastOptionsProvider : OptionsProvider {
     override fun getCastOptions(context: Context): CastOptions {
         val notificationOptions = NotificationOptions.Builder().build()
         val mediaOptions = CastMediaOptions.Builder()

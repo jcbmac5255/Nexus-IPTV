@@ -126,6 +126,7 @@ fun DashboardScreen(
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 viewModel.refreshAnnouncements()
+                viewModel.refreshUpdateNoticeIfStale()
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -187,7 +188,7 @@ fun DashboardScreen(
                     item(key = "update_notice") {
                         DashboardUpdateCard(
                             notice = updateNotice,
-                            onOpenSettings = { onNavigate(Routes.SETTINGS) },
+                            onOpenSettings = { onNavigate(Routes.settingsAbout()) },
                             onInstallUpdate = viewModel::installDownloadedUpdate
                         )
                     }
@@ -538,7 +539,10 @@ private fun DashboardActionButton(
         colors = ButtonDefaults.colors(
             containerColor = Primary.copy(alpha = 0.18f),
             focusedContainerColor = Primary.copy(alpha = 0.32f),
-            contentColor = TextPrimary
+            contentColor = TextPrimary,
+            // Without this, TV Material falls back to the focused container's contrast color
+            // (a dark blue) and the label becomes unreadable when the button is highlighted.
+            focusedContentColor = TextPrimary
         )
     ) {
         Text(text = label)

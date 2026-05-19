@@ -12,7 +12,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nexus.iptv.navigation.Routes
 import com.nexus.iptv.ui.test.assertAgainstGolden
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import com.nexus.iptv.domain.model.Channel
 import org.junit.Rule
 import org.junit.Test
@@ -27,7 +27,7 @@ class ShellGoldenTest {
     @Test
     fun browseHeroPanel_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -52,7 +52,7 @@ class ShellGoldenTest {
     @Test
     fun liveChannelRowSurface_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -81,7 +81,7 @@ class ShellGoldenTest {
     fun appScreenScaffold_rtl_matchesGolden() {
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                StreamVaultTheme {
+                NexusTheme {
                     AppScreenScaffold(
                         currentRoute = Routes.EPG,
                         onNavigate = {},

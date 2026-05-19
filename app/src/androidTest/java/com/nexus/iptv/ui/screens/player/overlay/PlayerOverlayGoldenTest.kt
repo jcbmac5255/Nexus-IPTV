@@ -10,7 +10,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nexus.iptv.ui.test.TestFixtures
 import com.nexus.iptv.ui.test.assertAgainstGolden
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import com.nexus.iptv.player.PlayerError
 import com.nexus.iptv.player.TrackType
 import org.junit.Rule
@@ -26,7 +26,7 @@ class PlayerOverlayGoldenTest {
     @Test
     fun playerControlsOverlay_vod_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -77,7 +77,7 @@ class PlayerOverlayGoldenTest {
     @Test
     fun playerNoticeBanner_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -98,7 +98,7 @@ class PlayerOverlayGoldenTest {
     @Test
     fun playerErrorOverlay_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -121,7 +121,7 @@ class PlayerOverlayGoldenTest {
     @Test
     fun playerTrackSelectionDialog_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -147,7 +147,7 @@ class PlayerOverlayGoldenTest {
     @Test
     fun playerResumePrompt_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -168,7 +168,7 @@ class PlayerOverlayGoldenTest {
     @Test
     fun playerNumericInputOverlay_matchesGolden() {
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

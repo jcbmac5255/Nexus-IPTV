@@ -24,7 +24,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun StreamVaultTheme(content: @Composable () -> Unit) {
+fun NexusTheme(content: @Composable () -> Unit) {
     val typography = rememberAppTypography()
     CompositionLocalProvider(
         LocalAppSpacing provides com.nexus.iptv.ui.design.AppSpacing(),

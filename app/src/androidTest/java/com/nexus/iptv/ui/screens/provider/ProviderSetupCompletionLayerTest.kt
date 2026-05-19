@@ -9,7 +9,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +33,7 @@ class ProviderSetupCompletionLayerTest {
         var cleanupCallCount by mutableIntStateOf(0)
 
         composeRule.setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 ProviderSetupCompletionLayer(
                     uiState = uiState,
                     knownLocalM3uUrls = emptySet(),

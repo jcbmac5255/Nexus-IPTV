@@ -32,6 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -123,14 +125,26 @@ internal fun EpgGrid(
     onProgramFocused: (Channel, Program, Boolean) -> Unit,
     onRequestMoreChannels: () -> Unit = {}
 ) {
-    val channelRailWidth = 180.dp
+    val channelRailWidth = 220.dp
     val timelineGap = 4.dp
     val rowHeight = when (density) {
-        GuideDensity.COMPACT -> 38.dp
-        GuideDensity.COMFORTABLE -> 44.dp
-        GuideDensity.CINEMATIC -> 52.dp
+        GuideDensity.COMPACT -> 46.dp
+        GuideDensity.COMFORTABLE -> 54.dp
+        GuideDensity.CINEMATIC -> 62.dp
     }
     val horizontalScrollState = rememberScrollState()
+    val firstRowFocusRequester = remember { FocusRequester() }
+    var hasRequestedInitialFocus by remember { mutableStateOf(false) }
+    LaunchedEffect(channels.isNotEmpty(), hasRequestedInitialFocus) {
+        if (channels.isNotEmpty() && !hasRequestedInitialFocus) {
+            // Small delay so the first row's TvClickableSurface registers as focusable
+            // before we request — calling immediately on first composition sometimes
+            // no-ops on TV.
+            kotlinx.coroutines.delay(120L)
+            runCatching { firstRowFocusRequester.requestFocus() }
+            hasRequestedInitialFocus = true
+        }
+    }
 
     BoxWithConstraints(
         modifier = modifier
@@ -192,7 +206,8 @@ internal fun EpgGrid(
                         onChannelClick = { onChannelClick(channel) },
                         onChannelFocused = { onChannelFocused(channel, it, isFirstRow) },
                         onProgramClick = { program -> onProgramClick(channel, program) },
-                        onProgramFocused = { program -> onProgramFocused(channel, program, isFirstRow) }
+                        onProgramFocused = { program -> onProgramFocused(channel, program, isFirstRow) },
+                        railFocusRequester = if (isFirstRow) firstRowFocusRequester else null
                     )
                 }
             }
@@ -338,7 +353,8 @@ fun EpgRow(
     onChannelClick: () -> Unit,
     onChannelFocused: (Program?) -> Unit,
     onProgramClick: (Program) -> Unit,
-    onProgramFocused: (Program) -> Unit
+    onProgramFocused: (Program) -> Unit,
+    railFocusRequester: androidx.compose.ui.focus.FocusRequester? = null
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val now = currentGuideNow()
@@ -368,6 +384,7 @@ fun EpgRow(
             modifier = Modifier
                 .width(channelRailWidth)
                 .fillMaxHeight()
+                .then(railFocusRequester?.let { Modifier.focusRequester(it) } ?: Modifier)
                 .onFocusChanged {
                     if (it.isFocused && !isFocused) {
                         onChannelFocused(currentProgram)
@@ -562,26 +579,26 @@ fun ProgramItem(
     }
     val titleStyle = when {
         isVeryCompactCell -> MaterialTheme.typography.labelSmall.copy(
-            fontSize = 10.sp,
-            lineHeight = 11.sp
+            fontSize = 12.sp,
+            lineHeight = 13.sp
         )
         isCompactCell || density == GuideDensity.COMPACT -> MaterialTheme.typography.labelMedium.copy(
-            fontSize = 11.sp,
-            lineHeight = 12.sp
+            fontSize = 13.sp,
+            lineHeight = 15.sp
         )
         else -> MaterialTheme.typography.labelLarge.copy(
-            fontSize = 12.sp,
-            lineHeight = 14.sp
+            fontSize = 14.sp,
+            lineHeight = 16.sp
         )
     }
     val timeStyle = when {
         isCompactCell || density == GuideDensity.COMPACT -> MaterialTheme.typography.labelSmall.copy(
-            fontSize = 9.sp,
-            lineHeight = 10.sp
+            fontSize = 11.sp,
+            lineHeight = 12.sp
         )
         else -> MaterialTheme.typography.labelSmall.copy(
-            fontSize = 10.sp,
-            lineHeight = 11.sp
+            fontSize = 12.sp,
+            lineHeight = 13.sp
         )
     }
 

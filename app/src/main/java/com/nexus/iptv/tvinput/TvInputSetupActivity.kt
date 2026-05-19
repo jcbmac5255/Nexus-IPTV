@@ -43,7 +43,7 @@ import com.nexus.iptv.ui.theme.ErrorColor
 import com.nexus.iptv.ui.theme.OnBackground
 import com.nexus.iptv.ui.theme.OnSurfaceDim
 import com.nexus.iptv.ui.theme.Primary
-import com.nexus.iptv.ui.theme.StreamVaultTheme
+import com.nexus.iptv.ui.theme.NexusTheme
 import com.nexus.iptv.ui.theme.SurfaceElevated
 import com.nexus.iptv.domain.model.Provider
 import com.nexus.iptv.domain.repository.ProviderRepository
@@ -64,10 +64,10 @@ class TvInputSetupActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inputId = intent.getStringExtra(TvInputInfo.EXTRA_INPUT_ID)
-            ?: ComponentName(this, StreamVaultTvInputService::class.java).flattenToShortString()
+            ?: ComponentName(this, NexusTvInputService::class.java).flattenToShortString()
         viewModel.startSetup(inputId)
         setContent {
-            StreamVaultTheme {
+            NexusTheme {
                 TvInputSetupRoute(
                     onOpenProviderSetup = {
                         startActivity(

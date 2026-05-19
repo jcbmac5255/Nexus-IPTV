@@ -59,25 +59,34 @@ class EpgResolutionEngine @Inject constructor(
         providerId: Long,
         hiddenLiveCategoryIds: Set<Long> = emptySet()
     ): EpgResolutionSummary = withContext(Dispatchers.Default) {
+        val tStart = System.currentTimeMillis()
+        val t0 = tStart
         val channels = channelDao.getByProviderSync(providerId)
             .filterNot { channel -> channel.categoryId != null && channel.categoryId in hiddenLiveCategoryIds }
+        Log.i(TAG, "resolve[$providerId] step=load-channels ms=${System.currentTimeMillis() - t0} channels=${channels.size}")
         if (channels.isEmpty()) {
             channelEpgMappingDao.deleteByProvider(providerId)
             return@withContext EpgResolutionSummary()
         }
 
+        val t1 = System.currentTimeMillis()
         val enabledAssignments = providerEpgSourceDao.getEnabledForProviderSync(providerId)
         val sourceIds = enabledAssignments.map { it.epgSourceId }
+        Log.i(TAG, "resolve[$providerId] step=load-assignments ms=${System.currentTimeMillis() - t1} sources=${sourceIds.size}")
 
         // Load all EPG channels from assigned sources in one query
+        val t2 = System.currentTimeMillis()
         val epgChannelsBySource = if (sourceIds.isNotEmpty()) {
             epgChannelDao.getBySources(sourceIds).groupBy { it.epgSourceId }
         } else {
             emptyMap()
         }
+        val totalEpgChannelsLoaded = epgChannelsBySource.values.sumOf { it.size }
+        Log.i(TAG, "resolve[$providerId] step=load-epg-channels ms=${System.currentTimeMillis() - t2} total=${totalEpgChannelsLoaded}")
 
         // Build lookup indexes for fast matching
         // sourceId -> set of trimmed xmltvChannelIds for existence checks
+        val t3 = System.currentTimeMillis()
         val exactIdIndex = mutableMapOf<Long, Set<String>>()
         // sourceId -> (normalizedName -> xmltvChannelId)
         val nameIndex = mutableMapOf<Long, Map<String, String>>()
@@ -94,20 +103,29 @@ class EpgResolutionEngine @Inject constructor(
             }
             nameIndex[sourceId] = nameMap
         }
+        Log.i(TAG, "resolve[$providerId] step=build-indexes ms=${System.currentTimeMillis() - t3}")
 
-        // Check which channels have provider-native EPG data
+        // Check which channels have provider-native EPG data. We load *all* channel ids
+        // with programs in a single query rather than passing the per-channel id list
+        // through an IN clause — for large providers (16k+ channels) the IN clause hits
+        // SQLite's variable-count limit and the resolve step stalls or fails silently.
+        val t4 = System.currentTimeMillis()
         val providerEpgChannelIds = channels.mapNotNull { it.epgChannelId?.trim()?.takeIf(String::isNotEmpty) }
         val providerNativeChannelIds = if (providerEpgChannelIds.isNotEmpty()) {
-            programDao.getChannelIdsWithPrograms(providerId, providerEpgChannelIds).toHashSet()
+            val allWithPrograms = programDao.getAllChannelIdsWithPrograms(providerId).toHashSet()
+            providerEpgChannelIds.filterTo(HashSet()) { it in allWithPrograms }
         } else {
             emptySet()
         }
+        Log.i(TAG, "resolve[$providerId] step=load-native-programs ms=${System.currentTimeMillis() - t4} native=${providerNativeChannelIds.size}")
 
         // Preserve existing manual overrides
+        val t5 = System.currentTimeMillis()
         val existingMappings = channelEpgMappingDao.getForProvider(providerId)
         val existingMappingsByChannel = existingMappings.associateBy { it.providerChannelId }
         val manualOverrides = existingMappings.filter { it.isManualOverride }
             .associateBy { it.providerChannelId }
+        Log.i(TAG, "resolve[$providerId] step=load-existing-mappings ms=${System.currentTimeMillis() - t5} existing=${existingMappings.size}")
 
         val now = System.currentTimeMillis()
         var exactIdMatches = 0
@@ -116,6 +134,7 @@ class EpgResolutionEngine @Inject constructor(
         var manualMatches = 0
         var unresolvedCount = 0
 
+        val t6 = System.currentTimeMillis()
         val mappings = channels.map { channel ->
             val existing = existingMappingsByChannel[channel.id]
             // 1. Check for manual override
@@ -198,13 +217,10 @@ class EpgResolutionEngine @Inject constructor(
                 )
             }
 
-            // 5. No EPG
+            // 5. No EPG. (Per-channel verbose log removed: it was a hot-path string
+            // allocation + double `.any` scan over enabledAssignments for every
+            // unresolved channel, which dominated the resolve step on big providers.)
             unresolvedCount++
-            Log.v(TAG, "Unresolved: channel=${channel.name} (id=${channel.id}), " +
-                "epgId=${channelEpgId ?: "null"}, " +
-                "normalizedName=$channelNormalizedName, " +
-                "idInAnySource=${enabledAssignments.any { channelEpgId != null && channelEpgId in (exactIdIndex[it.epgSourceId] ?: emptySet()) }}, " +
-                "nameInAnySource=${enabledAssignments.any { channelNormalizedName in (nameIndex[it.epgSourceId] ?: emptyMap()) }}")
             ChannelEpgMappingEntity(
                 providerChannelId = channel.id,
                 providerId = providerId,
@@ -219,9 +235,17 @@ class EpgResolutionEngine @Inject constructor(
                 updatedAt = now
             )
         }
+        Log.i(TAG, "resolve[$providerId] step=match-loop ms=${System.currentTimeMillis() - t6} mappings=${mappings.size}")
 
+        val t7 = System.currentTimeMillis()
         channelEpgMappingDao.replaceForProvider(providerId, mappings)
+        Log.i(TAG, "resolve[$providerId] step=replace-mappings ms=${System.currentTimeMillis() - t7}")
+
+        val t8 = System.currentTimeMillis()
         channelDao.backfillEpgIcons(providerId)
+        Log.i(TAG, "resolve[$providerId] step=backfill-icons ms=${System.currentTimeMillis() - t8}")
+
+        Log.i(TAG, "resolve[$providerId] TOTAL ms=${System.currentTimeMillis() - tStart}")
 
         val summary = EpgResolutionSummary(
             totalChannels = channels.size,

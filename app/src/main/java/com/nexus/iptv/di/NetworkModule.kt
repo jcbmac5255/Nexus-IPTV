@@ -59,7 +59,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .cache(
                 Cache(
-                    directory = File(context.cacheDir, "streamvault_http_cache"),
+                    directory = File(context.cacheDir, "nexus_http_cache"),
                     maxSize = 256L * 1024 * 1024
                 )
             )

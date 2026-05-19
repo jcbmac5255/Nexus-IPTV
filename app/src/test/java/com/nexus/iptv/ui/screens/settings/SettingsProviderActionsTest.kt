@@ -73,7 +73,7 @@ class SettingsProviderActionsTest {
         verify(providerRepository).setActiveProvider(7L)
         verify(watchNextManager).refreshWatchNext()
         verify(launcherRecommendationsManager).refreshRecommendations(force = true)
-        verify(tvInputChannelSyncManager).refreshTvInputCatalog()
+        verify(tvInputChannelSyncManager).refreshTvInputCatalogAsync()
         verify(syncProvider, never()).invoke(any(), any())
     }
 
@@ -87,7 +87,7 @@ class SettingsProviderActionsTest {
         verify(providerRepository).deleteProvider(7L)
         verify(watchNextManager).refreshWatchNext()
         verify(launcherRecommendationsManager).refreshRecommendations(force = true)
-        verify(tvInputChannelSyncManager).refreshTvInputCatalog()
+        verify(tvInputChannelSyncManager).refreshTvInputCatalogAsync()
         assertThat(uiState.value.userMessage).isEqualTo("Provider deleted")
     }
 }

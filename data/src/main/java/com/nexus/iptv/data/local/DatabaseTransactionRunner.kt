@@ -10,7 +10,7 @@ interface DatabaseTransactionRunner {
 
 @Singleton
 class RoomDatabaseTransactionRunner @Inject constructor(
-    private val database: StreamVaultDatabase
+    private val database: NexusDatabase
 ) : DatabaseTransactionRunner {
     override suspend fun <T> inTransaction(block: suspend () -> T): T {
         return database.withTransaction {

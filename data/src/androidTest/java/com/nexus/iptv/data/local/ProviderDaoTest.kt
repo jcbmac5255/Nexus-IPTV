@@ -18,13 +18,13 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class ProviderDaoTest {
-    private lateinit var db: StreamVaultDatabase
+    private lateinit var db: NexusDatabase
     private lateinit var providerDao: ProviderDao
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, StreamVaultDatabase::class.java).build()
+        db = Room.inMemoryDatabaseBuilder(context, NexusDatabase::class.java).build()
         providerDao = db.providerDao()
     }
 
