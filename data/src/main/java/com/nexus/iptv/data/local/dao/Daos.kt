@@ -759,14 +759,14 @@ interface TmdbIdentityDao {
 @Dao
 @RewriteQueriesToDropUnusedColumns
 interface MovieDao {
-    @Query("SELECT * FROM movies WHERE provider_id = :providerId ORDER BY name ASC")
+    @Query("SELECT * FROM movies WHERE provider_id = :providerId ORDER BY added_at DESC, name ASC, id ASC")
     fun getByProvider(providerId: Long): Flow<List<MovieBrowseEntity>>
 
     /** SQL-level parental filter — avoids loading protected items into memory. */
-    @Query("SELECT * FROM movies WHERE provider_id = :providerId AND is_user_protected = 0 ORDER BY name ASC")
+    @Query("SELECT * FROM movies WHERE provider_id = :providerId AND is_user_protected = 0 ORDER BY added_at DESC, name ASC, id ASC")
     fun getByProviderUnprotected(providerId: Long): Flow<List<MovieBrowseEntity>>
 
-    @Query("SELECT * FROM movies WHERE provider_id = :providerId ORDER BY name ASC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM movies WHERE provider_id = :providerId ORDER BY added_at DESC, name ASC, id ASC LIMIT :limit OFFSET :offset")
     fun getByProviderPage(providerId: Long, limit: Int, offset: Int): Flow<List<MovieBrowseEntity>>
 
     @Query("SELECT * FROM movies WHERE provider_id = :providerId ORDER BY name ASC, id ASC LIMIT :limit")
@@ -933,7 +933,7 @@ interface MovieDao {
         limit: Int
     ): List<MovieBrowseEntity>
 
-    @Query("SELECT * FROM movies WHERE provider_id = :providerId AND category_id = :categoryId ORDER BY name ASC")
+    @Query("SELECT * FROM movies WHERE provider_id = :providerId AND category_id = :categoryId ORDER BY added_at DESC, name ASC, id ASC")
     fun getByCategory(providerId: Long, categoryId: Long): Flow<List<MovieBrowseEntity>>
 
     @Query("SELECT * FROM movies WHERE provider_id = :providerId AND category_id = :categoryId ORDER BY name ASC, id ASC LIMIT :limit")
@@ -1600,10 +1600,10 @@ interface MovieDao {
 @Dao
 @RewriteQueriesToDropUnusedColumns
 interface SeriesDao {
-    @Query("SELECT * FROM series WHERE provider_id = :providerId ORDER BY name ASC")
+    @Query("SELECT * FROM series WHERE provider_id = :providerId ORDER BY last_modified DESC, name ASC, id ASC")
     fun getByProvider(providerId: Long): Flow<List<SeriesBrowseEntity>>
 
-    @Query("SELECT * FROM series WHERE provider_id = :providerId ORDER BY name ASC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM series WHERE provider_id = :providerId ORDER BY last_modified DESC, name ASC, id ASC LIMIT :limit OFFSET :offset")
     fun getByProviderPage(providerId: Long, limit: Int, offset: Int): Flow<List<SeriesBrowseEntity>>
 
     @Query("SELECT * FROM series WHERE provider_id = :providerId ORDER BY name ASC, id ASC LIMIT :limit")

@@ -2,6 +2,7 @@ package com.nexus.iptv.data.remote.xtream
 
 import com.nexus.iptv.data.local.dao.ProviderDao
 import com.nexus.iptv.data.local.entity.ProviderEntity
+import com.nexus.iptv.data.remote.http.toGenericRequestProfile
 import com.nexus.iptv.data.remote.stalker.StalkerProvider
 import com.nexus.iptv.data.remote.stalker.StalkerApiService
 import com.nexus.iptv.data.remote.stalker.StalkerStreamKind
@@ -96,9 +97,11 @@ class XtreamStreamUrlResolver @Inject constructor(
                     fallbackContainerExtension = fallbackContainerExtension
                 )?.let { return it }
             }
-            return ResolvedStreamUrl(
-                url = url,
-                expirationTime = extractStreamExpirationTime(url)
+            return provider.applyPlaybackRequestProfile(
+                ResolvedStreamUrl(
+                    url = url,
+                    expirationTime = extractStreamExpirationTime(url)
+                )
             )
         }
 
@@ -124,10 +127,12 @@ class XtreamStreamUrlResolver @Inject constructor(
                 )
                 val resolvedUrl = if (preferStableUrl) fallbackResolvedUrl else (directSource ?: fallbackResolvedUrl)
 
-                ResolvedStreamUrl(
-                    url = resolvedUrl,
-                    expirationTime = extractStreamExpirationTime(resolvedUrl),
-                    containerExtension = ext
+                resolvedProvider.applyPlaybackRequestProfile(
+                    ResolvedStreamUrl(
+                        url = resolvedUrl,
+                        expirationTime = extractStreamExpirationTime(resolvedUrl),
+                        containerExtension = ext
+                    )
                 )
             }
             ProviderType.STALKER_PORTAL -> {
@@ -153,9 +158,11 @@ class XtreamStreamUrlResolver @Inject constructor(
                 )
             }
             ProviderType.M3U -> url.takeIf { it.isNotBlank() }?.let { passthroughUrl ->
-                ResolvedStreamUrl(
-                    url = passthroughUrl,
-                    expirationTime = extractStreamExpirationTime(passthroughUrl)
+                resolvedProvider.applyPlaybackRequestProfile(
+                    ResolvedStreamUrl(
+                        url = passthroughUrl,
+                        expirationTime = extractStreamExpirationTime(passthroughUrl)
+                    )
                 )
             }
         }
@@ -184,13 +191,28 @@ class XtreamStreamUrlResolver @Inject constructor(
             streamId = streamId,
             containerExtension = ext
         )
-        // NB: upstream wraps this in `applyPlaybackRequestProfile` which we don't have —
-        // our HTTP client picks up the provider user-agent/headers via interceptors at
-        // request time, so a plain ResolvedStreamUrl is fine here.
-        return ResolvedStreamUrl(
-            url = resolvedUrl,
-            expirationTime = extractStreamExpirationTime(resolvedUrl),
-            containerExtension = ext
+        return provider.applyPlaybackRequestProfile(
+            ResolvedStreamUrl(
+                url = resolvedUrl,
+                expirationTime = extractStreamExpirationTime(resolvedUrl),
+                containerExtension = ext
+            )
+        )
+    }
+
+    /**
+     * Attach the provider's user-agent and request headers to a freshly-built playback URL
+     * so direct GETs against the stream survive providers that filter out OkHttp's default
+     * UA. Stalker uses its own per-request handshake path so we leave it alone.
+     */
+    private fun ProviderEntity?.applyPlaybackRequestProfile(resolved: ResolvedStreamUrl): ResolvedStreamUrl {
+        if (this == null || type == ProviderType.STALKER_PORTAL) {
+            return resolved
+        }
+        val requestProfile = toGenericRequestProfile(ownerTag = "provider:$id/playback")
+        return resolved.copy(
+            headers = requestProfile.headers + resolved.headers,
+            userAgent = resolved.userAgent?.takeIf { it.isNotBlank() } ?: requestProfile.userAgent
         )
     }
 
