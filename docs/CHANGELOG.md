@@ -2,6 +2,12 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.11] - 2026-05-25
+
+### Fixed
+
+- Sync overlay no longer shows stale "Live TV 210 / 210" while Movies, Series and EPG are still running.
+
 ## [1.1.10] - 2026-05-25
 
 ### Changed

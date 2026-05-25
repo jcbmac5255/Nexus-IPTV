@@ -642,6 +642,11 @@ class SyncManager @Inject constructor(
         syncReason: XtreamLiveSyncReason = XtreamLiveSyncReason.MANUAL_SETTINGS,
         onProgress: ((String) -> Unit)? = null
     ): com.nexus.iptv.domain.model.Result<Unit> = withProviderLock(providerId) lock@{
+        // Clear any bus progress carried over from the previous section so the
+        // overlay doesn't show "Live TV 210/210" while Movies/Series/EPG run
+        // (those sections don't emit to the bus and would otherwise keep the
+        // stale LIVE fraction onscreen).
+        syncProgressBus.reset()
         val providerEntity = providerDao.getById(providerId)
             ?: return@lock com.nexus.iptv.domain.model.Result.error("Provider $providerId not found")
 
