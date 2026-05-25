@@ -2,6 +2,13 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.10] - 2026-05-25
+
+### Changed
+
+- Sync overlay now shows Live TV channel-batch progress instead of sitting on a single message.
+- Movies/Series catalog chip shows "Indexing…" until at least one category has finished, not "0 / N".
+
 ## [1.1.9] - 2026-05-25
 
 ### Changed

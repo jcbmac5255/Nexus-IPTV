@@ -45,6 +45,7 @@ data class SettingsUiState(
     val activeLiveSource: ActiveLiveSource? = null,
     val isSyncing: Boolean = false,
     val syncProgress: String? = null,
+    val syncBusProgress: com.nexus.iptv.domain.sync.SyncProgress? = null,
     val syncingProviderName: String? = null,
     val userMessage: String? = null,
     val syncWarningsByProvider: Map<Long, List<String>> = emptyMap(),

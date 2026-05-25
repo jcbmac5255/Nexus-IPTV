@@ -38,7 +38,8 @@ import com.nexus.iptv.ui.theme.Primary
 internal fun SyncingOverlay(
     isSyncing: Boolean,
     providerName: String? = null,
-    progress: String? = null
+    progress: String? = null,
+    busProgress: com.nexus.iptv.domain.sync.SyncProgress? = null
 ) {
     if (!isSyncing) return
 
@@ -57,7 +58,10 @@ internal fun SyncingOverlay(
             .onKeyEvent { true },
         contentAlignment = Alignment.Center
     ) {
-        val fraction = progress?.let { extractProgressFraction(it) }
+        val busFraction = busProgress?.takeIf { it.total > 0 }?.let { p ->
+            (p.current.toFloat() / p.total.toFloat()).coerceIn(0f, 1f)
+        }
+        val fraction = busFraction ?: progress?.let { extractProgressFraction(it) }
         val animatedFraction by animateFloatAsState(
             targetValue = fraction ?: 0f,
             animationSpec = tween(durationMillis = 400),
@@ -80,7 +84,8 @@ internal fun SyncingOverlay(
                 style = MaterialTheme.typography.bodySmall,
                 color = OnSurfaceDim
             )
-            progress?.let { message ->
+            val message = formatBusProgressMessage(busProgress) ?: progress
+            if (message != null) {
                 if (fraction != null) {
                     LinearProgressIndicator(
                         progress = { animatedFraction },
@@ -101,5 +106,23 @@ internal fun SyncingOverlay(
             }
         }
     }
+}
+
+private fun formatBusProgressMessage(progress: com.nexus.iptv.domain.sync.SyncProgress?): String? {
+    if (progress == null) return null
+    val sectionLabel = when (progress.section) {
+        com.nexus.iptv.domain.sync.Section.LIVE -> "Live TV"
+        com.nexus.iptv.domain.sync.Section.VOD -> "Movies"
+        com.nexus.iptv.domain.sync.Section.SERIES -> "Series"
+        com.nexus.iptv.domain.sync.Section.EPG -> "EPG"
+    }
+    val countSuffix = when {
+        progress.total > 0 && progress.currentLabel.isNotBlank() ->
+            " ${progress.current} / ${progress.total} (${progress.currentLabel})"
+        progress.total > 0 -> " ${progress.current} / ${progress.total}"
+        progress.itemsIndexed > 0 -> " ${progress.itemsIndexed} items"
+        else -> ""
+    }
+    return "Syncing $sectionLabel...$countSuffix"
 }
 

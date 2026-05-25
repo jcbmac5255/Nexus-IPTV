@@ -31,7 +31,8 @@ internal fun SettingsScreenDialogs(
     SyncingOverlay(
         isSyncing = uiState.isSyncing,
         providerName = uiState.syncingProviderName,
-        progress = uiState.syncProgress
+        progress = uiState.syncProgress,
+        busProgress = uiState.syncBusProgress
     )
 
     if (dialogState.showLiveTvModeDialog) {

@@ -156,7 +156,7 @@ private fun providerCatalogStatusTagText(
     value: ProviderCatalogCountUiModel,
     syncingLabel: String
 ): String? = when (value.status) {
-    ProviderCatalogCountStatus.QUEUED -> if (value.totalCategories > 0) {
+    ProviderCatalogCountStatus.QUEUED -> if (value.completedCategories > 0 && value.totalCategories > 0) {
         stringResource(
             R.string.settings_catalog_count_indexing_progress,
             value.completedCategories,
@@ -165,7 +165,7 @@ private fun providerCatalogStatusTagText(
     } else {
         stringResource(R.string.settings_catalog_count_queued)
     }
-    ProviderCatalogCountStatus.SYNCING -> if (value.totalCategories > 0) {
+    ProviderCatalogCountStatus.SYNCING -> if (value.completedCategories > 0 && value.totalCategories > 0) {
         stringResource(
             R.string.settings_catalog_count_indexing_progress,
             value.completedCategories,

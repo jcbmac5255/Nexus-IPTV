@@ -109,7 +109,8 @@ class SettingsViewModel @Inject constructor(
     private val gitHubReleaseChecker: GitHubReleaseChecker,
     private val appUpdateInstaller: AppUpdateInstaller,
     private val getCustomCategories: GetCustomCategories,
-    private val audioCompatibilityMemoryStore: AudioCompatibilityMemoryStore
+    private val audioCompatibilityMemoryStore: AudioCompatibilityMemoryStore,
+    syncProgressBus: com.nexus.iptv.data.sync.SyncProgressBus
 ) : ViewModel() {
     private val appContext = application
     private val exportBackup = ExportBackup(backupManager)
@@ -170,6 +171,11 @@ class SettingsViewModel @Inject constructor(
         registerPreferenceObservers()
         registerXtreamIndexJobObserver()
         registerXtreamLiveOnboardingObserver()
+        viewModelScope.launch {
+            syncProgressBus.flow.collect { progress ->
+                _uiState.update { it.copy(syncBusProgress = progress) }
+            }
+        }
         registerSettingsAppUpdateObservers(
             scope = viewModelScope,
             preferencesRepository = preferencesRepository,
