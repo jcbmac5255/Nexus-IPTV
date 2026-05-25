@@ -62,7 +62,7 @@ internal fun ProviderSettingsCard(
     isSyncing: Boolean,
     xtreamLiveOnboardingPhase: String?,
     xtreamLiveOnboarding: XtreamLiveOnboardingUiModel?,
-    xtreamIndexSectionStatuses: Map<String, ProviderCatalogCountStatus>,
+    xtreamIndexSectionStatuses: Map<String, XtreamIndexSectionStatus>,
     diagnostics: ProviderDiagnosticsUiModel?,
     databaseMaintenance: DatabaseMaintenanceUiModel?,
     syncWarnings: List<String>,
@@ -197,7 +197,7 @@ internal fun ProviderSettingsCard(
             ProviderDiagnosticsPanel(
                 provider = provider,
                 diagnostics = model,
-                movieIndexInProgress = xtreamIndexSectionStatuses["MOVIE"] in setOf(
+                movieIndexInProgress = xtreamIndexSectionStatuses["MOVIE"]?.status in setOf(
                     ProviderCatalogCountStatus.QUEUED,
                     ProviderCatalogCountStatus.SYNCING
                 ),
@@ -271,7 +271,7 @@ internal fun ProviderDiagnosticsUiModel.liveCatalogCount(
 }
 
 internal fun ProviderDiagnosticsUiModel.movieCatalogCount(
-    jobStatus: ProviderCatalogCountStatus?
+    jobStatus: XtreamIndexSectionStatus?
 ): ProviderCatalogCountUiModel = sectionCatalogCount(
     count = movieCount,
     lastSuccess = lastMovieSuccess,
@@ -279,7 +279,7 @@ internal fun ProviderDiagnosticsUiModel.movieCatalogCount(
 )
 
 internal fun ProviderDiagnosticsUiModel.seriesCatalogCount(
-    jobStatus: ProviderCatalogCountStatus?
+    jobStatus: XtreamIndexSectionStatus?
 ): ProviderCatalogCountUiModel = sectionCatalogCount(
     count = seriesCount,
     lastSuccess = lastSeriesSuccess,
@@ -287,7 +287,7 @@ internal fun ProviderDiagnosticsUiModel.seriesCatalogCount(
 )
 
 internal fun ProviderDiagnosticsUiModel.epgCatalogCount(
-    jobStatus: ProviderCatalogCountStatus?
+    jobStatus: XtreamIndexSectionStatus?
 ): ProviderCatalogCountUiModel = sectionCatalogCount(
     count = epgCount,
     lastSuccess = lastEpgSuccess,
@@ -297,10 +297,15 @@ internal fun ProviderDiagnosticsUiModel.epgCatalogCount(
 internal fun sectionCatalogCount(
     count: Int,
     lastSuccess: Long,
-    jobStatus: ProviderCatalogCountStatus?
+    jobStatus: XtreamIndexSectionStatus?
 ): ProviderCatalogCountUiModel {
-    if (jobStatus != null && jobStatus != ProviderCatalogCountStatus.READY) {
-        return ProviderCatalogCountUiModel(count, jobStatus)
+    if (jobStatus != null && jobStatus.status != ProviderCatalogCountStatus.READY) {
+        return ProviderCatalogCountUiModel(
+            count = count,
+            status = jobStatus.status,
+            completedCategories = jobStatus.completedCategories,
+            totalCategories = jobStatus.totalCategories
+        )
     }
     return if (lastSuccess > 0L || count > 0) {
         ProviderCatalogCountUiModel(count, ProviderCatalogCountStatus.READY)

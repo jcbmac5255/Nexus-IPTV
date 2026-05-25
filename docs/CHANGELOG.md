@@ -2,6 +2,17 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.9] - 2026-05-25
+
+### Changed
+
+- EPG sync now shows download MB and parse progress instead of sitting on a single message.
+- Sync progress text says "Syncing X..." instead of misleading "Retrying X...".
+
+### Fixed
+
+- Catalog chip now shows "Indexing N / M" instead of stale "Queued" while background indexing runs.
+
 ## [1.1.8] - 2026-05-18
 
 ### Added

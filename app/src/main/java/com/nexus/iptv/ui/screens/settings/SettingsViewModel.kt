@@ -297,7 +297,11 @@ class SettingsViewModel @Inject constructor(
                             .filter { job -> job.providerId in providerIds }
                             .mapNotNull { job ->
                                 val section = job.section.toCatalogSectionKey() ?: return@mapNotNull null
-                                job.providerId to (section to job.state.toCatalogCountStatus())
+                                job.providerId to (section to XtreamIndexSectionStatus(
+                                    status = job.state.toCatalogCountStatus(),
+                                    completedCategories = job.completedCategories,
+                                    totalCategories = job.totalCategories
+                                ))
                             }
                             .groupBy({ it.first }, { it.second })
                             .mapValues { (_, pairs) -> pairs.toMap() }

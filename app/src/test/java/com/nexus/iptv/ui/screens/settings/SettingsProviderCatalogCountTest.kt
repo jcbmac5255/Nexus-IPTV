@@ -12,7 +12,9 @@ class SettingsProviderCatalogCountTest {
             lastMovieSuccess = 0L
         )
 
-        val result = diagnostics.movieCatalogCount(ProviderCatalogCountStatus.SYNCING)
+        val result = diagnostics.movieCatalogCount(
+            XtreamIndexSectionStatus(status = ProviderCatalogCountStatus.SYNCING)
+        )
 
         assertThat(result.count).isEqualTo(140_484)
         assertThat(result.status).isEqualTo(ProviderCatalogCountStatus.SYNCING)

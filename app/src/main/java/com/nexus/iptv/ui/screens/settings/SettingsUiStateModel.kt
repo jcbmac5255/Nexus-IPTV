@@ -50,7 +50,7 @@ data class SettingsUiState(
     val syncWarningsByProvider: Map<Long, List<String>> = emptyMap(),
     val xtreamLiveOnboardingPhaseByProvider: Map<Long, String> = emptyMap(),
     val xtreamLiveOnboardingByProvider: Map<Long, XtreamLiveOnboardingUiModel> = emptyMap(),
-    val xtreamIndexSectionStatusByProvider: Map<Long, Map<String, ProviderCatalogCountStatus>> = emptyMap(),
+    val xtreamIndexSectionStatusByProvider: Map<Long, Map<String, XtreamIndexSectionStatus>> = emptyMap(),
     val diagnosticsByProvider: Map<Long, ProviderDiagnosticsUiModel> = emptyMap(),
     val databaseMaintenance: DatabaseMaintenanceUiModel? = null,
     val parentalControlLevel: Int = 0,

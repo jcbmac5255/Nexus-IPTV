@@ -71,6 +71,8 @@ class EpgRepositoryImpl @Inject constructor(
     companion object {
         private const val MAX_EPG_SIZE_BYTES = NetworkTimeoutConfig.EPG_MAX_SIZE_BYTES
         private const val EPG_PROGRAM_BATCH_SIZE = 500
+        private const val EPG_DOWNLOAD_PROGRESS_INTERVAL_BYTES = 1_048_576L
+        private const val EPG_PARSE_PROGRESS_INTERVAL = 5_000L
         private const val NOW_AND_NEXT_LOOKBACK_MS = 60L * 60L * 1000L
         private const val NOW_AND_NEXT_LOOKAHEAD_MS = 2L * 60L * 60L * 1000L
         private const val NOW_AND_NEXT_REFRESH_INTERVAL_MS = 60L * 1000L
@@ -220,7 +222,11 @@ class EpgRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun refreshEpg(providerId: Long, epgUrl: String): Result<Unit> =
+    override suspend fun refreshEpg(
+        providerId: Long,
+        epgUrl: String,
+        onProgress: ((String) -> Unit)?
+    ): Result<Unit> =
         withContext(Dispatchers.IO) {
             providerRefreshMutex(providerId).withLock {
                 val stagingProviderId = -providerId
@@ -229,6 +235,8 @@ class EpgRepositoryImpl @Inject constructor(
                     ?.trim()
                     ?.takeIf(String::isNotEmpty)
                 val batch = ArrayList<ProgramEntity>(EPG_PROGRAM_BATCH_SIZE)
+                var parsedCount = 0L
+                var nextParseMilestone = EPG_PARSE_PROGRESS_INTERVAL
                 suspend fun flushBatch() {
                     if (batch.isEmpty()) return
                     val rows = batch.toList()
@@ -247,6 +255,7 @@ class EpgRepositoryImpl @Inject constructor(
                         .header("Accept-Encoding", "identity")
                         .build()
                         .withRequestProfile(providerRequestProfile)
+                    onProgress?.invoke("Downloading EPG...")
                     val response = epgHttpClient.newCall(request).execute()
 
                     if (!response.isSuccessful) {
@@ -280,15 +289,34 @@ class EpgRepositoryImpl @Inject constructor(
                             rawStream
                         }
                         // Cap total bytes read even when Content-Length is absent (chunked transfer)
+                        // and emit periodic download progress so the UI doesn't sit silent on
+                        // multi-minute XMLTV downloads from slow EPG hosts.
                         val limitedStream = object : FilterInputStream(httpStream) {
                             private var bytesRead = 0L
+                            private var nextDownloadMilestone = EPG_DOWNLOAD_PROGRESS_INTERVAL_BYTES
                             override fun read(): Int {
                                 if (bytesRead >= MAX_EPG_SIZE_BYTES) throw IOException("EPG response too large (>200 MB)")
-                                return super.read().also { if (it >= 0) bytesRead++ }
+                                return super.read().also {
+                                    if (it >= 0) {
+                                        bytesRead++
+                                        maybeEmitDownloadProgress()
+                                    }
+                                }
                             }
                             override fun read(b: ByteArray, off: Int, len: Int): Int {
                                 if (bytesRead >= MAX_EPG_SIZE_BYTES) throw IOException("EPG response too large (>200 MB)")
-                                return super.read(b, off, len).also { if (it > 0) bytesRead += it }
+                                return super.read(b, off, len).also {
+                                    if (it > 0) {
+                                        bytesRead += it
+                                        maybeEmitDownloadProgress()
+                                    }
+                                }
+                            }
+                            private fun maybeEmitDownloadProgress() {
+                                if (onProgress == null) return
+                                if (bytesRead < nextDownloadMilestone) return
+                                onProgress.invoke("Downloading EPG... ${bytesRead / 1_048_576} MB")
+                                nextDownloadMilestone = bytesRead + EPG_DOWNLOAD_PROGRESS_INTERVAL_BYTES
                             }
                         }
                         val xmlInput: InputStream = if (alreadyDecompressed) {
@@ -299,6 +327,11 @@ class EpgRepositoryImpl @Inject constructor(
                         xmlInput.use {
                             xmltvParser.parseStreaming(xmlInput, timezoneId = providerTimezoneId) { program ->
                                 batch.add(program.copy(providerId = stagingProviderId).toEntity())
+                                parsedCount++
+                                if (onProgress != null && parsedCount >= nextParseMilestone) {
+                                    onProgress.invoke("Parsing EPG... ${parsedCount / 1_000}k programs")
+                                    nextParseMilestone = parsedCount + EPG_PARSE_PROGRESS_INTERVAL
+                                }
                                 if (batch.size >= EPG_PROGRAM_BATCH_SIZE) {
                                     flushBatch()
                                 }
@@ -308,6 +341,7 @@ class EpgRepositoryImpl @Inject constructor(
 
                     flushBatch()
 
+                    onProgress?.invoke("Finalizing EPG...")
                     transactionRunner.inTransaction {
                         programDao.deleteByProvider(providerId)
                         programDao.moveToProvider(stagingProviderId, providerId)

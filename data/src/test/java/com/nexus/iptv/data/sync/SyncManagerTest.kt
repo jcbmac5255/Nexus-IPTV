@@ -536,7 +536,7 @@ class SyncManagerTest {
     @Test
     fun `syncEpg_xtream_success_marks_epg_job_success`() = runTest {
         val mgr = buildManager(providerType = ProviderType.XTREAM_CODES)
-        org.mockito.kotlin.whenever(epgRepo.refreshEpg(eq(1L), any())).thenReturn(Result.success(Unit))
+        org.mockito.kotlin.whenever(epgRepo.refreshEpg(eq(1L), any(), anyOrNull())).thenReturn(Result.success(Unit))
         org.mockito.kotlin.whenever(epgSourceRepo.refreshAllForProvider(1L)).thenReturn(Result.success(Unit))
         org.mockito.kotlin.whenever(epgSourceRepo.resolveForProvider(eq(1L), any()))
             .thenReturn(com.nexus.iptv.domain.model.EpgResolutionSummary())
@@ -557,7 +557,7 @@ class SyncManagerTest {
     @Test
     fun `syncEpg_xtream_refresh_error_marks_epg_job_retryable_instead_of_success`() = runTest {
         val mgr = buildManager(providerType = ProviderType.XTREAM_CODES)
-        org.mockito.kotlin.whenever(epgRepo.refreshEpg(eq(1L), any()))
+        org.mockito.kotlin.whenever(epgRepo.refreshEpg(eq(1L), any(), anyOrNull()))
             .thenReturn(Result.error("network down", java.io.IOException("network down")))
         org.mockito.kotlin.whenever(epgSourceRepo.refreshAllForProvider(1L)).thenReturn(Result.success(Unit))
         org.mockito.kotlin.whenever(epgSourceRepo.resolveForProvider(eq(1L), any()))
@@ -1885,7 +1885,7 @@ class SyncManagerTest {
         val mgr = buildManager(providerType = ProviderType.M3U, providerEntity = provider)
         val syncEntered = CompletableDeferred<Unit>()
         val releaseSync = CompletableDeferred<Unit>()
-        org.mockito.kotlin.whenever(epgRepo.refreshEpg(1L, "https://epg.example.com/guide.xml")).thenAnswer {
+        org.mockito.kotlin.whenever(epgRepo.refreshEpg(eq(1L), eq("https://epg.example.com/guide.xml"), anyOrNull())).thenAnswer {
             syncEntered.complete(Unit)
             runBlocking { releaseSync.await() }
             Result.success(Unit)

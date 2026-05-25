@@ -18,7 +18,15 @@ enum class ProviderCatalogCountStatus {
 
 data class ProviderCatalogCountUiModel(
     val count: Int = 0,
-    val status: ProviderCatalogCountStatus = ProviderCatalogCountStatus.PENDING
+    val status: ProviderCatalogCountStatus = ProviderCatalogCountStatus.PENDING,
+    val completedCategories: Int = 0,
+    val totalCategories: Int = 0
+)
+
+data class XtreamIndexSectionStatus(
+    val status: ProviderCatalogCountStatus,
+    val completedCategories: Int = 0,
+    val totalCategories: Int = 0
 )
 
 data class ProviderDiagnosticsUiModel(

@@ -2219,8 +2219,9 @@ class SyncManager @Inject constructor(
                         UrlSecurityPolicy.validateXtreamEpgUrl(xmltvUrl)?.let { message ->
                             throw IllegalStateException(message)
                         }
+                        val epgProgress: (String) -> Unit = { msg -> progress(provider.id, onProgress, msg) }
                         retryTransient {
-                            requireResult(epgRepository.refreshEpg(provider.id, xmltvUrl), "Failed to refresh EPG")
+                            requireResult(epgRepository.refreshEpg(provider.id, xmltvUrl, epgProgress), "Failed to refresh EPG")
                         }
                         val epgCount = programDao.countByProvider(provider.id)
                         updatedMetadata = updatedMetadata.copy(
@@ -2250,9 +2251,10 @@ class SyncManager @Inject constructor(
                         warnings.add(epgValidationError)
                     } else {
                         try {
+                            val epgProgress: (String) -> Unit = { msg -> progress(provider.id, onProgress, msg) }
                             progress(provider.id, onProgress, "Downloading EPG...")
                             retryTransient {
-                                requireResult(epgRepository.refreshEpg(provider.id, currentEpgUrl), "Failed to refresh EPG")
+                                requireResult(epgRepository.refreshEpg(provider.id, currentEpgUrl, epgProgress), "Failed to refresh EPG")
                             }
                             updatedMetadata = updatedMetadata.copy(
                                 lastEpgSync = now,
@@ -2312,7 +2314,7 @@ class SyncManager @Inject constructor(
         provider: Provider,
         onProgress: ((String) -> Unit)?
     ) {
-        progress(provider.id, onProgress, "Retrying EPG...")
+        progress(provider.id, onProgress, "Syncing EPG...")
         val hiddenLiveCategoryIds = preferencesRepository.getHiddenCategoryIds(provider.id, ContentType.LIVE).first()
         if (provider.type == ProviderType.STALKER_PORTAL) {
             syncStalkerPreferredEpg(
@@ -2364,8 +2366,9 @@ class SyncManager @Inject constructor(
         validationError?.let { message ->
             throw IllegalStateException(message)
         }
+        val epgProgress: (String) -> Unit = { msg -> progress(provider.id, onProgress, msg) }
         retryTransient {
-            requireResult(epgRepository.refreshEpg(provider.id, epgUrl), "Failed to refresh EPG")
+            requireResult(epgRepository.refreshEpg(provider.id, epgUrl, epgProgress), "Failed to refresh EPG")
         }
         val now = System.currentTimeMillis()
         val metadata = (syncMetadataRepository.getMetadata(provider.id) ?: SyncMetadata(provider.id))
@@ -2405,9 +2408,10 @@ class SyncManager @Inject constructor(
                 shouldUseNativeGuide = true
             } else {
                 try {
+                    val epgProgress: (String) -> Unit = { msg -> progress(provider.id, onProgress, msg) }
                     progress(provider.id, onProgress, "Downloading EPG...")
                     retryTransient {
-                        requireResult(epgRepository.refreshEpg(provider.id, currentEpgUrl), "Failed to refresh EPG")
+                        requireResult(epgRepository.refreshEpg(provider.id, currentEpgUrl, epgProgress), "Failed to refresh EPG")
                     }
                     val epgCount = programDao.countByProvider(provider.id)
                     if (epgCount > 0) {
@@ -2657,7 +2661,7 @@ class SyncManager @Inject constructor(
         val sectionWarnings = mutableListOf<String>()
         when (provider.type) {
             ProviderType.XTREAM_CODES -> {
-                progress(provider.id, onProgress, "Retrying Live TV...")
+                progress(provider.id, onProgress, "Syncing Live TV...")
                 val useTextClassification = preferencesRepository.useXtreamTextClassification.first()
                 val enableBase64TextCompatibility = preferencesRepository.xtreamBase64TextCompatibility.first()
                 val hiddenLiveCategoryIds = preferencesRepository.getHiddenCategoryIds(provider.id, ContentType.LIVE).first()
@@ -2756,7 +2760,7 @@ class SyncManager @Inject constructor(
                 }
             }
             ProviderType.M3U -> {
-                progress(provider.id, onProgress, "Retrying Live TV...")
+                progress(provider.id, onProgress, "Syncing Live TV...")
                 val stats = withContext(Dispatchers.IO) {
                     m3uImporter.importPlaylist(provider, onProgress, includeLive = true, includeMovies = false)
                 }
@@ -2772,7 +2776,7 @@ class SyncManager @Inject constructor(
                 syncMetadataRepository.updateMetadata(metadata)
             }
             ProviderType.STALKER_PORTAL -> {
-                progress(provider.id, onProgress, "Retrying Live TV...")
+                progress(provider.id, onProgress, "Syncing Live TV...")
                 val api = createStalkerSyncProvider(provider)
                 val hiddenLiveCategoryIds = preferencesRepository.getHiddenCategoryIds(provider.id, ContentType.LIVE).first()
                 val liveCatalogResult = syncStalkerLiveCatalogStaged(api, provider, hiddenLiveCategoryIds, onProgress)
@@ -2834,7 +2838,7 @@ class SyncManager @Inject constructor(
                 Log.i(TAG, "Queued Xtream movie index for provider ${provider.id}: $categoryCount categories.")
             }
             ProviderType.M3U -> {
-                progress(provider.id, onProgress, "Retrying Movies...")
+                progress(provider.id, onProgress, "Syncing Movies...")
                 val stats = withContext(Dispatchers.IO) {
                     m3uImporter.importPlaylist(provider, onProgress, includeLive = false, includeMovies = true)
                 }
@@ -2854,7 +2858,7 @@ class SyncManager @Inject constructor(
                 syncMetadataRepository.updateMetadata(metadata)
             }
             ProviderType.STALKER_PORTAL -> {
-                progress(provider.id, onProgress, "Retrying Movies...")
+                progress(provider.id, onProgress, "Syncing Movies...")
                 val api = createStalkerSyncProvider(provider)
                 val categories = requireResult(api.getVodCategories(), "Failed to load movie categories")
                 val movies = loadStalkerMoviesByCategory(api, categories, onProgress)
@@ -2931,7 +2935,7 @@ class SyncManager @Inject constructor(
                 Log.i(TAG, "Queued Xtream series index for provider ${provider.id}: $categoryCount categories.")
             }
             ProviderType.STALKER_PORTAL -> {
-                progress(provider.id, onProgress, "Retrying Series...")
+                progress(provider.id, onProgress, "Syncing Series...")
                 val api = createStalkerSyncProvider(provider)
                 val categories = requireResult(api.getSeriesCategories(), "Failed to load series categories")
                 val series = loadStalkerSeriesByCategory(api, categories, onProgress)
