@@ -2,6 +2,13 @@
 
 All notable product changes are recorded in this document.
 
+## [1.1.12] - 2026-05-25
+
+### Changed
+
+- Manual sync now indexes Movies and Series in the foreground so the sync overlay shows real progress instead of flashing past them.
+- EPG finalize phase now shows "clearing old guide" then "applying new guide" so it doesn't look frozen on a single message.
+
 ## [1.1.11] - 2026-05-25
 
 ### Fixed

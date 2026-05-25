@@ -1440,7 +1440,12 @@ class SyncManager @Inject constructor(
 
         for (workItem in workItems) {
             val category = workItem.category
-            progress(provider.id, onProgress, "Indexing ${xtreamIndexSectionLabel(contentType)}: ${category.name}")
+            val nextCounter = (completedCategories + failedCategories + 1).coerceAtMost(indexedCategories.size)
+            progress(
+                provider.id,
+                onProgress,
+                "Indexing ${xtreamIndexSectionLabel(contentType)}: $nextCounter / ${indexedCategories.size} (${category.name})"
+            )
             val outcome = when (contentType) {
                 ContentType.MOVIE -> fetchMovieCategoryOutcome(provider, api, category.toXtreamCategory())
                 ContentType.SERIES -> fetchSeriesCategoryOutcome(provider, api, category.toXtreamCategory())
@@ -1627,6 +1632,7 @@ class SyncManager @Inject constructor(
                     lastAttemptAt = now,
                     lastError = null
                 )
+                progress(provider.id, onProgress, "Indexing ${xtreamIndexSectionLabel(contentType)}... $indexedRows items")
             }
             ContentType.SERIES -> api.streamSeriesSummaries(adultCategoryIds = adultCategoryIds) { batch ->
                 val accepted = upsertXtreamSeriesSummaryBatch(
@@ -1648,6 +1654,7 @@ class SyncManager @Inject constructor(
                     lastAttemptAt = now,
                     lastError = null
                 )
+                progress(provider.id, onProgress, "Indexing ${xtreamIndexSectionLabel(contentType)}... $indexedRows items")
             }
             else -> Result.error("Unsupported Xtream summary stream section: $contentType")
         }
@@ -2806,7 +2813,7 @@ class SyncManager @Inject constructor(
         val sectionWarnings = mutableListOf<String>()
         when (provider.type) {
             ProviderType.XTREAM_CODES -> {
-                progress(provider.id, onProgress, "Queueing Movies index...")
+                progress(provider.id, onProgress, "Syncing Movies...")
                 val useTextClassification = preferencesRepository.useXtreamTextClassification.first()
                 val enableBase64TextCompatibility = preferencesRepository.xtreamBase64TextCompatibility.first()
                 val api = createXtreamSyncProvider(provider, useTextClassification, enableBase64TextCompatibility)
@@ -2828,7 +2835,7 @@ class SyncManager @Inject constructor(
                         lastError = sanitizeThrowableMessage(error)
                     )
                     throw IllegalStateException(
-                        syncErrorSanitizer.userMessage(error, "Failed to queue movie index"),
+                        syncErrorSanitizer.userMessage(error, "Failed to load movie categories"),
                         error
                     )
                 }
@@ -2839,8 +2846,12 @@ class SyncManager @Inject constructor(
                         movieSyncMode = VodSyncMode.UNKNOWN
                     )
                 )
-                scheduleXtreamIndexSync(provider.id, ContentType.MOVIE)
-                Log.i(TAG, "Queued Xtream movie index for provider ${provider.id}: $categoryCount categories.")
+                // Inline the index instead of handing off to XtreamIndexWorker so the
+                // sync overlay can show real progress through the catalog. The periodic
+                // worker still runs in the background for routine refresh; this just
+                // makes the manual "Sync Now" honest about what's happening.
+                processXtreamSummaryIndexSection(provider, api, ContentType.MOVIE, maxCategories = null, onProgress)
+                Log.i(TAG, "Inline-indexed Xtream movies for provider ${provider.id}: $categoryCount categories.")
             }
             ProviderType.M3U -> {
                 progress(provider.id, onProgress, "Syncing Movies...")
@@ -2905,7 +2916,7 @@ class SyncManager @Inject constructor(
         when (provider.type) {
             ProviderType.XTREAM_CODES -> {
                 val now = System.currentTimeMillis()
-                progress(provider.id, onProgress, "Queueing Series index...")
+                progress(provider.id, onProgress, "Syncing Series...")
                 val useTextClassification = preferencesRepository.useXtreamTextClassification.first()
                 val enableBase64TextCompatibility = preferencesRepository.xtreamBase64TextCompatibility.first()
                 val api = createXtreamSyncProvider(provider, useTextClassification, enableBase64TextCompatibility)
@@ -2927,7 +2938,7 @@ class SyncManager @Inject constructor(
                         lastError = sanitizeThrowableMessage(error)
                     )
                     throw IllegalStateException(
-                        syncErrorSanitizer.userMessage(error, "Failed to queue series index"),
+                        syncErrorSanitizer.userMessage(error, "Failed to load series categories"),
                         error
                     )
                 }
@@ -2936,8 +2947,10 @@ class SyncManager @Inject constructor(
                         lastSeriesSync = now
                     )
                 )
-                scheduleXtreamIndexSync(provider.id, ContentType.SERIES)
-                Log.i(TAG, "Queued Xtream series index for provider ${provider.id}: $categoryCount categories.")
+                // Inline the index instead of handing off to XtreamIndexWorker — see
+                // the matching comment in syncMoviesOnly for the rationale.
+                processXtreamSummaryIndexSection(provider, api, ContentType.SERIES, maxCategories = null, onProgress)
+                Log.i(TAG, "Inline-indexed Xtream series for provider ${provider.id}: $categoryCount categories.")
             }
             ProviderType.STALKER_PORTAL -> {
                 progress(provider.id, onProgress, "Syncing Series...")

@@ -341,9 +341,13 @@ class EpgRepositoryImpl @Inject constructor(
 
                     flushBatch()
 
-                    onProgress?.invoke("Finalizing EPG...")
+                    onProgress?.invoke("Finalizing EPG: clearing old guide...")
                     transactionRunner.inTransaction {
                         programDao.deleteByProvider(providerId)
+                        // Progress update inside the transaction so the user sees the
+                        // step transition even though the swap stays atomic — losing
+                        // power between delete and move would otherwise wipe EPG.
+                        onProgress?.invoke("Finalizing EPG: applying new guide...")
                         programDao.moveToProvider(stagingProviderId, providerId)
                     }
 
